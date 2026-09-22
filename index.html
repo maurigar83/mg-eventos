@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MG Eventos | Organización y gestión de eventos</title>
+
+    <meta name="description" content="MG Eventos - Organización, gestión y boletería para eventos.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #222;
+            background: #f7f7f7;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 25px 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #111827, #374151);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 21px;
+            max-width: 700px;
+            margin: auto;
+            color: #e5e7eb;
+        }
+
+        section {
+            padding: 70px 20px;
+        }
+
+        section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 21px;
+        }
+
+        .about {
+            background: white;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .events {
+            background: #f3f4f6;
+        }
+
+        .event-placeholder {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .contact {
+            background: white;
+            text-align: center;
+        }
+
+        .contact p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        footer {
+            background: #111827;
+            color: #d1d5db;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            nav {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">MG Eventos</div>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>MG Eventos</h1>
+        <p>
+            Organización, gestión y boletería para eventos.
+            Creamos soluciones para facilitar la experiencia de organizadores y asistentes.
+        </p>
+    </div>
+</section>
+
+<section class="about">
+    <div class="container">
+        <h2>Sobre nosotros</h2>
+
+        <p>
+            MG Eventos es una plataforma dedicada a la organización,
+            gestión y comercialización de eventos, incluyendo servicios
+            de boletería, registro, atención al público y comunicación
+            con asistentes.
+        </p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>Nuestros servicios</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🎟️ Boletería</h3>
+                <p>
+                    Gestión de entradas, códigos y control de acceso
+                    para eventos.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>📋 Gestión de eventos</h3>
+                <p>
+                    Herramientas y soluciones para organizar y administrar
+                    eventos de diferentes tamaños.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>📱 Atención al asistente</h3>
+                <p>
+                    Comunicación y acompañamiento antes, durante y después
+                    de cada evento.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="events">
+    <div class="container">
+        <h2>Próximos eventos</h2>
+
+        <div class="event-placeholder">
+            <h3>Próximamente</h3>
+            <p>
+                Aquí encontrarás información sobre nuestros próximos eventos
+                y los canales oficiales para adquirir tus entradas.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="contact">
+    <div class="container">
+        <h2>Contacto</h2>
+
+        <p>
+            Para información sobre eventos y servicios de MG Eventos,
+            próximamente encontrarás aquí nuestros canales oficiales
+            de contacto.
+        </p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 MG Eventos. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>
