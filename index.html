@@ -8,6 +8,8 @@
 
     <meta name="description" content="MG Eventos - Organización, gestión y boletería para eventos.">
 
+    <link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+
     <style>
         * {
             box-sizing: border-box;
@@ -25,7 +27,7 @@
         header {
             background: #111827;
             color: white;
-            padding: 25px 20px;
+            padding: 15px 20px;
         }
 
         .container {
@@ -42,15 +44,33 @@
         }
 
         .logo {
-            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
             font-weight: bold;
+        }
+
+        .logo img {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            border-radius: 50%;
         }
 
         .hero {
             background: linear-gradient(135deg, #111827, #374151);
             color: white;
-            padding: 100px 20px;
+            padding: 90px 20px;
             text-align: center;
+        }
+
+        .hero-logo {
+            width: 190px;
+            height: 190px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 25px;
         }
 
         .hero h1 {
@@ -85,7 +105,7 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .card h3 {
@@ -137,6 +157,24 @@
         }
 
         @media (max-width: 600px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo img {
+                width: 48px;
+                height: 48px;
+            }
+
+            .hero {
+                padding: 70px 20px;
+            }
+
+            .hero-logo {
+                width: 150px;
+                height: 150px;
+            }
+
             .hero h1 {
                 font-size: 36px;
             }
@@ -157,23 +195,37 @@
 <header>
     <div class="container">
         <nav>
-            <div class="logo">MG Eventos</div>
+            <div class="logo">
+                <img src="images/mg-eventos-logo.png" alt="MG Eventos">
+                <span>MG Eventos</span>
+            </div>
         </nav>
     </div>
 </header>
 
 <section class="hero">
     <div class="container">
+
+        <img
+            src="images/mg-eventos-logo.png"
+            alt="MG Eventos"
+            class="hero-logo"
+        >
+
         <h1>MG Eventos</h1>
+
         <p>
             Organización, gestión y boletería para eventos.
-            Creamos soluciones para facilitar la experiencia de organizadores y asistentes.
+            Creamos soluciones para facilitar la experiencia
+            de organizadores y asistentes.
         </p>
+
     </div>
 </section>
 
 <section class="about">
     <div class="container">
+
         <h2>Sobre nosotros</h2>
 
         <p>
@@ -182,11 +234,13 @@
             de boletería, registro, atención al público y comunicación
             con asistentes.
         </p>
+
     </div>
 </section>
 
 <section>
     <div class="container">
+
         <h2>Nuestros servicios</h2>
 
         <div class="cards">
@@ -216,25 +270,32 @@
             </div>
 
         </div>
+
     </div>
 </section>
 
 <section class="events">
     <div class="container">
+
         <h2>Próximos eventos</h2>
 
         <div class="event-placeholder">
+
             <h3>Próximamente</h3>
+
             <p>
                 Aquí encontrarás información sobre nuestros próximos eventos
                 y los canales oficiales para adquirir tus entradas.
             </p>
+
         </div>
+
     </div>
 </section>
 
 <section class="contact">
     <div class="container">
+
         <h2>Contacto</h2>
 
         <p>
@@ -242,6 +303,7 @@
             próximamente encontrarás aquí nuestros canales oficiales
             de contacto.
         </p>
+
     </div>
 </section>
 
