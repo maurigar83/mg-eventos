@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Adviento | Tiempo de volver a empezar</title>
 
@@ -11,7 +15,11 @@
         content="Adviento: tiempo de volver a empezar a través del perdón y la sanación."
     >
 
-    <meta name="theme-color" content="#071b35">
+    <link
+        rel="icon"
+        type="image/png"
+        href="../../images/mg-eventos-logo.png"
+    >
 
     <style>
         * {
@@ -22,125 +30,321 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #071b35;
-            color: #ffffff;
+            background: #ffffff;
+            color: #111827;
             min-height: 100vh;
         }
 
-        .page {
+        /* =========================
+           ENCABEZADO
+        ========================= */
+
+        header {
             width: 100%;
-            min-height: 100vh;
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px;
+
             display: flex;
-            flex-direction: column;
             align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            text-decoration: none;
+            color: #111827;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .brand span {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+        ========================= */
+
+        main {
+            width: 100%;
         }
 
         .hero {
             width: 100%;
             max-width: 900px;
-            padding: 20px 15px 0;
+            margin: 0 auto;
+            padding: 25px 20px 0;
             text-align: center;
         }
 
         .flyer {
+            display: block;
+
             width: 100%;
             max-width: 720px;
             height: auto;
-            display: block;
+
             margin: 0 auto;
-            border-radius: 18px;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+
+            border-radius: 0;
+
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
         }
 
-        .content {
+        /* =========================
+           INFORMACIÓN
+        ========================= */
+
+        .event-info {
             width: 100%;
             max-width: 720px;
-            padding: 35px 20px 50px;
+
+            margin: 0 auto;
+            padding: 38px 20px 55px;
+
             text-align: center;
         }
 
-        .content h1 {
+        .event-info h1 {
             font-size: 30px;
             line-height: 1.2;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+            margin-bottom: 14px;
+
+            color: #111827;
+            letter-spacing: 0.5px;
         }
 
-        .content p {
-            color: #e5e7eb;
+        .event-info > p {
+            max-width: 600px;
+
+            margin: 0 auto 28px;
+
             font-size: 17px;
             line-height: 1.6;
-            margin-bottom: 25px;
+
+            color: #4b5563;
         }
 
-        .info-card {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+        /* =========================
+           TARJETA DEL EVENTO
+        ========================= */
+
+        .event-card {
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
             border-radius: 18px;
+
             padding: 25px 20px;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
+
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
         }
 
-        .info-card h2 {
-            font-size: 22px;
+        .event-card h2 {
+            font-size: 21px;
             margin-bottom: 12px;
+
+            color: #111827;
         }
 
-        .info-card p {
-            margin-bottom: 0;
+        .event-card p {
             font-size: 16px;
+            line-height: 1.7;
+
+            color: #4b5563;
         }
 
-        .button {
+        .event-card strong {
+            color: #111827;
+        }
+
+        /* =========================
+           BOTÓN
+        ========================= */
+
+        .info-button {
             display: inline-block;
-            padding: 15px 28px;
+
+            padding: 15px 30px;
+
+            border: 2px solid #d9ad55;
             border-radius: 30px;
-            background: #d9ad55;
-            color: #071b35;
+
+            background: #111827;
+            color: #ffffff;
+
             text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
         }
 
-        .button:hover {
+        .info-button:hover {
+            background: #1f2937;
             transform: translateY(-2px);
-            opacity: 0.9;
         }
 
-        .footer {
+        /* =========================
+           PIE DE PÁGINA
+        ========================= */
+
+        footer {
             width: 100%;
+
             padding: 25px 20px;
+
             text-align: center;
-            color: rgba(255, 255, 255, 0.55);
+
+            border-top: 1px solid #eeeeee;
+
+            color: #9ca3af;
+
             font-size: 13px;
         }
 
+        /* =========================
+           VENTANA DE INFORMACIÓN
+        ========================= */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+            z-index: 1000;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 430px;
+
+            background: #ffffff;
+
+            border-radius: 20px;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+
+            font-size: 25px;
+
+            color: #111827;
+        }
+
+        .modal-content p {
+            margin-bottom: 25px;
+
+            color: #4b5563;
+
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .close-button {
+            display: inline-block;
+
+            padding: 11px 25px;
+
+            border: none;
+            border-radius: 25px;
+
+            background: #111827;
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           MÓVILES
+        ========================= */
+
         @media (max-width: 600px) {
 
+            .header-container {
+                padding: 10px 15px;
+            }
+
+            .brand img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand span {
+                font-size: 18px;
+            }
+
             .hero {
-                padding: 10px 8px 0;
+                padding: 12px 8px 0;
             }
 
             .flyer {
-                border-radius: 10px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
             }
 
-            .content {
-                padding: 30px 18px 40px;
+            .event-info {
+                padding: 32px 18px 45px;
             }
 
-            .content h1 {
+            .event-info h1 {
                 font-size: 25px;
             }
 
-            .content p {
+            .event-info > p {
                 font-size: 16px;
             }
 
-            .info-card {
+            .event-card {
                 padding: 22px 17px;
+            }
+
+            .info-button {
+                width: 100%;
+                max-width: 330px;
             }
         }
     </style>
@@ -148,51 +352,162 @@
 
 <body>
 
-    <div class="page">
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
 
-        <main>
+    <header>
 
-            <section class="hero">
+        <div class="header-container">
+
+            <a
+                href="../../index.html"
+                class="brand"
+                aria-label="MG Eventos"
+            >
+
                 <img
-                    src="../../images/Flyer-Adviento.png"
-                    alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
-                    class="flyer"
+                    src="../../images/mg-eventos-logo.png"
+                    alt="MG Eventos"
                 >
-            </section>
 
-            <section class="content">
+                <span>MG Eventos</span>
 
-                <h1>Muy pronto conocerás más...</h1>
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <img
+                src="../../images/Flyer-Adviento.png"
+                alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
+                class="flyer"
+            >
+
+        </section>
+
+
+        <section class="event-info">
+
+            <h1>
+                MUY PRONTO CONOCERÁS MÁS...
+            </h1>
+
+            <p>
+                Una invitación a volver a empezar,
+                a través del perdón y la sanación.
+            </p>
+
+
+            <div class="event-card">
+
+                <h2>
+                    RETIRO DE ADVIENTO
+                </h2>
 
                 <p>
-                    Una invitación a volver a empezar,
-                    a través del perdón y la sanación.
+                    <strong>SÁBADO 28 DE NOVIEMBRE DE 2026</strong>
+                    <br>
+                    8:00 A.M. a 3:00 P.M.
                 </p>
 
-                <div class="info-card">
+            </div>
 
-                    <h2>Retiro de Adviento</h2>
 
-                    <p>
-                        <strong>Sábado 28 de noviembre de 2026</strong><br>
-                        8:00 a.m. a 3:00 p.m.
-                    </p>
+            <button
+                class="info-button"
+                onclick="openModal()"
+            >
+                PRÓXIMAMENTE MÁS INFORMACIÓN
+            </button>
 
-                </div>
+        </section>
 
-                <a href="#" class="button">
-                    Próximamente más información
-                </a>
+    </main>
 
-            </section>
 
-        </main>
+    <!-- =========================
+         VENTANA DE INFORMACIÓN
+    ========================== -->
 
-        <footer class="footer">
-            © 2026 · Información oficial del evento
-        </footer>
+    <div
+        id="infoModal"
+        class="modal"
+        onclick="closeModal(event)"
+    >
+
+        <div
+            class="modal-content"
+            onclick="event.stopPropagation()"
+        >
+
+            <h2>
+                MUY PRONTO
+            </h2>
+
+            <p>
+                Estamos preparando toda la información
+                de este encuentro.
+                <br><br>
+                Vuelve pronto para conocer todos los detalles
+                de <strong>ADVIENTO</strong>.
+            </p>
+
+            <button
+                class="close-button"
+                onclick="closeModal()"
+            >
+                CERRAR
+            </button>
+
+        </div>
 
     </div>
+
+
+    <!-- =========================
+         PIE DE PÁGINA
+    ========================== -->
+
+    <footer>
+
+        © 2026 MG Eventos
+
+    </footer>
+
+
+    <script>
+
+        function openModal() {
+
+            document
+                .getElementById("infoModal")
+                .classList
+                .add("active");
+
+        }
+
+
+        function closeModal() {
+
+            document
+                .getElementById("infoModal")
+                .classList
+                .remove("active");
+
+        }
+
+    </script>
 
 </body>
 </html>
