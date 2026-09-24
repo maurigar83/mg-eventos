@@ -3,12 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adviento | MG Eventos</title>
+
+    <title>Adviento | Tiempo de volver a empezar</title>
+
+    <meta
+        name="description"
+        content="Adviento: tiempo de volver a empezar a través del perdón y la sanación."
+    >
+
+    <meta name="theme-color" content="#071b35">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #071b35;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px 15px 0;
+            text-align: center;
+        }
+
+        .flyer {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .content {
+            width: 100%;
+            max-width: 720px;
+            padding: 35px 20px 50px;
+            text-align: center;
+        }
+
+        .content h1 {
+            font-size: 30px;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .content p {
+            color: #e5e7eb;
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 18px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-card h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 28px;
+            border-radius: 30px;
+            background: #d9ad55;
+            color: #071b35;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .footer {
+            width: 100%;
+            padding: 25px 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+
+            .hero {
+                padding: 10px 8px 0;
+            }
+
+            .flyer {
+                border-radius: 10px;
+            }
+
+            .content {
+                padding: 30px 18px 40px;
+            }
+
+            .content h1 {
+                font-size: 25px;
+            }
+
+            .content p {
+                font-size: 16px;
+            }
+
+            .info-card {
+                padding: 22px 17px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>ADVIENTO</h1>
-    <p>Muy pronto conocerás más...</p>
+    <div class="page">
+
+        <main>
+
+            <section class="hero">
+                <img
+                    src="../../images/Flyer-Adviento.png"
+                    alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
+                    class="flyer"
+                >
+            </section>
+
+            <section class="content">
+
+                <h1>Muy pronto conocerás más...</h1>
+
+                <p>
+                    Una invitación a volver a empezar,
+                    a través del perdón y la sanación.
+                </p>
+
+                <div class="info-card">
+
+                    <h2>Retiro de Adviento</h2>
+
+                    <p>
+                        <strong>Sábado 28 de noviembre de 2026</strong><br>
+                        8:00 a.m. a 3:00 p.m.
+                    </p>
+
+                </div>
+
+                <a href="#" class="button">
+                    Próximamente más información
+                </a>
+
+            </section>
+
+        </main>
+
+        <footer class="footer">
+            © 2026 · Información oficial del evento
+        </footer>
+
+    </div>
 
 </body>
 </html>
