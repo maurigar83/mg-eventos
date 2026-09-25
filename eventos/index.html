@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -22,6 +24,7 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -78,15 +81,43 @@
             letter-spacing: 0.3px;
         }
 
-        .back-link {
-            color: #111827;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .back-link:hover {
-            color: #d09f3d;
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 100px;
+
+            padding: 9px 18px;
+
+            border: 1px solid #d9ad55;
+            border-radius: 25px;
+
+            background: #ffffff;
+            color: #111827;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: translateY(-1px);
         }
 
         /* =========================
@@ -284,8 +315,17 @@
                 font-size: 18px;
             }
 
-            .back-link {
-                font-size: 13px;
+            .navigation {
+                gap: 5px;
+            }
+
+            .nav-link {
+                min-width: auto;
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+                letter-spacing: 0.3px;
             }
 
             .events-section {
@@ -309,8 +349,11 @@
             .event-content {
                 padding: 18px 16px 20px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -326,7 +369,7 @@
             <a
                 href="../index.html"
                 class="brand"
-                aria-label="MG Eventos"
+                aria-label="MG Eventos - Inicio"
             >
 
                 <img
@@ -334,16 +377,29 @@
                     alt="MG Eventos"
                 >
 
-                <span>MG Eventos</span>
+                <span>
+                    MG Eventos
+                </span>
 
             </a>
 
-            <a
-                href="../index.html"
-                class="back-link"
-            >
-                INICIO
-            </a>
+            <nav class="navigation">
+
+                <a
+                    href="../servicios/index.html"
+                    class="nav-link"
+                >
+                    SERVICIOS
+                </a>
+
+                <a
+                    href="../contacto/index.html"
+                    class="nav-link"
+                >
+                    CONTACTO
+                </a>
+
+            </nav>
 
         </div>
 
@@ -435,4 +491,5 @@
     </footer>
 
 </body>
+
 </html>
