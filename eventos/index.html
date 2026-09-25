@@ -120,6 +120,18 @@
             transform: translateY(-1px);
         }
 
+        .nav-link.active {
+            background: #d9ad55;
+            color: #111827;
+            cursor: default;
+        }
+
+        .nav-link.active:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: none;
+        }
+
         /* =========================
            CONTENIDO PRINCIPAL
         ========================= */
@@ -384,6 +396,13 @@
             </a>
 
             <nav class="navigation">
+
+                <span
+                    class="nav-link active"
+                    aria-current="page"
+                >
+                    EVENTOS
+                </span>
 
                 <a
                     href="../servicios/index.html"
