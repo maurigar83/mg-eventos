@@ -53,6 +53,7 @@
 
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
         .brand {
@@ -75,6 +76,41 @@
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.3px;
+        }
+
+        /* =========================
+           NAVEGACIÓN
+        ========================= */
+
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: #111827;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            padding: 9px 17px;
+
+            border: 1px solid #d9ad55;
+            border-radius: 25px;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: translateY(-1px);
         }
 
         /* =========================
@@ -352,6 +388,15 @@
                 font-size: 18px;
             }
 
+            .navigation {
+                gap: 6px;
+            }
+
+            .nav-link {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+
             .hero {
                 padding: 12px 8px 0;
             }
@@ -419,6 +464,24 @@
                 <span>MG Eventos</span>
 
             </a>
+
+            <nav class="navigation">
+
+                <a
+                    href="../../index.html"
+                    class="nav-link"
+                >
+                    INICIO
+                </a>
+
+                <a
+                    href="../index.html"
+                    class="nav-link"
+                >
+                    EVENTOS
+                </a>
+
+            </nav>
 
         </div>
 
