@@ -171,7 +171,7 @@
 
 
         /* ========================================
-           OVERLAY
+           OVERLAY PRINCIPAL
         ======================================== */
 
         .hero-overlay {
@@ -190,7 +190,7 @@
 
 
         /* ========================================
-           FUNDIDO DEL VIDEO
+           TRANSICIÓN ENTRE VIDEOS
         ======================================== */
 
         .hero-fade {
@@ -210,7 +210,7 @@
 
             pointer-events: none;
 
-            transition: opacity 0.45s ease;
+            transition: opacity 0.55s ease;
         }
 
 
@@ -621,7 +621,7 @@
         <section class="hero">
 
 
-            <!-- Video de fondo -->
+            <!-- Video principal -->
 
             <video
                 class="hero-video"
@@ -634,14 +634,14 @@
             >
 
                 <source
-                    src="videos/hero-eventos.mp4"
+                    src="videos/hero-qr.mp4"
                     type="video/mp4"
                 >
 
             </video>
 
 
-            <!-- Overlay -->
+            <!-- Overlay principal -->
 
             <div
                 class="hero-overlay"
@@ -649,7 +649,7 @@
             ></div>
 
 
-            <!-- Fundido del video -->
+            <!-- Capa utilizada para las transiciones -->
 
             <div
                 class="hero-fade"
@@ -725,7 +725,7 @@
 
 
     <!-- ========================================
-         CONTROL DEL LOOP SUAVIZADO
+         CONTROL DE LA SECUENCIA DE VIDEOS
     ======================================== -->
 
     <script>
@@ -733,46 +733,109 @@
         const heroVideo = document.querySelector(".hero-video");
         const heroFade = document.querySelector(".hero-fade");
 
-        if (heroVideo && heroFade) {
+        const videos = [
+            "videos/hero-qr.mp4",
+            "videos/hero-evento.mp4"
+        ];
 
-            heroVideo.addEventListener("ended", () => {
+        let currentVideo = 0;
+        let changingVideo = false;
 
-                /* 
-                   Oscurecemos la imagen final antes
-                   de reiniciar el video.
-                */
 
-                heroFade.style.opacity = "1";
+        function playNextVideo() {
+
+            if (!heroVideo || !heroFade || changingVideo) {
+                return;
+            }
+
+            changingVideo = true;
+
+            /*
+             * Primero oscurecemos el Hero.
+             */
+
+            heroFade.style.opacity = "1";
+
+
+            /*
+             * Esperamos a que termine el fundido
+             * antes de cambiar el video.
+             */
+
+            setTimeout(() => {
+
+                currentVideo =
+                    (currentVideo + 1) % videos.length;
+
+
+                heroVideo.src = videos[currentVideo];
+
+                heroVideo.load();
+
+
+                const playPromise = heroVideo.play();
+
+                if (playPromise !== undefined) {
+
+                    playPromise
+                        .catch(() => {});
+
+                }
+
+
+                /*
+                 * Dejamos que el nuevo video comience
+                 * y después retiramos progresivamente
+                 * la capa oscura.
+                 */
 
                 setTimeout(() => {
 
-                    /*
-                       Reiniciamos el video mientras
-                       la pantalla está oscura.
-                    */
+                    heroFade.style.opacity = "0";
 
-                    heroVideo.currentTime = 0;
+                    changingVideo = false;
 
-                    const playPromise = heroVideo.play();
+                }, 180);
 
-                    if (playPromise !== undefined) {
-                        playPromise.catch(() => {});
-                    }
-
-                    /*
-                       Después de reiniciar, retiramos
-                       suavemente la capa oscura.
-                    */
-
-                    requestAnimationFrame(() => {
-                        heroFade.style.opacity = "0";
-                    });
-
-                }, 450);
-
-            });
+            }, 550);
 
         }
+
+
+        /*
+         * Cuando termina cada video,
+         * iniciamos la transición al siguiente.
+         */
+
+        heroVideo.addEventListener("ended", () => {
+
+            playNextVideo();
+
+        });
+
+
+        /*
+         * Si el navegador impide inicialmente
+         * la reproducción automática, intentamos
+         * iniciarla nuevamente.
+         */
+
+        window.addEventListener("load", () => {
+
+            if (!heroVideo) {
+                return;
+            }
+
+            const playPromise = heroVideo.play();
+
+            if (playPromise !== undefined) {
+
+                playPromise
+                    .catch(() => {});
+
+            }
+
+        });
 
     </script>
 
