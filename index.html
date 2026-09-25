@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>MG Eventos | Organización y gestión de eventos</title>
 
@@ -18,6 +24,7 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -26,65 +33,126 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            color: #222;
-            background: #f7f7f7;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            min-height: 100vh;
+
             line-height: 1.6;
         }
+
 
         /* =========================
            ENCABEZADO
         ========================= */
 
         header {
-            background: #111827;
-            color: white;
-            padding: 15px 20px;
+
+            width: 100%;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #eeeeee;
         }
 
-        .container {
-            width: 90%;
+
+        .header-container {
+
+            width: 100%;
+
             max-width: 1100px;
-            margin: auto;
-        }
 
-        nav {
+            margin: 0 auto;
+
+            padding: 12px 20px;
+
             display: flex;
+
+            align-items: center;
+
             justify-content: space-between;
-            align-items: center;
-            gap: 20px;
         }
 
-        .logo {
+
+        .brand {
+
             display: flex;
+
             align-items: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: bold;
+
+            gap: 10px;
+
+            text-decoration: none;
+
+            color: #111827;
         }
 
-        .logo img {
-            width: 58px;
-            height: 58px;
+
+        .brand img {
+
+            width: 48px;
+
+            height: 48px;
+
             object-fit: contain;
+
             border-radius: 50%;
         }
+
+
+        .brand span {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.3px;
+        }
+
 
         /* =========================
            MENÚ
         ========================= */
 
-        .nav-link {
-            color: #ffffff;
-            text-decoration: none;
+        .navigation {
 
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .nav-link {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 100px;
 
             padding: 9px 18px;
 
             border: 1px solid #d9ad55;
+
             border-radius: 25px;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.7px;
 
             transition:
                 background 0.2s ease,
@@ -92,140 +160,199 @@
                 transform 0.2s ease;
         }
 
+
         .nav-link:hover {
+
             background: #d9ad55;
+
             color: #111827;
+
             transform: translateY(-1px);
         }
+
 
         /* =========================
            HERO
         ========================= */
 
         .hero {
-            background: linear-gradient(135deg, #111827, #374151);
-            color: white;
-            padding: 90px 20px;
+
+            width: 100%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #374151
+                );
+
+            color: #ffffff;
+
             text-align: center;
+
+            padding: 85px 20px 90px;
         }
 
+
+        .hero-content {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: 0 auto;
+        }
+
+
         .hero-logo {
-            width: 190px;
-            height: 190px;
+
+            width: 175px;
+
+            height: 175px;
+
             object-fit: contain;
+
             border-radius: 50%;
+
             margin-bottom: 25px;
         }
 
+
         .hero h1 {
+
             font-size: 48px;
-            margin-bottom: 20px;
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
         }
 
+
         .hero p {
-            font-size: 21px;
+
             max-width: 700px;
-            margin: auto;
+
+            margin: 0 auto;
+
+            font-size: 20px;
+
+            line-height: 1.6;
+
             color: #e5e7eb;
         }
 
+
         /* =========================
-           SECCIONES
+           LLAMADA A EVENTOS
         ========================= */
 
-        section {
-            padding: 70px 20px;
-        }
+        .events-section {
 
-        section h2 {
+            width: 100%;
+
+            padding: 65px 20px 75px;
+
             text-align: center;
-            font-size: 32px;
-            margin-bottom: 40px;
+
+            background: #ffffff;
         }
 
-        /* =========================
-           TARJETAS
-        ========================= */
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(240px, 1fr)
-            );
-            gap: 25px;
+        .events-content {
+
+            width: 100%;
+
+            max-width: 720px;
+
+            margin: 0 auto;
         }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
 
-        .card h3 {
+        .events-section h2 {
+
+            font-size: 30px;
+
+            line-height: 1.2;
+
             margin-bottom: 15px;
-            font-size: 21px;
+
+            color: #111827;
         }
 
-        /* =========================
-           SOBRE NOSOTROS
-        ========================= */
 
-        .about {
-            background: white;
+        .events-section p {
+
+            max-width: 600px;
+
+            margin: 0 auto 25px;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            color: #4b5563;
         }
 
-        .about p {
-            max-width: 800px;
-            margin: auto;
-            text-align: center;
-            font-size: 18px;
-            color: #555;
+
+        .events-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 13px 28px;
+
+            border: 2px solid #d9ad55;
+
+            border-radius: 30px;
+
+            background: #111827;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.8px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
-        /* =========================
-           EVENTOS
-        ========================= */
 
-        .events {
-            background: #f3f4f6;
+        .events-button:hover {
+
+            background: #1f2937;
+
+            transform: translateY(-2px);
         }
 
-        .event-placeholder {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            max-width: 700px;
-            margin: auto;
-        }
-
-        /* =========================
-           CONTACTO
-        ========================= */
-
-        .contact {
-            background: white;
-            text-align: center;
-        }
-
-        .contact p {
-            margin-bottom: 10px;
-            color: #555;
-        }
 
         /* =========================
            PIE DE PÁGINA
         ========================= */
 
         footer {
-            background: #111827;
-            color: #d1d5db;
+
+            width: 100%;
+
+            padding: 25px 20px;
+
             text-align: center;
-            padding: 30px 20px;
-            font-size: 14px;
+
+            border-top: 1px solid #eeeeee;
+
+            color: #9ca3af;
+
+            font-size: 13px;
         }
+
 
         /* =========================
            MÓVILES
@@ -233,45 +360,107 @@
 
         @media (max-width: 600px) {
 
-            .logo {
-                font-size: 20px;
+            .header-container {
+
+                padding: 10px 15px;
+
+                gap: 12px;
             }
 
-            .logo img {
-                width: 48px;
-                height: 48px;
+
+            .brand img {
+
+                width: 42px;
+
+                height: 42px;
             }
 
-            nav {
-                justify-content: space-between;
+
+            .brand span {
+
+                font-size: 18px;
             }
+
+
+            .navigation {
+
+                gap: 5px;
+            }
+
 
             .nav-link {
-                font-size: 13px;
-                padding: 8px 14px;
+
+                min-width: auto;
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+
+                letter-spacing: 0.3px;
             }
+
 
             .hero {
-                padding: 70px 20px;
+
+                padding: 65px 20px 70px;
             }
+
 
             .hero-logo {
-                width: 150px;
-                height: 150px;
+
+                width: 145px;
+
+                height: 145px;
+
+                margin-bottom: 22px;
             }
 
+
             .hero h1 {
+
                 font-size: 36px;
             }
 
+
             .hero p {
-                font-size: 18px;
+
+                font-size: 17px;
+            }
+
+
+            .events-section {
+
+                padding: 50px 20px 60px;
+            }
+
+
+            .events-section h2 {
+
+                font-size: 27px;
+            }
+
+
+            .events-section p {
+
+                font-size: 16px;
+            }
+
+
+            .events-button {
+
+                width: 100%;
+
+                max-width: 300px;
             }
         }
+
     </style>
+
 </head>
 
+
 <body>
+
 
     <!-- =========================
          ENCABEZADO
@@ -279,22 +468,28 @@
 
     <header>
 
-        <div class="container">
+        <div class="header-container">
 
-            <nav>
 
-                <div class="logo">
+            <a
+                href="index.html"
+                class="brand"
+                aria-label="MG Eventos - Inicio"
+            >
 
-                    <img
-                        src="images/mg-eventos-logo.png"
-                        alt="MG Eventos"
-                    >
+                <img
+                    src="images/mg-eventos-logo.png"
+                    alt="MG Eventos"
+                >
 
-                    <span>
-                        MG Eventos
-                    </span>
+                <span>
+                    MG Eventos
+                </span>
 
-                </div>
+            </a>
+
+
+            <nav class="navigation">
 
                 <a
                     href="eventos/index.html"
@@ -303,7 +498,24 @@
                     EVENTOS
                 </a>
 
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    SERVICIOS
+                </a>
+
+
+                <a
+                    href="#"
+                    class="nav-link"
+                >
+                    CONTACTO
+                </a>
+
             </nav>
+
 
         </div>
 
@@ -314,168 +526,70 @@
          HERO
     ========================== -->
 
-    <section class="hero">
+    <main>
 
-        <div class="container">
+        <section class="hero">
 
-            <img
-                src="images/mg-eventos-logo.png"
-                alt="MG Eventos"
-                class="hero-logo"
-            >
-
-            <h1>
-                MG Eventos
-            </h1>
-
-            <p>
-                Organización, gestión y boletería para eventos.
-                Creamos soluciones para facilitar la experiencia
-                de organizadores y asistentes.
-            </p>
-
-        </div>
-
-    </section>
+            <div class="hero-content">
 
 
-    <!-- =========================
-         SOBRE NOSOTROS
-    ========================== -->
-
-    <section class="about">
-
-        <div class="container">
-
-            <h2>
-                Sobre nosotros
-            </h2>
-
-            <p>
-                MG Eventos es una plataforma dedicada a la organización,
-                gestión y comercialización de eventos, incluyendo servicios
-                de boletería, registro, atención al público y comunicación
-                con asistentes.
-            </p>
-
-        </div>
-
-    </section>
+                <img
+                    src="images/mg-eventos-logo.png"
+                    alt="MG Eventos"
+                    class="hero-logo"
+                >
 
 
-    <!-- =========================
-         SERVICIOS
-    ========================== -->
+                <h1>
+                    MG Eventos
+                </h1>
 
-    <section>
-
-        <div class="container">
-
-            <h2>
-                Nuestros servicios
-            </h2>
-
-            <div class="cards">
-
-                <div class="card">
-
-                    <h3>
-                        🎟️ Boletería
-                    </h3>
-
-                    <p>
-                        Gestión de entradas, códigos y control de acceso
-                        para eventos.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        📋 Gestión de eventos
-                    </h3>
-
-                    <p>
-                        Herramientas y soluciones para organizar y administrar
-                        eventos de diferentes tamaños.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3>
-                        📱 Atención al asistente
-                    </h3>
-
-                    <p>
-                        Comunicación y acompañamiento antes, durante y después
-                        de cada evento.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         EVENTOS
-    ========================== -->
-
-    <section class="events">
-
-        <div class="container">
-
-            <h2>
-                Próximos eventos
-            </h2>
-
-            <div class="event-placeholder">
-
-                <h3>
-                    Próximamente
-                </h3>
 
                 <p>
-                    Aquí encontrarás información sobre nuestros próximos eventos
-                    y los canales oficiales para adquirir tus entradas.
+                    Organización, gestión y boletería para eventos.
+                    Creamos soluciones para facilitar la experiencia
+                    de organizadores y asistentes.
                 </p>
+
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =========================
-         CONTACTO
-    ========================== -->
+        <!-- =========================
+             EVENTOS
+        ========================== -->
 
-    <section class="contact">
+        <section class="events-section">
 
-        <div class="container">
+            <div class="events-content">
 
-            <h2>
-                Contacto
-            </h2>
 
-            <p>
-                Para información sobre eventos y servicios de MG Eventos,
-                próximamente encontrarás aquí nuestros canales oficiales
-                de contacto.
-            </p>
+                <h2>
+                    Próximos eventos
+                </h2>
 
-        </div>
 
-    </section>
+                <p>
+                    Conoce nuestros próximos eventos y encuentra
+                    toda la información que necesitas para participar.
+                </p>
+
+
+                <a
+                    href="eventos/index.html"
+                    class="events-button"
+                >
+                    VER EVENTOS
+                </a>
+
+
+            </div>
+
+        </section>
+
+    </main>
 
 
     <!-- =========================
@@ -484,11 +598,11 @@
 
     <footer>
 
-        <p>
-            © 2026 MG Eventos. Todos los derechos reservados.
-        </p>
+        © 2026 MG Eventos
 
     </footer>
 
+
 </body>
+
 </html>
