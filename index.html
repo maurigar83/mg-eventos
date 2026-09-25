@@ -143,12 +143,30 @@
             border-radius: 50%;
 
             margin-bottom: 25px;
+
+            opacity: 0;
+
+            animation:
+                heroFadeUp
+                1.2s
+                ease-out
+                0.1s
+                both;
         }
 
         .hero h1 {
             font-size: 48px;
             line-height: 1.15;
             margin-bottom: 18px;
+
+            opacity: 0;
+
+            animation:
+                heroFadeUp
+                1.2s
+                ease-out
+                0.3s
+                both;
         }
 
         .hero p {
@@ -160,6 +178,15 @@
             line-height: 1.6;
 
             color: #e5e7eb;
+
+            opacity: 0;
+
+            animation:
+                heroFadeUp
+                1.2s
+                ease-out
+                0.5s
+                both;
         }
 
         .events-section {
@@ -170,6 +197,15 @@
             text-align: center;
 
             background: #ffffff;
+
+            opacity: 0;
+
+            animation:
+                heroFadeUp
+                1.2s
+                ease-out
+                0.8s
+                both;
         }
 
         .events-content {
@@ -242,6 +278,28 @@
             font-size: 13px;
         }
 
+        /* =========================
+           ANIMACIÓN
+        ========================= */
+
+        @keyframes heroFadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* =========================
+           MÓVILES
+        ========================= */
+
         @media (max-width: 600px) {
 
             .header-container {
@@ -305,6 +363,24 @@
             .events-button {
                 width: 100%;
                 max-width: 300px;
+            }
+
+        }
+
+        /* =========================
+           REDUCIR ANIMACIONES
+           SI EL USUARIO LO PREFIERE
+        ========================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .hero-logo,
+            .hero h1,
+            .hero p,
+            .events-section {
+                animation: none;
+                opacity: 1;
+                transform: none;
             }
 
         }
