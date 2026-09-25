@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -37,6 +38,10 @@
             min-height: 100vh;
             line-height: 1.6;
         }
+
+        /* =========================
+           ENCABEZADO
+        ========================= */
 
         header {
             width: 100%;
@@ -112,6 +117,10 @@
             color: #111827;
             transform: translateY(-1px);
         }
+
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
             width: 100%;
@@ -189,6 +198,10 @@
                 both;
         }
 
+        /* =========================
+           PRÓXIMOS EVENTOS
+        ========================= */
+
         .events-section {
             width: 100%;
 
@@ -235,7 +248,13 @@
             color: #4b5563;
         }
 
+        /* =========================
+           BOTÓN VER EVENTOS
+        ========================= */
+
         .events-button {
+            position: relative;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -254,15 +273,63 @@
             font-weight: 700;
             letter-spacing: 0.8px;
 
+            overflow: hidden;
+
             transition:
-                background 0.2s ease,
-                transform 0.2s ease;
+                background 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
-        .events-button:hover {
-            background: #1f2937;
-            transform: translateY(-2px);
+        /* Brillo */
+
+        .events-button::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -120%;
+
+            width: 60%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.25),
+                    transparent
+                );
+
+            transform: skewX(-20deg);
+
+            transition:
+                left 0.6s ease;
         }
+
+        /* Hover */
+
+        .events-button:hover {
+            background: #d9ad55;
+            color: #111827;
+
+            transform: scale(1.05);
+
+            box-shadow:
+                0 8px 22px rgba(217, 173, 85, 0.25);
+        }
+
+        /* Movimiento del brillo */
+
+        .events-button:hover::before {
+            left: 130%;
+        }
+
+        /* =========================
+           PIE DE PÁGINA
+        ========================= */
 
         footer {
             width: 100%;
@@ -279,7 +346,7 @@
         }
 
         /* =========================
-           ANIMACIÓN
+           ANIMACIÓN DE ENTRADA
         ========================= */
 
         @keyframes heroFadeUp {
@@ -369,7 +436,6 @@
 
         /* =========================
            REDUCIR ANIMACIONES
-           SI EL USUARIO LO PREFIERE
         ========================= */
 
         @media (prefers-reduced-motion: reduce) {
@@ -383,6 +449,10 @@
                 transform: none;
             }
 
+            .events-button {
+                transition: none;
+            }
+
         }
 
     </style>
@@ -390,6 +460,10 @@
 </head>
 
 <body>
+
+    <!-- =========================
+         ENCABEZADO
+    ========================= -->
 
     <header>
 
@@ -437,6 +511,11 @@
 
     </header>
 
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+    ========================= -->
+
     <main>
 
         <section class="hero">
@@ -463,6 +542,7 @@
 
         </section>
 
+
         <section class="events-section">
 
             <div class="events-content">
@@ -488,6 +568,11 @@
         </section>
 
     </main>
+
+
+    <!-- =========================
+         PIE DE PÁGINA
+    ========================= -->
 
     <footer>
 
