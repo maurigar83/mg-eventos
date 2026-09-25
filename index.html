@@ -357,6 +357,12 @@
             transform: translateY(-1px);
         }
 
+        .login-submit:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+        }
+
         .login-modal-close {
             position: absolute;
             top: 10px;
@@ -670,6 +676,7 @@
     </footer>
 
     <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbwITb6P7XOPAZpuRCmrLFitL2eK3-UBujqRuFMDgjUe1-YDXHNWCPUm4x0kUA8d82ZhLw/exec";
         const accessButton = document.getElementById("accessButton");
         const loginModal = document.getElementById("loginModal");
         const loginModalClose = document.getElementById("loginModalClose");
@@ -706,10 +713,56 @@
             }
         });
 
-        loginForm.addEventListener("submit", (event) => {
+        loginForm.addEventListener("submit", async (event) => {
             event.preventDefault();
-            loginMessage.textContent =
-                "El acceso se conectará al sistema de seguridad.";
+
+            const usuario = document.getElementById("loginUsuario").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            const submitButton = loginForm.querySelector(".login-submit");
+
+            if (!usuario || !password) {
+                loginMessage.textContent = "Ingresa usuario y contraseña.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "VERIFICANDO...";
+            loginMessage.textContent = "";
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+                    body: JSON.stringify({
+                        accion: "login",
+                        usuario: usuario,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!data.ok) {
+                    loginMessage.textContent = data.mensaje || "Usuario o contraseña incorrectos.";
+                    return;
+                }
+
+                sessionStorage.setItem("mg_eventos_token", data.token);
+                sessionStorage.setItem("mg_eventos_usuario", data.usuario);
+                sessionStorage.setItem("mg_eventos_nombre", data.nombre);
+                sessionStorage.setItem("mg_eventos_rol", data.rol);
+                sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(data.permisos || []));
+                sessionStorage.setItem("mg_eventos_expira", data.expira);
+
+                window.location.href = "panel.html";
+            } catch (error) {
+                loginMessage.textContent = "No fue posible conectar con el sistema de seguridad. Intenta nuevamente.";
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "INGRESAR";
+            }
         });
 
         const heroVideo = document.querySelector(".hero-video");
