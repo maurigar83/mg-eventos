@@ -10,11 +10,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>MG Eventos | Organización y gestión de eventos</title>
+    <title>MG Eventos | Boletería y acceso para tus eventos</title>
 
     <meta
         name="description"
-        content="MG Eventos - Organización, gestión y boletería para eventos."
+        content="MG Eventos facilita la venta de boletería y el control de acceso para eventos."
     >
 
     <link
@@ -25,10 +25,18 @@
 
     <style>
 
+        /* ========================================
+           CONFIGURACIÓN GENERAL
+        ======================================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -39,9 +47,10 @@
             line-height: 1.6;
         }
 
-        /* =========================
+
+        /* ========================================
            ENCABEZADO
-        ========================= */
+        ======================================== */
 
         header {
             width: 100%;
@@ -91,7 +100,6 @@
             justify-content: center;
 
             min-width: 100px;
-
             padding: 9px 18px;
 
             border: 1px solid #d9ad55;
@@ -118,30 +126,84 @@
             transform: translateY(-1px);
         }
 
-        /* =========================
+
+        /* ========================================
            HERO
-        ========================= */
+        ======================================== */
 
         .hero {
-            width: 100%;
+            position: relative;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #111827,
-                    #374151
-                );
+            width: 100%;
+            min-height: 560px;
+
+            overflow: hidden;
+
+            background: #111827;
 
             color: #ffffff;
             text-align: center;
 
-            padding: 85px 20px 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+
+        /* ========================================
+           VIDEO DE FONDO
+        ======================================== */
+
+        .hero-video {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center;
+
+            z-index: 0;
+        }
+
+
+        /* ========================================
+           OVERLAY
+        ======================================== */
+
+        .hero-overlay {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(8, 18, 35, 0.72);
+
+            z-index: 1;
+        }
+
+
+        /* ========================================
+           CONTENIDO DEL HERO
+        ======================================== */
+
         .hero-content {
+            position: relative;
+
+            z-index: 2;
+
             width: 100%;
             max-width: 850px;
+
             margin: 0 auto;
+
+            padding: 85px 20px 90px;
         }
 
         .hero-logo {
@@ -166,6 +228,7 @@
         .hero h1 {
             font-size: 48px;
             line-height: 1.15;
+
             margin-bottom: 18px;
 
             opacity: 0;
@@ -179,7 +242,7 @@
         }
 
         .hero p {
-            max-width: 700px;
+            max-width: 720px;
 
             margin: 0 auto;
 
@@ -198,9 +261,10 @@
                 both;
         }
 
-        /* =========================
-           PRÓXIMOS EVENTOS
-        ========================= */
+
+        /* ========================================
+           SECCIÓN PRÓXIMOS EVENTOS
+        ======================================== */
 
         .events-section {
             width: 100%;
@@ -248,9 +312,10 @@
             color: #4b5563;
         }
 
-        /* =========================
+
+        /* ========================================
            BOTÓN VER EVENTOS
-        ========================= */
+        ======================================== */
 
         .events-button {
             position: relative;
@@ -282,8 +347,6 @@
                 box-shadow 0.3s ease;
         }
 
-        /* Brillo */
-
         .events-button::before {
             content: "";
 
@@ -305,11 +368,8 @@
 
             transform: skewX(-20deg);
 
-            transition:
-                left 0.6s ease;
+            transition: left 0.6s ease;
         }
-
-        /* Hover */
 
         .events-button:hover {
             background: #d9ad55;
@@ -321,15 +381,14 @@
                 0 8px 22px rgba(217, 173, 85, 0.25);
         }
 
-        /* Movimiento del brillo */
-
         .events-button:hover::before {
             left: 130%;
         }
 
-        /* =========================
+
+        /* ========================================
            PIE DE PÁGINA
-        ========================= */
+        ======================================== */
 
         footer {
             width: 100%;
@@ -345,9 +404,10 @@
             font-size: 13px;
         }
 
-        /* =========================
+
+        /* ========================================
            ANIMACIÓN DE ENTRADA
-        ========================= */
+        ======================================== */
 
         @keyframes heroFadeUp {
 
@@ -363,9 +423,10 @@
 
         }
 
-        /* =========================
-           MÓVILES
-        ========================= */
+
+        /* ========================================
+           VERSIÓN MÓVIL
+        ======================================== */
 
         @media (max-width: 600px) {
 
@@ -397,6 +458,10 @@
             }
 
             .hero {
+                min-height: 520px;
+            }
+
+            .hero-content {
                 padding: 65px 20px 70px;
             }
 
@@ -434,9 +499,10 @@
 
         }
 
-        /* =========================
+
+        /* ========================================
            REDUCIR ANIMACIONES
-        ========================= */
+        ======================================== */
 
         @media (prefers-reduced-motion: reduce) {
 
@@ -459,11 +525,13 @@
 
 </head>
 
+
 <body>
 
-    <!-- =========================
+
+    <!-- ========================================
          ENCABEZADO
-    ========================= -->
+    ======================================== -->
 
     <header>
 
@@ -481,6 +549,7 @@
                 </span>
 
             </div>
+
 
             <nav class="navigation">
 
@@ -512,13 +581,50 @@
     </header>
 
 
-    <!-- =========================
+    <!-- ========================================
          CONTENIDO PRINCIPAL
-    ========================= -->
+    ======================================== -->
 
     <main>
 
+
+        <!-- ====================================
+             HERO
+        ==================================== -->
+
         <section class="hero">
+
+
+            <!-- Video de fondo -->
+
+            <video
+                class="hero-video"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+                poster="images/mg-eventos-logo.png"
+                aria-hidden="true"
+            >
+
+                <source
+                    src="videos/hero-eventos.mp4"
+                    type="video/mp4"
+                >
+
+            </video>
+
+
+            <!-- Overlay -->
+
+            <div
+                class="hero-overlay"
+                aria-hidden="true"
+            ></div>
+
+
+            <!-- Contenido -->
 
             <div class="hero-content">
 
@@ -529,19 +635,23 @@
                 >
 
                 <h1>
-                    MG Eventos
+                    Boletería y acceso para tus eventos
                 </h1>
 
                 <p>
-                    Organización, gestión y boletería para eventos.
-                    Creamos soluciones para facilitar la experiencia
-                    de organizadores y asistentes.
+                    Facilitamos la venta de entradas y el control
+                    de acceso para que puedas gestionar tu evento
+                    de forma sencilla y segura.
                 </p>
 
             </div>
 
         </section>
 
+
+        <!-- ====================================
+             PRÓXIMOS EVENTOS
+        ==================================== -->
 
         <section class="events-section">
 
@@ -570,15 +680,16 @@
     </main>
 
 
-    <!-- =========================
+    <!-- ========================================
          PIE DE PÁGINA
-    ========================= -->
+    ======================================== -->
 
     <footer>
 
         © 2026 MG Eventos
 
     </footer>
+
 
 </body>
 
