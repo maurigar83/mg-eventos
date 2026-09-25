@@ -339,72 +339,7 @@
 
 
         /* ========================================
-           ENLACES DE CONTACTO
-        ======================================== */
-
-        .contact-link {
-            display: inline-block;
-
-            margin-top: 8px;
-
-            color: #111827;
-
-            font-size: 17px;
-            font-weight: 700;
-
-            text-decoration: none;
-
-            transition:
-                color 0.2s ease;
-        }
-
-        .contact-link:hover {
-            color: #b78d38;
-        }
-
-
-        /* ========================================
-           SECCIÓN FINAL
-        ======================================== */
-
-        .contact-cta {
-            width: 100%;
-
-            padding: 65px 20px 75px;
-
-            background: #f8f9fb;
-
-            text-align: center;
-        }
-
-        .contact-cta-content {
-            width: 100%;
-            max-width: 720px;
-
-            margin: 0 auto;
-        }
-
-        .contact-cta h2 {
-            margin-bottom: 15px;
-
-            color: #111827;
-
-            font-size: 30px;
-            line-height: 1.25;
-        }
-
-        .contact-cta p {
-            margin-bottom: 0;
-
-            color: #4b5563;
-
-            font-size: 17px;
-            line-height: 1.6;
-        }
-
-
-        /* ========================================
-           BOTÓN WHATSAPP
+           BOTONES DE CONTACTO
         ======================================== */
 
         .cta-button {
@@ -475,6 +410,46 @@
 
         .cta-button:hover::before {
             left: 130%;
+        }
+
+
+        /* ========================================
+           SECCIÓN FINAL
+        ======================================== */
+
+        .contact-cta {
+            width: 100%;
+
+            padding: 65px 20px 75px;
+
+            background: #f8f9fb;
+
+            text-align: center;
+        }
+
+        .contact-cta-content {
+            width: 100%;
+            max-width: 720px;
+
+            margin: 0 auto;
+        }
+
+        .contact-cta h2 {
+            margin-bottom: 15px;
+
+            color: #111827;
+
+            font-size: 30px;
+            line-height: 1.25;
+        }
+
+        .contact-cta p {
+            margin-bottom: 0;
+
+            color: #4b5563;
+
+            font-size: 17px;
+            line-height: 1.6;
         }
 
 
@@ -582,6 +557,11 @@
                 padding: 28px 22px;
             }
 
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+
             .contact-cta {
                 padding: 50px 20px 60px;
             }
@@ -592,11 +572,6 @@
 
             .contact-cta p {
                 font-size: 16px;
-            }
-
-            .cta-button {
-                width: 100%;
-                max-width: 300px;
             }
 
         }
@@ -616,9 +591,9 @@
                 transform: none;
             }
 
-            .nav-link,
             .contact-card,
-            .cta-button {
+            .cta-button,
+            .nav-link {
                 transition: none;
             }
 
@@ -727,7 +702,7 @@
             <div class="contact-grid">
 
 
-                <!-- Correo -->
+                <!-- Correo electrónico -->
 
                 <article class="contact-card">
 
@@ -747,9 +722,9 @@
 
                     <a
                         href="mailto:mgeventos.co@gmail.com"
-                        class="contact-link"
+                        class="cta-button"
                     >
-                        mgeventos.co@gmail.com
+                        ESCRÍBENOS POR CORREO
                     </a>
 
                 </article>
