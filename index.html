@@ -190,13 +190,38 @@
 
 
         /* ========================================
+           FUNDIDO DEL VIDEO
+        ======================================== */
+
+        .hero-fade {
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: #081223;
+
+            opacity: 0;
+
+            z-index: 2;
+
+            pointer-events: none;
+
+            transition: opacity 0.45s ease;
+        }
+
+
+        /* ========================================
            CONTENIDO DEL HERO
         ======================================== */
 
         .hero-content {
             position: relative;
 
-            z-index: 2;
+            z-index: 3;
 
             width: 100%;
             max-width: 850px;
@@ -515,7 +540,8 @@
                 transform: none;
             }
 
-            .events-button {
+            .events-button,
+            .hero-fade {
                 transition: none;
             }
 
@@ -600,7 +626,6 @@
             <video
                 class="hero-video"
                 autoplay
-                loop
                 muted
                 playsinline
                 preload="auto"
@@ -620,6 +645,14 @@
 
             <div
                 class="hero-overlay"
+                aria-hidden="true"
+            ></div>
+
+
+            <!-- Fundido del video -->
+
+            <div
+                class="hero-fade"
                 aria-hidden="true"
             ></div>
 
@@ -689,6 +722,59 @@
         © 2026 MG Eventos
 
     </footer>
+
+
+    <!-- ========================================
+         CONTROL DEL LOOP SUAVIZADO
+    ======================================== -->
+
+    <script>
+
+        const heroVideo = document.querySelector(".hero-video");
+        const heroFade = document.querySelector(".hero-fade");
+
+        if (heroVideo && heroFade) {
+
+            heroVideo.addEventListener("ended", () => {
+
+                /* 
+                   Oscurecemos la imagen final antes
+                   de reiniciar el video.
+                */
+
+                heroFade.style.opacity = "1";
+
+                setTimeout(() => {
+
+                    /*
+                       Reiniciamos el video mientras
+                       la pantalla está oscura.
+                    */
+
+                    heroVideo.currentTime = 0;
+
+                    const playPromise = heroVideo.play();
+
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {});
+                    }
+
+                    /*
+                       Después de reiniciar, retiramos
+                       suavemente la capa oscura.
+                    */
+
+                    requestAnimationFrame(() => {
+                        heroFade.style.opacity = "0";
+                    });
+
+                }, 450);
+
+            });
+
+        }
+
+    </script>
 
 
 </body>
