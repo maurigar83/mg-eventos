@@ -1,34 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MG Eventos | Boletería y acceso para tus eventos</title>
-
-    <meta
-        name="description"
-        content="MG Eventos facilita la venta de boletería y el control de acceso para eventos."
-    >
-
-    <link
-        rel="icon"
-        type="image/png"
-        href="images/mg-eventos-logo.png"
-    >
+    <meta name="description" content="MG Eventos facilita la venta de boletería y el control de acceso para eventos.">
+    <link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
 
     <style>
-
-        /* ========================================
-           CONFIGURACIÓN GENERAL
-        ======================================== */
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -47,11 +26,6 @@
             line-height: 1.6;
         }
 
-
-        /* ========================================
-           ENCABEZADO
-        ======================================== */
-
         header {
             width: 100%;
             background: #ffffff;
@@ -63,7 +37,6 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 12px 20px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -73,7 +46,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-
             text-decoration: none;
             color: #111827;
         }
@@ -91,11 +63,6 @@
             letter-spacing: 0.3px;
         }
 
-
-        /* ========================================
-           NAVEGACIÓN
-        ======================================== */
-
         .navigation {
             display: flex;
             align-items: center;
@@ -106,26 +73,17 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             min-width: 100px;
             padding: 9px 18px;
-
             border: 1px solid #d9ad55;
             border-radius: 25px;
-
             background: #ffffff;
             color: #111827;
-
             text-decoration: none;
-
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.7px;
-
-            transition:
-                background 0.2s ease,
-                color 0.2s ease,
-                transform 0.2s ease;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
 
         .nav-link:hover {
@@ -134,316 +92,171 @@
             transform: translateY(-1px);
         }
 
-
-        /* ========================================
-           HERO
-        ======================================== */
-
         .hero {
             position: relative;
-
             width: 100%;
             min-height: 560px;
-
             overflow: hidden;
-
             background: #111827;
-
             color: #ffffff;
             text-align: center;
-
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-
-        /* ========================================
-           VIDEO DE FONDO
-        ======================================== */
-
         .hero-video {
             position: absolute;
-
             top: 0;
             left: 0;
-
             width: 100%;
             height: 100%;
-
             object-fit: cover;
             object-position: center;
-
             z-index: 0;
         }
 
-
-        /* ========================================
-           OVERLAY PRINCIPAL
-        ======================================== */
-
         .hero-overlay {
             position: absolute;
-
             top: 0;
             left: 0;
-
             width: 100%;
             height: 100%;
-
             background: rgba(8, 18, 35, 0.72);
-
             z-index: 1;
         }
 
-
-        /* ========================================
-           TRANSICIÓN ENTRE VIDEOS
-        ======================================== */
-
         .hero-fade {
             position: absolute;
-
             top: 0;
             left: 0;
-
             width: 100%;
             height: 100%;
-
             background: #081223;
-
             opacity: 0;
-
             z-index: 2;
-
             pointer-events: none;
-
             transition: opacity 0.55s ease;
         }
 
-
-        /* ========================================
-           CONTENIDO DEL HERO
-        ======================================== */
-
         .hero-content {
             position: relative;
-
             z-index: 3;
-
             width: 100%;
             max-width: 850px;
-
             margin: 0 auto;
-
             padding: 85px 20px 90px;
         }
 
         .hero-logo {
             width: 175px;
             height: 175px;
-
             object-fit: contain;
             border-radius: 50%;
-
             margin-bottom: 25px;
-
             opacity: 0;
-
-            animation:
-                heroFadeUp
-                1.2s
-                ease-out
-                0.1s
-                both;
+            animation: heroFadeUp 1.2s ease-out 0.1s both;
         }
 
         .hero h1 {
             font-size: 48px;
             line-height: 1.15;
-
             margin-bottom: 18px;
-
             opacity: 0;
-
-            animation:
-                heroFadeUp
-                1.2s
-                ease-out
-                0.3s
-                both;
+            animation: heroFadeUp 1.2s ease-out 0.3s both;
         }
 
         .hero p {
             max-width: 720px;
-
             margin: 0 auto;
-
             font-size: 20px;
             line-height: 1.6;
-
             color: #e5e7eb;
-
             opacity: 0;
-
-            animation:
-                heroFadeUp
-                1.2s
-                ease-out
-                0.5s
-                both;
+            animation: heroFadeUp 1.2s ease-out 0.5s both;
         }
-
-
-        /* ========================================
-           SECCIÓN PRÓXIMOS EVENTOS
-        ======================================== */
 
         .events-section {
             width: 100%;
-
             padding: 65px 20px 75px;
-
             text-align: center;
-
             background: #ffffff;
-
             opacity: 0;
-
-            animation:
-                heroFadeUp
-                1.2s
-                ease-out
-                0.8s
-                both;
+            animation: heroFadeUp 1.2s ease-out 0.8s both;
         }
 
         .events-content {
             width: 100%;
             max-width: 720px;
-
             margin: 0 auto;
         }
 
         .events-section h2 {
             font-size: 30px;
             line-height: 1.2;
-
             margin-bottom: 15px;
-
             color: #111827;
         }
 
         .events-section p {
             max-width: 600px;
-
             margin: 0 auto 25px;
-
             font-size: 17px;
             line-height: 1.6;
-
             color: #4b5563;
         }
 
-
-        /* ========================================
-           BOTÓN VER EVENTOS
-        ======================================== */
-
         .events-button {
             position: relative;
-
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             padding: 13px 28px;
-
             border: 2px solid #d9ad55;
             border-radius: 30px;
-
             background: #111827;
             color: #ffffff;
-
             text-decoration: none;
-
             font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.8px;
-
             overflow: hidden;
-
-            transition:
-                background 0.3s ease,
-                color 0.3s ease,
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .events-button::before {
             content: "";
-
             position: absolute;
-
             top: 0;
             left: -120%;
-
             width: 60%;
             height: 100%;
-
-            background:
-                linear-gradient(
-                    120deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.25),
-                    transparent
-                );
-
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             transform: skewX(-20deg);
-
             transition: left 0.6s ease;
         }
 
         .events-button:hover {
             background: #d9ad55;
             color: #111827;
-
             transform: scale(1.05);
-
-            box-shadow:
-                0 8px 22px rgba(217, 173, 85, 0.25);
+            box-shadow: 0 8px 22px rgba(217, 173, 85, 0.25);
         }
 
         .events-button:hover::before {
             left: 130%;
         }
 
-
-        /* ========================================
-           PIE DE PÁGINA
-        ======================================== */
-
         footer {
             width: 100%;
-
             padding: 25px 20px;
-
             text-align: center;
-
             border-top: 1px solid #eeeeee;
-
             color: #9ca3af;
-
             font-size: 13px;
         }
 
-
-        /* ========================================
-           ANIMACIÓN DE ENTRADA
-        ======================================== */
-
         @keyframes heroFadeUp {
-
             from {
                 opacity: 0;
                 transform: translateY(35px);
@@ -453,20 +266,120 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-
         }
 
+        .login-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
 
-        /* ========================================
-           VERSIÓN MÓVIL
-        ======================================== */
+        .login-modal.is-open {
+            display: flex;
+        }
+
+        .login-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(8, 18, 35, 0.72);
+        }
+
+        .login-modal-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 30px 30px;
+            border: 1px solid #d9ad55;
+            border-radius: 18px;
+            background: #ffffff;
+            color: #111827;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-modal-content h2 {
+            margin-bottom: 8px;
+            font-size: 26px;
+            line-height: 1.2;
+        }
+
+        .login-modal-subtitle {
+            margin-bottom: 25px;
+            color: #4b5563;
+            font-size: 15px;
+        }
+
+        .login-modal-content label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .login-modal-content input {
+            width: 100%;
+            margin-bottom: 18px;
+            padding: 12px 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #111827;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .login-modal-content input:focus {
+            border-color: #d9ad55;
+            box-shadow: 0 0 0 2px rgba(217, 173, 85, 0.15);
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #d9ad55;
+            border-radius: 25px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .login-submit:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: translateY(-1px);
+        }
+
+        .login-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            border: 0;
+            background: transparent;
+            color: #111827;
+            font-size: 32px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .login-message {
+            min-height: 20px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
 
         @media (max-width: 600px) {
-
             .header-container {
                 padding: 10px 15px;
                 gap: 10px;
-
                 flex-direction: column;
             }
 
@@ -478,7 +391,7 @@
             .navigation {
                 width: 100%;
                 justify-content: center;
-                gap: 6px;
+                gap: 5px;
             }
 
             .brand img {
@@ -490,17 +403,16 @@
                 font-size: 18px;
             }
 
-            .navigation {
-                gap: 5px;
-            }
-
             .nav-link {
                 min-width: auto;
-
                 padding: 8px 10px;
-
                 font-size: 11px;
                 letter-spacing: 0.3px;
+            }
+
+            .access-link {
+                padding-left: 9px;
+                padding-right: 9px;
             }
 
             .hero {
@@ -514,7 +426,6 @@
             .hero-logo {
                 width: 145px;
                 height: 145px;
-
                 margin-bottom: 22px;
             }
 
@@ -543,15 +454,20 @@
                 max-width: 300px;
             }
 
+            .login-modal {
+                padding: 15px;
+            }
+
+            .login-modal-content {
+                padding: 32px 22px 24px;
+            }
+
+            .login-modal-content h2 {
+                font-size: 23px;
+            }
         }
 
-
-        /* ========================================
-           REDUCIR ANIMACIONES
-        ======================================== */
-
         @media (prefers-reduced-motion: reduce) {
-
             .hero-logo,
             .hero h1,
             .hero p,
@@ -565,45 +481,26 @@
             .hero-fade {
                 transition: none;
             }
-
         }
-
     </style>
-
 </head>
 
-
 <body>
-
-
-    <!-- ========================================
-         ENCABEZADO
-    ======================================== -->
-
     <header>
-
         <div class="header-container">
-
             <a
                 href="index.html"
                 class="brand"
                 aria-label="MG Eventos - Inicio"
             >
-
                 <img
                     src="images/mg-eventos-logo.png"
                     alt="MG Eventos"
                 >
-
-                <span>
-                    MG Eventos
-                </span>
-
+                <span>MG Eventos</span>
             </a>
 
-
             <nav class="navigation">
-
                 <a
                     href="eventos/index.html"
                     class="nav-link"
@@ -625,29 +522,88 @@
                     CONTACTO
                 </a>
 
+                <a
+                    href="#"
+                    class="nav-link access-link"
+                    id="accessButton"
+                    aria-label="Acceso de administración"
+                >
+                    🔐 ACCESO
+                </a>
             </nav>
-
         </div>
-
     </header>
 
+    <div
+        id="loginModal"
+        class="login-modal"
+        aria-hidden="true"
+    >
+        <div
+            class="login-modal-overlay"
+            id="loginModalOverlay"
+        ></div>
 
-    <!-- ========================================
-         CONTENIDO PRINCIPAL
-    ======================================== -->
+        <div
+            class="login-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="loginModalTitle"
+        >
+            <button
+                type="button"
+                class="login-modal-close"
+                id="loginModalClose"
+                aria-label="Cerrar acceso"
+            >
+                ×
+            </button>
+
+            <h2 id="loginModalTitle">Acceso administrativo</h2>
+
+            <p class="login-modal-subtitle">
+                Ingresa tus credenciales para continuar.
+            </p>
+
+            <form id="loginForm">
+                <label for="loginUsuario">Usuario</label>
+
+                <input
+                    type="text"
+                    id="loginUsuario"
+                    name="usuario"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="loginPassword">Contraseña</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+                    INGRESAR
+                </button>
+
+                <p
+                    id="loginMessage"
+                    class="login-message"
+                    aria-live="polite"
+                ></p>
+            </form>
+        </div>
+    </div>
 
     <main>
-
-
-        <!-- ====================================
-             HERO
-        ==================================== -->
-
         <section class="hero">
-
-
-            <!-- Video principal -->
-
             <video
                 class="hero-video"
                 autoplay
@@ -657,67 +613,42 @@
                 poster="images/mg-eventos-logo.png"
                 aria-hidden="true"
             >
-
                 <source
                     src="videos/hero-qr.mp4"
                     type="video/mp4"
                 >
-
             </video>
-
-
-            <!-- Overlay principal -->
 
             <div
                 class="hero-overlay"
                 aria-hidden="true"
             ></div>
 
-
-            <!-- Capa utilizada para las transiciones -->
-
             <div
                 class="hero-fade"
                 aria-hidden="true"
             ></div>
 
-
-            <!-- Contenido -->
-
             <div class="hero-content">
-
                 <img
                     src="images/mg-eventos-logo.png"
                     alt="MG Eventos"
                     class="hero-logo"
                 >
 
-                <h1>
-                    Boletería y acceso para tus eventos
-                </h1>
+                <h1>Boletería y acceso para tus eventos</h1>
 
                 <p>
                     Facilitamos la venta de entradas y el control
                     de acceso para que puedas gestionar tu evento
                     de forma sencilla y segura.
                 </p>
-
             </div>
-
         </section>
 
-
-        <!-- ====================================
-             PRÓXIMOS EVENTOS
-        ==================================== -->
-
         <section class="events-section">
-
             <div class="events-content">
-
-                <h2>
-                    Próximos eventos
-                </h2>
+                <h2>Próximos eventos</h2>
 
                 <p>
                     Conoce nuestros próximos eventos y encuentra
@@ -730,30 +661,56 @@
                 >
                     VER EVENTOS
                 </a>
-
             </div>
-
         </section>
-
     </main>
 
-
-    <!-- ========================================
-         PIE DE PÁGINA
-    ======================================== -->
-
     <footer>
-
         © 2026 MG Eventos
-
     </footer>
 
-
-    <!-- ========================================
-         CONTROL DE LA SECUENCIA DE VIDEOS
-    ======================================== -->
-
     <script>
+        const accessButton = document.getElementById("accessButton");
+        const loginModal = document.getElementById("loginModal");
+        const loginModalClose = document.getElementById("loginModalClose");
+        const loginModalOverlay = document.getElementById("loginModalOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const loginMessage = document.getElementById("loginMessage");
+
+        function openLoginModal() {
+            loginModal.classList.add("is-open");
+            loginModal.setAttribute("aria-hidden", "false");
+            loginMessage.textContent = "";
+            document.getElementById("loginUsuario").focus();
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove("is-open");
+            loginModal.setAttribute("aria-hidden", "true");
+        }
+
+        accessButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            openLoginModal();
+        });
+
+        loginModalClose.addEventListener("click", closeLoginModal);
+        loginModalOverlay.addEventListener("click", closeLoginModal);
+
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                loginModal.classList.contains("is-open")
+            ) {
+                closeLoginModal();
+            }
+        });
+
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            loginMessage.textContent =
+                "El acceso se conectará al sistema de seguridad.";
+        });
 
         const heroVideo = document.querySelector(".hero-video");
         const heroFade = document.querySelector(".hero-fade");
@@ -766,87 +723,39 @@
         let currentVideo = 0;
         let changingVideo = false;
 
-
         function playNextVideo() {
-
             if (!heroVideo || !heroFade || changingVideo) {
                 return;
             }
 
             changingVideo = true;
-
-            /*
-             * Primero oscurecemos el Hero.
-             */
-
             heroFade.style.opacity = "1";
 
-
-            /*
-             * Esperamos a que termine el fundido
-             * antes de cambiar el video.
-             */
-
             setTimeout(() => {
-
                 currentVideo =
                     (currentVideo + 1) % videos.length;
 
-
                 heroVideo.src = videos[currentVideo];
-
                 heroVideo.load();
-
 
                 const playPromise = heroVideo.play();
 
                 if (playPromise !== undefined) {
-
-                    playPromise
-                        .catch(() => {});
-
+                    playPromise.catch(() => {});
                 }
 
-
-                /*
-                 * Dejamos que el nuevo video comience
-                 * y después retiramos progresivamente
-                 * la capa oscura.
-                 */
-
                 setTimeout(() => {
-
                     heroFade.style.opacity = "0";
-
                     changingVideo = false;
-
                 }, 180);
-
             }, 550);
-
         }
 
-
-        /*
-         * Cuando termina cada video,
-         * iniciamos la transición al siguiente.
-         */
-
         heroVideo.addEventListener("ended", () => {
-
             playNextVideo();
-
         });
 
-
-        /*
-         * Si el navegador impide inicialmente
-         * la reproducción automática, intentamos
-         * iniciarla nuevamente.
-         */
-
         window.addEventListener("load", () => {
-
             if (!heroVideo) {
                 return;
             }
@@ -854,17 +763,9 @@
             const playPromise = heroVideo.play();
 
             if (playPromise !== undefined) {
-
-                playPromise
-                    .catch(() => {});
-
+                playPromise.catch(() => {});
             }
-
         });
-
     </script>
-
-
 </body>
-
 </html>
