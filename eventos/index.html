@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Eventos | MG Eventos</title>
+
+    <meta
+        name="description"
+        content="Próximos eventos organizados por MG Eventos."
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="../images/mg-eventos-logo.png"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111827;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           ENCABEZADO
+        ========================= */
+
+        header {
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            text-decoration: none;
+            color: #111827;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .brand span {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .back-link {
+            color: #111827;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .back-link:hover {
+            color: #d09f3d;
+        }
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+        ========================= */
+
+        main {
+            width: 100%;
+        }
+
+        .events-section {
+            width: 100%;
+            max-width: 1100px;
+
+            margin: 0 auto;
+            padding: 50px 20px 70px;
+
+            text-align: center;
+        }
+
+        .events-section h1 {
+            font-size: 32px;
+            line-height: 1.2;
+
+            margin-bottom: 12px;
+
+            color: #111827;
+            letter-spacing: 0.5px;
+        }
+
+        .intro {
+            max-width: 650px;
+
+            margin: 0 auto 40px;
+
+            font-size: 17px;
+            line-height: 1.6;
+
+            color: #4b5563;
+        }
+
+        /* =========================
+           TARJETAS DE EVENTOS
+        ========================= */
+
+        .events-grid {
+            display: grid;
+
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(260px, 1fr)
+            );
+
+            gap: 30px;
+
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+            text-align: left;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 14px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .event-image {
+            display: block;
+
+            width: 100%;
+            aspect-ratio: 3 / 4;
+
+            object-fit: cover;
+
+            background: #f8fafc;
+        }
+
+        .event-content {
+            padding: 22px 20px 24px;
+        }
+
+        .event-content h2 {
+            font-size: 21px;
+
+            margin-bottom: 10px;
+
+            color: #111827;
+        }
+
+        .event-content p {
+            font-size: 15px;
+            line-height: 1.6;
+
+            color: #4b5563;
+
+            margin-bottom: 18px;
+        }
+
+        .event-date {
+            display: block;
+
+            margin-bottom: 15px;
+
+            color: #111827;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .event-button {
+            display: inline-block;
+
+            padding: 11px 22px;
+
+            border: 2px solid #d9ad55;
+            border-radius: 25px;
+
+            background: #111827;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .event-button:hover {
+            background: #1f2937;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           PIE DE PÁGINA
+        ========================= */
+
+        footer {
+            width: 100%;
+
+            padding: 25px 20px;
+
+            text-align: center;
+
+            border-top: 1px solid #eeeeee;
+
+            color: #9ca3af;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           MÓVILES
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .header-container {
+                padding: 10px 15px;
+            }
+
+            .brand img {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand span {
+                font-size: 18px;
+            }
+
+            .back-link {
+                font-size: 13px;
+            }
+
+            .events-section {
+                padding: 35px 15px 50px;
+            }
+
+            .events-section h1 {
+                font-size: 27px;
+            }
+
+            .intro {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .event-content {
+                padding: 20px 18px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
+
+    <header>
+
+        <div class="header-container">
+
+            <a
+                href="../index.html"
+                class="brand"
+                aria-label="MG Eventos"
+            >
+
+                <img
+                    src="../images/mg-eventos-logo.png"
+                    alt="MG Eventos"
+                >
+
+                <span>MG Eventos</span>
+
+            </a>
+
+            <a
+                href="../index.html"
+                class="back-link"
+            >
+                INICIO
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <main>
+
+        <section class="events-section">
+
+            <h1>
+                PRÓXIMOS EVENTOS
+            </h1>
+
+            <p class="intro">
+                Conoce los próximos encuentros y eventos
+                que estamos preparando para ti.
+            </p>
+
+
+            <div class="events-grid">
+
+                <!-- =========================
+                     EVENTO: ADVIENTO
+                ========================== -->
+
+                <article class="event-card">
+
+                    <a
+                        href="adviento/index.html"
+                        aria-label="Ver evento Adviento"
+                    >
+
+                        <img
+                            src="../images/Flyer-Adviento.png"
+                            alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
+                            class="event-image"
+                        >
+
+                    </a>
+
+
+                    <div class="event-content">
+
+                        <h2>
+                            ADVIENTO
+                        </h2>
+
+                        <span class="event-date">
+                            SÁBADO 28 DE NOVIEMBRE DE 2026
+                        </span>
+
+                        <p>
+                            Tiempo de volver a empezar
+                            a través del perdón y la sanación.
+                        </p>
+
+                        <a
+                            href="adviento/index.html"
+                            class="event-button"
+                        >
+                            VER EVENTO
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         PIE DE PÁGINA
+    ========================== -->
+
+    <footer>
+
+        © 2026 MG Eventos
+
+    </footer>
+
+</body>
+</html>
