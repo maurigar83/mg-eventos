@@ -282,21 +282,55 @@
             line-height: 1.6;
         }
 
-        .close-button {
-            display: inline-block;
+        /* =========================
+           BOTONES DEL MODAL
+        ========================= */
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .close-button,
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
             padding: 11px 25px;
 
             border: none;
             border-radius: 25px;
 
-            background: #111827;
             color: #ffffff;
 
             font-size: 14px;
             font-weight: 700;
 
+            text-decoration: none;
+
             cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        .close-button {
+            background: #111827;
+        }
+
+        .whatsapp-button {
+            background: #25D366;
+        }
+
+        .close-button:hover,
+        .whatsapp-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
         }
 
         /* =========================
@@ -345,6 +379,17 @@
             .info-button {
                 width: 100%;
                 max-width: 330px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .close-button,
+            .whatsapp-button {
+                width: 100%;
+                max-width: 220px;
             }
         }
     </style>
@@ -458,17 +503,31 @@
             <p>
                 Estamos preparando toda la información
                 de este encuentro.
+
                 <br><br>
-                Vuelve pronto para conocer todos los detalles
-                de <strong>ADVIENTO</strong>.
+
+                Vuelve pronto para conocer todos los detalles.
             </p>
 
-            <button
-                class="close-button"
-                onclick="closeModal()"
-            >
-                CERRAR
-            </button>
+            <div class="modal-buttons">
+
+                <a
+                    class="whatsapp-button"
+                    href="https://wa.me/573225276778?text=Quiero%20m%C3%A1s%20informaci%C3%B3n"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    WHATSAPP
+                </a>
+
+                <button
+                    class="close-button"
+                    onclick="closeModal()"
+                >
+                    CERRAR
+                </button>
+
+            </div>
 
         </div>
 
