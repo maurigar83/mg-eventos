@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -22,6 +24,7 @@
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -89,17 +92,25 @@
         }
 
         .nav-link {
-            color: #111827;
-            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            min-width: 100px;
 
-            padding: 9px 17px;
+            padding: 9px 18px;
 
             border: 1px solid #d9ad55;
             border-radius: 25px;
+
+            background: #ffffff;
+            color: #111827;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
 
             transition:
                 background 0.2s ease,
@@ -111,6 +122,18 @@
             background: #d9ad55;
             color: #111827;
             transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            background: #d9ad55;
+            color: #111827;
+            cursor: default;
+        }
+
+        .nav-link.active:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: none;
         }
 
         /* =========================
@@ -313,7 +336,6 @@
             margin-bottom: 25px;
 
             color: #4b5563;
-
             font-size: 16px;
             line-height: 1.6;
         }
@@ -326,7 +348,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
             gap: 12px;
+
             margin-top: 10px;
         }
 
@@ -389,12 +413,16 @@
             }
 
             .navigation {
-                gap: 6px;
+                gap: 5px;
             }
 
             .nav-link {
-                font-size: 12px;
-                padding: 8px 12px;
+                min-width: auto;
+
+                padding: 8px 10px;
+
+                font-size: 11px;
+                letter-spacing: 0.3px;
             }
 
             .hero {
@@ -436,8 +464,11 @@
                 width: 100%;
                 max-width: 220px;
             }
+
         }
+
     </style>
+
 </head>
 
 <body>
@@ -453,7 +484,7 @@
             <a
                 href="../../index.html"
                 class="brand"
-                aria-label="MG Eventos"
+                aria-label="MG Eventos - Inicio"
             >
 
                 <img
@@ -461,18 +492,13 @@
                     alt="MG Eventos"
                 >
 
-                <span>MG Eventos</span>
+                <span>
+                    MG Eventos
+                </span>
 
             </a>
 
             <nav class="navigation">
-
-                <a
-                    href="../../index.html"
-                    class="nav-link"
-                >
-                    INICIO
-                </a>
 
                 <a
                     href="../index.html"
@@ -480,6 +506,27 @@
                 >
                     EVENTOS
                 </a>
+
+                <a
+                    href="../../servicios/index.html"
+                    class="nav-link"
+                >
+                    SERVICIOS
+                </a>
+
+                <a
+                    href="../../contacto/index.html"
+                    class="nav-link"
+                >
+                    CONTACTO
+                </a>
+
+                <span
+                    class="nav-link active"
+                    aria-current="page"
+                >
+                    ADVIENTO
+                </span>
 
             </nav>
 
@@ -633,4 +680,5 @@
     </script>
 
 </body>
+
 </html>
