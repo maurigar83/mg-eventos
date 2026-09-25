@@ -73,6 +73,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
+
+            text-decoration: none;
+            color: #111827;
         }
 
         .brand img {
@@ -87,6 +90,11 @@
             font-weight: 700;
             letter-spacing: 0.3px;
         }
+
+
+        /* ========================================
+           NAVEGACIÓN
+        ======================================== */
 
         .navigation {
             display: flex;
@@ -466,13 +474,13 @@
                 width: 100%;
                 justify-content: center;
             }
-            
+
             .navigation {
                 width: 100%;
                 justify-content: center;
                 gap: 6px;
             }
-            
+
             .brand img {
                 width: 42px;
                 height: 42px;
@@ -576,7 +584,11 @@
 
         <div class="header-container">
 
-            <div class="brand">
+            <a
+                href="index.html"
+                class="brand"
+                aria-label="MG Eventos - Inicio"
+            >
 
                 <img
                     src="images/mg-eventos-logo.png"
@@ -587,7 +599,7 @@
                     MG Eventos
                 </span>
 
-            </div>
+            </a>
 
 
             <nav class="navigation">
@@ -600,14 +612,14 @@
                 </a>
 
                 <a
-                    href="#"
+                    href="servicios/index.html"
                     class="nav-link"
                 >
                     SERVICIOS
                 </a>
 
                 <a
-                    href="#"
+                    href="contacto/index.html"
                     class="nav-link"
                 >
                     CONTACTO
