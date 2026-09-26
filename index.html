@@ -315,11 +315,6 @@
             color: #111827;
             transform: translateY(-1px);
         }
-        .login-submit:disabled {
-            opacity: 0.65;
-            cursor: wait;
-            transform: none;
-        }
         .login-modal-close {
             position: absolute;
             top: 10px;
@@ -587,6 +582,7 @@
     <script src="config.js"></script>
     <script>
         const API_URL = CONFIG.SEGURIDAD_API_URL;
+        const PANEL_URL = "https://maurigar83.github.io/mg-eventos/panel.html";
         const accessButton = document.getElementById("accessButton");
         const loginModal = document.getElementById("loginModal");
         const loginModalClose = document.getElementById("loginModalClose");
@@ -601,8 +597,6 @@
             sessionStorage.removeItem("mg_eventos_rol");
             sessionStorage.removeItem("mg_eventos_permisos");
             sessionStorage.removeItem("mg_eventos_expira");
-            sessionStorage.removeItem("mg_eventos_qr_token");
-            sessionStorage.removeItem("mg_eventos_qr_validado");
         }
 
         function openLoginModal(mensaje = "") {
@@ -618,7 +612,7 @@
         }
 
         async function acceder() {
-            const token = sessionStorage.getItem("mg_eventos_token") || "";
+            const token = sessionStorage.getItem("mg_eventos_token");
 
             if (!token) {
                 openLoginModal();
@@ -642,7 +636,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error("HTTP " + response.status);
+                    throw new Error("No fue posible verificar la sesión.");
                 }
 
                 const data = await response.json();
@@ -654,12 +648,12 @@
                 }
 
                 sessionStorage.setItem("mg_eventos_usuario", data.usuario || "");
-                sessionStorage.setItem("mg_eventos_nombre", data.nombre || "");
+                sessionStorage.setItem("mg_eventos_nombre", data.nombre || sessionStorage.getItem("mg_eventos_nombre") || "");
                 sessionStorage.setItem("mg_eventos_rol", data.rol || "");
                 sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(data.permisos || []));
                 sessionStorage.setItem("mg_eventos_expira", data.expira || "");
 
-                window.location.href = "panel.html";
+                window.location.href = PANEL_URL;
             } catch (error) {
                 console.error("Error verificando sesión:", error);
                 openLoginModal("No fue posible verificar la sesión. Intenta nuevamente.");
@@ -669,9 +663,9 @@
             }
         }
 
-        accessButton.addEventListener("click", async (event) => {
+        accessButton.addEventListener("click", (event) => {
             event.preventDefault();
-            await acceder();
+            acceder();
         });
 
         loginModalClose.addEventListener("click", closeLoginModal);
