@@ -474,6 +474,7 @@ function limpiarSesion() {
   sessionStorage.removeItem("mg_eventos_rol");
   sessionStorage.removeItem("mg_eventos_permisos");
   sessionStorage.removeItem("mg_eventos_expira");
+  sessionStorage.removeItem("mg_eventos_nombre_panel");
   sessionStorage.removeItem("mg_eventos_qr_token");
   sessionStorage.removeItem("mg_eventos_qr_validado");
 }
@@ -528,7 +529,9 @@ function aplicarPermisos(permisos) {
 function cargarDatosLocales() {
   const token = obtenerToken();
   const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
-  const nombre = sessionStorage.getItem("mg_eventos_nombre") || usuario;
+  const nombreGuardado = sessionStorage.getItem("mg_eventos_nombre") || "";
+  const nombrePanel = sessionStorage.getItem("mg_eventos_nombre_panel") || "";
+  const nombre = nombreGuardado || nombrePanel || usuario;
   const rol = sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = obtenerPermisosLocales();
   if (!token) {
@@ -541,16 +544,22 @@ function cargarDatosLocales() {
       rol: rol
     });
   }
+  if (nombreGuardado && nombreGuardado !== usuario) {
+    sessionStorage.setItem("mg_eventos_nombre_panel", nombreGuardado);
+  }
   aplicarPermisos(permisos);
   return true;
 }
 function actualizarDatosSesion(resultado) {
-  const nombre = resultado.nombre || sessionStorage.getItem("mg_eventos_nombre") || resultado.usuario || "Usuario";
+  const nombreGuardado = sessionStorage.getItem("mg_eventos_nombre") || "";
+  const nombrePanel = sessionStorage.getItem("mg_eventos_nombre_panel") || "";
+  const nombre = resultado.nombre || nombreGuardado || nombrePanel || resultado.usuario || "Usuario";
   const usuario = resultado.usuario || sessionStorage.getItem("mg_eventos_usuario") || "";
   const rol = resultado.rol || sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : obtenerPermisosLocales();
   sessionStorage.setItem("mg_eventos_usuario", usuario);
   sessionStorage.setItem("mg_eventos_nombre", nombre);
+  sessionStorage.setItem("mg_eventos_nombre_panel", nombre);
   sessionStorage.setItem("mg_eventos_rol", rol);
   sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
   sessionStorage.setItem("mg_eventos_expira", resultado.expira || sessionStorage.getItem("mg_eventos_expira") || "");
@@ -603,6 +612,14 @@ async function abrirModulo(permiso) {
     window.location.replace(PUBLIC_URL);
     return;
   }
+  if (permiso === "LEER_QR") {
+    const nombre = sessionStorage.getItem("mg_eventos_nombre") || sessionStorage.getItem("mg_eventos_nombre_panel") || "";
+    if (nombre) {
+      sessionStorage.setItem("mg_eventos_nombre_panel", nombre);
+    }
+    window.location.href = QR_URL;
+    return;
+  }
   const modulo = document.querySelector('[data-permission="' + permiso + '"]');
   if (modulo) {
     modulo.style.pointerEvents = "none";
@@ -617,10 +634,6 @@ async function abrirModulo(permiso) {
       document.getElementById("modalTitle").textContent = "Acceso restringido";
       document.getElementById("modalMessage").textContent = "El servidor no autorizó el acceso a este módulo.";
       document.getElementById("modal").classList.add("show");
-      return;
-    }
-    if (permiso === "LEER_QR") {
-      window.location.href = QR_URL;
       return;
     }
     const nombreModulo = NOMBRES_MODULOS[permiso] || "Módulo";
