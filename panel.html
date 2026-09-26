@@ -793,6 +793,12 @@
           return;
         }
 
+        if (permiso === "LEER_QR") {
+          window.location.href =
+            "https://maurigar83.github.io/validacion-tickets/?lector=1";
+          return;
+        }
+
         const nombreModulo =
           NOMBRES_MODULOS[permiso] || "Módulo";
 
