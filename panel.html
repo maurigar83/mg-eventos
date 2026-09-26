@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Panel | MG Eventos</title>
-
   <meta name="description" content="Panel de administración de MG Eventos">
 
   <style>
@@ -445,7 +443,6 @@
 
   <header class="header">
     <div class="header-container">
-
       <a class="brand" href="index.html">
         <div class="brand-mark">MG</div>
 
@@ -465,7 +462,6 @@
           Cerrar sesión
         </button>
       </div>
-
     </div>
   </header>
 
@@ -483,7 +479,6 @@
     </section>
 
     <section class="session-card">
-
       <div class="session-left">
         <div class="session-icon">✓</div>
 
@@ -496,17 +491,14 @@
       <div class="session-status">
         ACTIVA
       </div>
-
     </section>
 
     <section>
-
       <h2 class="section-title">Módulos disponibles</h2>
 
       <div class="modules">
 
         <article class="module enabled" data-permission="LEER_QR" onclick="abrirModulo('LEER_QR')">
-
           <div>
             <div class="module-top">
               <div class="module-icon">📷</div>
@@ -523,11 +515,9 @@
           <div class="module-action">
             Ingresar →
           </div>
-
         </article>
 
         <article class="module enabled" data-permission="VENDER" onclick="abrirModulo('VENDER')">
-
           <div>
             <div class="module-top">
               <div class="module-icon">🎟️</div>
@@ -544,11 +534,9 @@
           <div class="module-action">
             Ingresar →
           </div>
-
         </article>
 
         <article class="module enabled" data-permission="REPORTES" onclick="abrirModulo('REPORTES')">
-
           <div>
             <div class="module-top">
               <div class="module-icon">📊</div>
@@ -565,11 +553,9 @@
           <div class="module-action">
             Ingresar →
           </div>
-
         </article>
 
         <article class="module enabled" data-permission="USUARIOS" onclick="abrirModulo('USUARIOS')">
-
           <div>
             <div class="module-top">
               <div class="module-icon">👥</div>
@@ -586,11 +572,9 @@
           <div class="module-action">
             Ingresar →
           </div>
-
         </article>
 
         <article class="module enabled" data-permission="CONFIGURACION" onclick="abrirModulo('CONFIGURACION')">
-
           <div>
             <div class="module-top">
               <div class="module-icon">⚙️</div>
@@ -607,11 +591,9 @@
           <div class="module-action">
             Ingresar →
           </div>
-
         </article>
 
       </div>
-
     </section>
 
     <footer class="footer">
@@ -621,9 +603,7 @@
   </main>
 
   <div class="modal" id="modal">
-
     <div class="modal-box">
-
       <div class="modal-icon">🔐</div>
 
       <h2 id="modalTitle">Módulo</h2>
@@ -635,40 +615,11 @@
       <button class="modal-button" type="button" onclick="cerrarModal()">
         Entendido
       </button>
-
     </div>
-
   </div>
 
   <script>
-    const ROL_DEMO = "SUPERADMIN";
-
-    const USUARIO_DEMO = {
-      nombre: "Administrador",
-      rol: ROL_DEMO
-    };
-
-    const PERMISOS_POR_ROL = {
-      LECTOR: [
-        "LEER_QR"
-      ],
-      VENDEDOR: [
-        "LEER_QR",
-        "VENDER"
-      ],
-      ADMIN: [
-        "LEER_QR",
-        "VENDER",
-        "REPORTES"
-      ],
-      SUPERADMIN: [
-        "LEER_QR",
-        "VENDER",
-        "REPORTES",
-        "USUARIOS",
-        "CONFIGURACION"
-      ]
-    };
+    const API_URL = "https://script.google.com/macros/s/AKfycbwITb6P7XOPAZpuRCmrLFitL2eK3-UBujqRuFMDgjUe1-YDXHNWCPUm4x0kUA8d82ZhLw/exec";
 
     const NOMBRES_MODULOS = {
       LEER_QR: "Leer QR",
@@ -678,15 +629,55 @@
       CONFIGURACION: "Configuración"
     };
 
-    function cargarUsuario() {
-      document.getElementById("userName").textContent = USUARIO_DEMO.nombre;
-      document.getElementById("userRole").textContent = USUARIO_DEMO.rol;
-      document.getElementById("welcomeName").textContent = USUARIO_DEMO.nombre;
+    function obtenerToken() {
+      return sessionStorage.getItem("mg_eventos_token") || "";
     }
 
-    function aplicarPermisos() {
-      const permisos = PERMISOS_POR_ROL[ROL_DEMO] || [];
+    function limpiarSesion() {
+      sessionStorage.removeItem("mg_eventos_token");
+      sessionStorage.removeItem("mg_eventos_usuario");
+      sessionStorage.removeItem("mg_eventos_nombre");
+      sessionStorage.removeItem("mg_eventos_rol");
+      sessionStorage.removeItem("mg_eventos_permisos");
+      sessionStorage.removeItem("mg_eventos_expira");
+    }
 
+    async function llamarAPI(datos) {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(datos)
+      });
+
+      return response.json();
+    }
+
+    function mostrarUsuario(sesion) {
+      document.getElementById("userName").textContent =
+        sesion.nombre || sesion.usuario || "Usuario";
+
+      document.getElementById("userRole").textContent =
+        sesion.rol || "";
+
+      document.getElementById("welcomeName").textContent =
+        sesion.nombre || sesion.usuario || "Usuario";
+    }
+
+    function obtenerPermisosLocales() {
+      try {
+        const permisos = JSON.parse(
+          sessionStorage.getItem("mg_eventos_permisos") || "[]"
+        );
+
+        return Array.isArray(permisos) ? permisos : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function aplicarPermisos(permisos) {
       document.querySelectorAll(".module").forEach((modulo) => {
         const permiso = modulo.dataset.permission;
         const tienePermiso = permisos.includes(permiso);
@@ -707,44 +698,158 @@
       });
     }
 
-    function abrirModulo(permiso) {
-      const permisos = PERMISOS_POR_ROL[ROL_DEMO] || [];
+    async function validarSesion() {
+      const token = obtenerToken();
+
+      if (!token) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        const resultado = await llamarAPI({
+          accion: "sesion",
+          token: token
+        });
+
+        if (!resultado || !resultado.ok) {
+          limpiarSesion();
+          window.location.href = "index.html";
+          return;
+        }
+
+        sessionStorage.setItem(
+          "mg_eventos_usuario",
+          resultado.usuario || ""
+        );
+
+        sessionStorage.setItem(
+          "mg_eventos_rol",
+          resultado.rol || ""
+        );
+
+        sessionStorage.setItem(
+          "mg_eventos_permisos",
+          JSON.stringify(resultado.permisos || [])
+        );
+
+        sessionStorage.setItem(
+          "mg_eventos_expira",
+          resultado.expira || ""
+        );
+
+        mostrarUsuario({
+          usuario: resultado.usuario,
+          nombre:
+            sessionStorage.getItem("mg_eventos_nombre") ||
+            resultado.usuario,
+          rol: resultado.rol
+        });
+
+        aplicarPermisos(resultado.permisos || []);
+      } catch (error) {
+        limpiarSesion();
+        window.location.href = "index.html";
+      }
+    }
+
+    async function abrirModulo(permiso) {
+      const permisos = obtenerPermisosLocales();
 
       if (!permisos.includes(permiso)) {
-        document.getElementById("modalTitle").textContent = "Acceso restringido";
+        document.getElementById("modalTitle").textContent =
+          "Acceso restringido";
+
         document.getElementById("modalMessage").textContent =
           "Tu usuario no tiene permisos para acceder a este módulo.";
+
         document.getElementById("modal").classList.add("show");
         return;
       }
 
-      const nombreModulo = NOMBRES_MODULOS[permiso] || "Módulo";
+      const token = obtenerToken();
 
-      document.getElementById("modalTitle").textContent = nombreModulo;
-      document.getElementById("modalMessage").textContent =
-        "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
-      document.getElementById("modal").classList.add("show");
+      if (!token) {
+        limpiarSesion();
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        const resultado = await llamarAPI({
+          accion: "permiso",
+          token: token,
+          permiso: permiso
+        });
+
+        if (!resultado || !resultado.ok || !resultado.autorizado) {
+          document.getElementById("modalTitle").textContent =
+            "Acceso restringido";
+
+          document.getElementById("modalMessage").textContent =
+            "El servidor no autorizó el acceso a este módulo.";
+
+          document.getElementById("modal").classList.add("show");
+          return;
+        }
+
+        const nombreModulo =
+          NOMBRES_MODULOS[permiso] || "Módulo";
+
+        document.getElementById("modalTitle").textContent =
+          nombreModulo;
+
+        document.getElementById("modalMessage").textContent =
+          "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
+
+        document.getElementById("modal").classList.add("show");
+      } catch (error) {
+        document.getElementById("modalTitle").textContent =
+          "Error de conexión";
+
+        document.getElementById("modalMessage").textContent =
+          "No fue posible validar el permiso con el servidor.";
+
+        document.getElementById("modal").classList.add("show");
+      }
     }
 
     function cerrarModal() {
       document.getElementById("modal").classList.remove("show");
     }
 
-    function cerrarSesion() {
-      document.getElementById("modalTitle").textContent = "Cerrar sesión";
-      document.getElementById("modalMessage").textContent =
-        "La función de cierre de sesión se conectará posteriormente al sistema de seguridad.";
-      document.getElementById("modal").classList.add("show");
+    async function cerrarSesion() {
+      const token = obtenerToken();
+
+      if (!token) {
+        limpiarSesion();
+        window.location.href = "index.html";
+        return;
+      }
+
+      try {
+        await llamarAPI({
+          accion: "logout",
+          token: token
+        });
+      } catch (error) {
+        // La sesión local se elimina aunque la petición al servidor falle.
+      } finally {
+        limpiarSesion();
+        window.location.href = "index.html";
+      }
     }
 
-    document.getElementById("modal").addEventListener("click", function(event) {
-      if (event.target === this) {
-        cerrarModal();
+    document.getElementById("modal").addEventListener(
+      "click",
+      function(event) {
+        if (event.target === this) {
+          cerrarModal();
+        }
       }
-    });
+    );
 
-    cargarUsuario();
-    aplicarPermisos();
+    validarSesion();
   </script>
 
 </body>
