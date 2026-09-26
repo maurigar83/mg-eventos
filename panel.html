@@ -359,8 +359,8 @@
       </a>
       <div class="header-user">
         <div class="user-info">
-          <div class="user-name" id="userName">Administrador</div>
-          <div class="user-role" id="userRole">SUPERADMIN</div>
+          <div class="user-name" id="userName">Cargando...</div>
+          <div class="user-role" id="userRole">Cargando...</div>
         </div>
         <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
       </div>
@@ -369,7 +369,7 @@
   <main class="main">
     <section class="welcome">
       <div class="welcome-label">Panel de gestión</div>
-      <h1>Bienvenido, <span id="welcomeName">Administrador</span></h1>
+      <h1>Bienvenido, <span id="welcomeName">Cargando...</span></h1>
       <p>Desde este panel puedes acceder a las herramientas disponibles según los permisos de tu usuario.</p>
     </section>
     <section class="session-card">
@@ -472,6 +472,8 @@
       sessionStorage.removeItem("mg_eventos_rol");
       sessionStorage.removeItem("mg_eventos_permisos");
       sessionStorage.removeItem("mg_eventos_expira");
+      sessionStorage.removeItem("mg_eventos_qr_token");
+      sessionStorage.removeItem("mg_eventos_qr_validado");
     }
     async function llamarAPI(datos) {
       const response = await fetch(API_URL, {
@@ -515,10 +517,27 @@
         }
       });
     }
+    function cargarDatosLocales() {
+      const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
+      const nombre = sessionStorage.getItem("mg_eventos_nombre") || usuario;
+      const rol = sessionStorage.getItem("mg_eventos_rol") || "";
+      const permisos = obtenerPermisosLocales();
+      if (usuario || nombre || rol) {
+        mostrarUsuario({
+          usuario: usuario,
+          nombre: nombre,
+          rol: rol
+        });
+      }
+      if (permisos.length) {
+        aplicarPermisos(permisos);
+      }
+    }
     async function validarSesion() {
       const token = obtenerToken();
       if (!token) {
-        window.location.href = PUBLIC_URL;
+        limpiarSesion();
+        window.location.replace(PUBLIC_URL);
         return;
       }
       try {
@@ -528,22 +547,25 @@
         });
         if (!resultado || !resultado.ok) {
           limpiarSesion();
-          window.location.href = PUBLIC_URL;
+          window.location.replace(PUBLIC_URL);
           return;
         }
+        const nombre = resultado.nombre || sessionStorage.getItem("mg_eventos_nombre") || resultado.usuario || "Usuario";
+        const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : [];
         sessionStorage.setItem("mg_eventos_usuario", resultado.usuario || "");
+        sessionStorage.setItem("mg_eventos_nombre", nombre);
         sessionStorage.setItem("mg_eventos_rol", resultado.rol || "");
-        sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(resultado.permisos || []));
+        sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
         sessionStorage.setItem("mg_eventos_expira", resultado.expira || "");
         mostrarUsuario({
-          usuario: resultado.usuario,
-          nombre: sessionStorage.getItem("mg_eventos_nombre") || resultado.usuario,
-          rol: resultado.rol
+          usuario: resultado.usuario || "",
+          nombre: nombre,
+          rol: resultado.rol || ""
         });
-        aplicarPermisos(resultado.permisos || []);
+        aplicarPermisos(permisos);
       } catch (error) {
         limpiarSesion();
-        window.location.href = PUBLIC_URL;
+        window.location.replace(PUBLIC_URL);
       }
     }
     async function abrirModulo(permiso) {
@@ -612,6 +634,7 @@
         cerrarModal();
       }
     });
+    cargarDatosLocales();
     validarSesion();
   </script>
 </body>
