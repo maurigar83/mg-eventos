@@ -1,789 +1,878 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel | MG Eventos</title>
-  <meta name="description" content="Panel de administración de MG Eventos">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Eventos | Boletería y acceso para tus eventos</title>
+    <meta name="description" content="MG Eventos facilita la venta de boletería y el control de acceso para eventos.">
+    <link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f6f8;
-      color: #111827;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .header {
-      width: 100%;
-      background: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .header-container {
-      width: 100%;
-      max-width: 1180px;
-      min-height: 78px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111827;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: #111827;
-    }
+        header {
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+        }
 
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: #111827;
-      color: #d9ad55;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
+        .header-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #111827;
+        }
 
-    .brand-name {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
 
-    .brand-subtitle {
-      margin-top: 4px;
-      font-size: 11px;
-      color: #6b7280;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-    }
+        .brand span {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
 
-    .header-user {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+        .navigation {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .user-info {
-      text-align: right;
-    }
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 100px;
+            padding: 9px 18px;
+            border: 1px solid #d9ad55;
+            border-radius: 25px;
+            background: #ffffff;
+            color: #111827;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
 
-    .user-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: #111827;
-    }
+        .nav-link:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: translateY(-1px);
+        }
 
-    .user-role {
-      margin-top: 4px;
-      font-size: 11px;
-      color: #9a7a32;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-    }
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 560px;
+            overflow: hidden;
+            background: #111827;
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .logout-button {
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #374151;
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
 
-    .logout-button:hover {
-      border-color: #d9ad55;
-      color: #111827;
-      background: #fffaf0;
-    }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 18, 35, 0.72);
+            z-index: 1;
+        }
 
-    .main {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 42px 24px 60px;
-    }
+        .hero-fade {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #081223;
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.55s ease;
+        }
 
-    .welcome {
-      margin-bottom: 32px;
-    }
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 85px 20px 90px;
+        }
 
-    .welcome-label {
-      margin-bottom: 8px;
-      color: #9a7a32;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
+        .hero-logo {
+            width: 175px;
+            height: 175px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: heroFadeUp 1.2s ease-out 0.1s both;
+        }
 
-    .welcome h1 {
-      font-size: 32px;
-      line-height: 1.2;
-      font-weight: 700;
-      color: #111827;
-    }
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: heroFadeUp 1.2s ease-out 0.3s both;
+        }
 
-    .welcome p {
-      margin-top: 10px;
-      max-width: 680px;
-      color: #6b7280;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #e5e7eb;
+            opacity: 0;
+            animation: heroFadeUp 1.2s ease-out 0.5s both;
+        }
 
-    .session-card {
-      margin-bottom: 30px;
-      padding: 18px 20px;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+        .events-section {
+            width: 100%;
+            padding: 65px 20px 75px;
+            text-align: center;
+            background: #ffffff;
+            opacity: 0;
+            animation: heroFadeUp 1.2s ease-out 0.8s both;
+        }
 
-    .session-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        .events-content {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
 
-    .session-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #ecfdf5;
-      color: #059669;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-    }
+        .events-section h2 {
+            font-size: 30px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: #111827;
+        }
 
-    .session-text strong {
-      display: block;
-      font-size: 13px;
-      color: #111827;
-    }
+        .events-section p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            font-size: 17px;
+            line-height: 1.6;
+            color: #4b5563;
+        }
 
-    .session-text span {
-      display: block;
-      margin-top: 3px;
-      color: #6b7280;
-      font-size: 12px;
-    }
+        .events-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 28px;
+            border: 2px solid #d9ad55;
+            border-radius: 30px;
+            background: #111827;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            overflow: hidden;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    .session-status {
-      color: #059669;
-      font-size: 12px;
-      font-weight: 700;
-    }
+        .events-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.6s ease;
+        }
 
-    .section-title {
-      margin-bottom: 16px;
-      font-size: 18px;
-      font-weight: 700;
-      color: #111827;
-    }
+        .events-button:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: scale(1.05);
+            box-shadow: 0 8px 22px rgba(217, 173, 85, 0.25);
+        }
 
-    .modules {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
+        .events-button:hover::before {
+            left: 130%;
+        }
 
-    .module {
-      min-height: 190px;
-      padding: 26px;
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
+        footer {
+            width: 100%;
+            padding: 25px 20px;
+            text-align: center;
+            border-top: 1px solid #eeeeee;
+            color: #9ca3af;
+            font-size: 13px;
+        }
 
-    .module.enabled {
-      cursor: pointer;
-    }
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
 
-    .module.enabled:hover {
-      transform: translateY(-3px);
-      border-color: #d9ad55;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .module.disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
+        .login-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
 
-    .module-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 15px;
-    }
+        .login-modal.is-open {
+            display: flex;
+        }
 
-    .module-icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 12px;
-      background: #fff8e8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 27px;
-    }
+        .login-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(8, 18, 35, 0.72);
+        }
 
-    .module-lock {
-      font-size: 15px;
-      color: #9ca3af;
-    }
+        .login-modal-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 30px 30px;
+            border: 1px solid #d9ad55;
+            border-radius: 18px;
+            background: #ffffff;
+            color: #111827;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
 
-    .module h3 {
-      margin-top: 18px;
-      font-size: 17px;
-      font-weight: 700;
-      color: #111827;
-    }
+        .login-modal-content h2 {
+            margin-bottom: 8px;
+            font-size: 26px;
+            line-height: 1.2;
+        }
 
-    .module p {
-      margin-top: 7px;
-      color: #6b7280;
-      font-size: 13px;
-      line-height: 1.5;
-    }
+        .login-modal-subtitle {
+            margin-bottom: 25px;
+            color: #4b5563;
+            font-size: 15px;
+        }
 
-    .module-action {
-      margin-top: 20px;
-      color: #9a7a32;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+        .login-modal-content label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: 700;
+        }
 
-    .footer {
-      margin-top: 50px;
-      padding-top: 22px;
-      border-top: 1px solid #e5e7eb;
-      text-align: center;
-      color: #9ca3af;
-      font-size: 11px;
-    }
+        .login-modal-content input {
+            width: 100%;
+            margin-bottom: 18px;
+            padding: 12px 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #111827;
+            font-size: 15px;
+            outline: none;
+        }
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(17, 24, 39, 0.55);
-    }
+        .login-modal-content input:focus {
+            border-color: #d9ad55;
+            box-shadow: 0 0 0 2px rgba(217, 173, 85, 0.15);
+        }
 
-    .modal.show {
-      display: flex;
-    }
+        .login-submit {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #d9ad55;
+            border-radius: 25px;
+            background: #111827;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
 
-    .modal-box {
-      width: 100%;
-      max-width: 420px;
-      padding: 30px;
-      background: #ffffff;
-      border-radius: 14px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-      text-align: center;
-    }
+        .login-submit:hover {
+            background: #d9ad55;
+            color: #111827;
+            transform: translateY(-1px);
+        }
 
-    .modal-icon {
-      font-size: 35px;
-      margin-bottom: 14px;
-    }
+        .login-submit:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+        }
 
-    .modal-box h2 {
-      font-size: 21px;
-      color: #111827;
-    }
+        .login-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            border: 0;
+            background: transparent;
+            color: #111827;
+            font-size: 32px;
+            line-height: 1;
+            cursor: pointer;
+        }
 
-    .modal-box p {
-      margin-top: 10px;
-      color: #6b7280;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+        .login-message {
+            min-height: 20px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
 
-    .modal-button {
-      margin-top: 22px;
-      width: 100%;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      background: #111827;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+        @media (max-width: 600px) {
+            .header-container {
+                padding: 10px 15px;
+                gap: 10px;
+                flex-direction: column;
+            }
 
-    @media (max-width: 900px) {
-      .modules {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+            .brand {
+                width: 100%;
+                justify-content: center;
+            }
 
-    @media (max-width: 650px) {
-      .header-container {
-        min-height: 70px;
-        padding: 0 16px;
-      }
+            .navigation {
+                width: 100%;
+                justify-content: center;
+                gap: 5px;
+            }
 
-      .brand-mark {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-      }
+            .brand img {
+                width: 42px;
+                height: 42px;
+            }
 
-      .brand-name {
-        font-size: 17px;
-      }
+            .brand span {
+                font-size: 18px;
+            }
 
-      .brand-subtitle {
-        font-size: 9px;
-      }
+            .nav-link {
+                min-width: auto;
+                padding: 8px 10px;
+                font-size: 11px;
+                letter-spacing: 0.3px;
+            }
 
-      .header-user {
-        gap: 8px;
-      }
+            .access-link {
+                padding-left: 9px;
+                padding-right: 9px;
+            }
 
-      .user-info {
-        display: none;
-      }
+            .hero {
+                min-height: 520px;
+            }
 
-      .logout-button {
-        padding: 9px 12px;
-        font-size: 12px;
-      }
+            .hero-content {
+                padding: 65px 20px 70px;
+            }
 
-      .main {
-        padding: 30px 16px 45px;
-      }
+            .hero-logo {
+                width: 145px;
+                height: 145px;
+                margin-bottom: 22px;
+            }
 
-      .welcome h1 {
-        font-size: 27px;
-      }
+            .hero h1 {
+                font-size: 36px;
+            }
 
-      .welcome p {
-        font-size: 14px;
-      }
+            .hero p {
+                font-size: 17px;
+            }
 
-      .session-card {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+            .events-section {
+                padding: 50px 20px 60px;
+            }
 
-      .modules {
-        grid-template-columns: 1fr;
-      }
+            .events-section h2 {
+                font-size: 27px;
+            }
 
-      .module {
-        min-height: 175px;
-      }
-    }
+            .events-section p {
+                font-size: 16px;
+            }
 
-    @media (max-width: 400px) {
-      .brand-subtitle {
-        display: none;
-      }
+            .events-button {
+                width: 100%;
+                max-width: 300px;
+            }
 
-      .welcome h1 {
-        font-size: 24px;
-      }
+            .login-modal {
+                padding: 15px;
+            }
 
-      .module {
-        padding: 22px;
-      }
-    }
-  </style>
+            .login-modal-content {
+                padding: 32px 22px 24px;
+            }
+
+            .login-modal-content h2 {
+                font-size: 23px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-logo,
+            .hero h1,
+            .hero p,
+            .events-section {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .events-button,
+            .hero-fade {
+                transition: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <header class="header">
-    <div class="header-container">
-      <a class="brand" href="index.html">
-        <div class="brand-mark">MG</div>
-        <div class="brand-text">
-          <span class="brand-name">MG Eventos</span>
-          <span class="brand-subtitle">Gestión de eventos</span>
+    <header>
+        <div class="header-container">
+            <a
+                href="index.html"
+                class="brand"
+                aria-label="MG Eventos - Inicio"
+            >
+                <img
+                    src="images/mg-eventos-logo.png"
+                    alt="MG Eventos"
+                >
+                <span>MG Eventos</span>
+            </a>
+
+            <nav class="navigation">
+                <a
+                    href="eventos/index.html"
+                    class="nav-link"
+                >
+                    EVENTOS
+                </a>
+
+                <a
+                    href="servicios/index.html"
+                    class="nav-link"
+                >
+                    SERVICIOS
+                </a>
+
+                <a
+                    href="contacto/index.html"
+                    class="nav-link"
+                >
+                    CONTACTO
+                </a>
+
+                <a
+                    href="#"
+                    class="nav-link access-link"
+                    id="accessButton"
+                    aria-label="Acceso de administración"
+                >
+                    🔐 ACCESO
+                </a>
+            </nav>
         </div>
-      </a>
-      <div class="header-user">
-        <div class="user-info">
-          <div class="user-name" id="userName">Administrador</div>
-          <div class="user-role" id="userRole">SUPERADMIN</div>
+    </header>
+
+    <div
+        id="loginModal"
+        class="login-modal"
+        aria-hidden="true"
+    >
+        <div
+            class="login-modal-overlay"
+            id="loginModalOverlay"
+        ></div>
+
+        <div
+            class="login-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="loginModalTitle"
+        >
+            <button
+                type="button"
+                class="login-modal-close"
+                id="loginModalClose"
+                aria-label="Cerrar acceso"
+            >
+                ×
+            </button>
+
+            <h2 id="loginModalTitle">Acceso administrativo</h2>
+
+            <p class="login-modal-subtitle">
+                Ingresa tus credenciales para continuar.
+            </p>
+
+            <form id="loginForm">
+                <label for="loginUsuario">Usuario</label>
+
+                <input
+                    type="text"
+                    id="loginUsuario"
+                    name="usuario"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="loginPassword">Contraseña</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+                    INGRESAR
+                </button>
+
+                <p
+                    id="loginMessage"
+                    class="login-message"
+                    aria-live="polite"
+                ></p>
+            </form>
         </div>
-        <button class="logout-button" type="button" onclick="cerrarSesion()">
-          Cerrar sesión
-        </button>
-      </div>
     </div>
-  </header>
-  <main class="main">
-    <section class="welcome">
-      <div class="welcome-label">Panel de gestión</div>
-      <h1>Bienvenido, <span id="welcomeName">Administrador</span></h1>
-      <p>
-        Desde este panel puedes acceder a las herramientas disponibles
-        según los permisos de tu usuario.
-      </p>
-    </section>
-    <section class="session-card">
-      <div class="session-left">
-        <div class="session-icon">✓</div>
-        <div class="session-text">
-          <strong>Sesión activa</strong>
-          <span>Tu acceso está actualmente habilitado.</span>
-        </div>
-      </div>
-      <div class="session-status">ACTIVA</div>
-    </section>
-    <section>
-      <h2 class="section-title">Módulos disponibles</h2>
-      <div class="modules">
-        <article class="module enabled" data-permission="LEER_QR" onclick="abrirModulo('LEER_QR')">
-          <div>
-            <div class="module-top">
-              <div class="module-icon">📷</div>
-              <div class="module-lock"></div>
+
+    <main>
+        <section class="hero">
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                playsinline
+                preload="auto"
+                poster="images/mg-eventos-logo.png"
+                aria-hidden="true"
+            >
+                <source
+                    src="videos/hero-qr.mp4"
+                    type="video/mp4"
+                >
+            </video>
+
+            <div
+                class="hero-overlay"
+                aria-hidden="true"
+            ></div>
+
+            <div
+                class="hero-fade"
+                aria-hidden="true"
+            ></div>
+
+            <div class="hero-content">
+                <img
+                    src="images/mg-eventos-logo.png"
+                    alt="MG Eventos"
+                    class="hero-logo"
+                >
+
+                <h1>Boletería y acceso para tus eventos</h1>
+
+                <p>
+                    Facilitamos la venta de entradas y el control
+                    de acceso para que puedas gestionar tu evento
+                    de forma sencilla y segura.
+                </p>
             </div>
-            <h3>Leer QR</h3>
-            <p>
-              Validación y control de ingreso de asistentes mediante código QR.
-            </p>
-          </div>
-          <div class="module-action">Ingresar →</div>
-        </article>
-        <article class="module enabled" data-permission="VENDER" onclick="abrirModulo('VENDER')">
-          <div>
-            <div class="module-top">
-              <div class="module-icon">🎟️</div>
-              <div class="module-lock"></div>
+        </section>
+
+        <section class="events-section">
+            <div class="events-content">
+                <h2>Próximos eventos</h2>
+
+                <p>
+                    Conoce nuestros próximos eventos y encuentra
+                    toda la información que necesitas para participar.
+                </p>
+
+                <a
+                    href="eventos/index.html"
+                    class="events-button"
+                >
+                    VER EVENTOS
+                </a>
             </div>
-            <h3>Vender</h3>
-            <p>
-              Gestión de ventas, registro de compradores y emisión de boletas.
-            </p>
-          </div>
-          <div class="module-action">Ingresar →</div>
-        </article>
-        <article class="module enabled" data-permission="REPORTES" onclick="abrirModulo('REPORTES')">
-          <div>
-            <div class="module-top">
-              <div class="module-icon">📊</div>
-              <div class="module-lock"></div>
-            </div>
-            <h3>Reportes</h3>
-            <p>
-              Consulta de información, ventas y estadísticas del evento.
-            </p>
-          </div>
-          <div class="module-action">Ingresar →</div>
-        </article>
-        <article class="module enabled" data-permission="USUARIOS" onclick="abrirModulo('USUARIOS')">
-          <div>
-            <div class="module-top">
-              <div class="module-icon">👥</div>
-              <div class="module-lock"></div>
-            </div>
-            <h3>Usuarios</h3>
-            <p>
-              Administración de usuarios, roles y permisos del sistema.
-            </p>
-          </div>
-          <div class="module-action">Ingresar →</div>
-        </article>
-        <article class="module enabled" data-permission="CONFIGURACION" onclick="abrirModulo('CONFIGURACION')">
-          <div>
-            <div class="module-top">
-              <div class="module-icon">⚙️</div>
-              <div class="module-lock"></div>
-            </div>
-            <h3>Configuración</h3>
-            <p>
-              Configuración general y parámetros administrativos de la plataforma.
-            </p>
-          </div>
-          <div class="module-action">Ingresar →</div>
-        </article>
-      </div>
-    </section>
-    <footer class="footer">
-      MG Eventos · Plataforma de gestión de eventos
+        </section>
+    </main>
+
+    <footer>
+        © 2026 MG Eventos
     </footer>
-  </main>
-  <div class="modal" id="modal">
-    <div class="modal-box">
-      <div class="modal-icon">🔐</div>
-      <h2 id="modalTitle">Módulo</h2>
-      <p id="modalMessage">
-        Esta función será conectada posteriormente al sistema.
-      </p>
-      <button class="modal-button" type="button" onclick="cerrarModal()">
-        Entendido
-      </button>
-    </div>
-  </div>
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwITb6P7XOPAZpuRCmrLFitL2eK3-UBujqRuFMDgjUe1-YDXHNWCPUm4x0kUA8d82ZhLw/exec";
-    const URL_LEER_QR = "https://maurigar83.github.io/validacion-tickets/?lector=1";
-    const NOMBRES_MODULOS = {
-      LEER_QR: "Leer QR",
-      VENDER: "Vender",
-      REPORTES: "Reportes",
-      USUARIOS: "Usuarios",
-      CONFIGURACION: "Configuración"
-    };
 
-    function obtenerToken() {
-      return sessionStorage.getItem("mg_eventos_token") || "";
-    }
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbwITb6P7XOPAZpuRCmrLFitL2eK3-UBujqRuFMDgjUe1-YDXHNWCPUm4x0kUA8d82ZhLw/exec";
+        const accessButton = document.getElementById("accessButton");
+        const loginModal = document.getElementById("loginModal");
+        const loginModalClose = document.getElementById("loginModalClose");
+        const loginModalOverlay = document.getElementById("loginModalOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const loginMessage = document.getElementById("loginMessage");
 
-    function limpiarSesion() {
-      sessionStorage.removeItem("mg_eventos_token");
-      sessionStorage.removeItem("mg_eventos_usuario");
-      sessionStorage.removeItem("mg_eventos_nombre");
-      sessionStorage.removeItem("mg_eventos_rol");
-      sessionStorage.removeItem("mg_eventos_permisos");
-      sessionStorage.removeItem("mg_eventos_expira");
-    }
-
-    async function llamarAPI(datos) {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(datos)
-      });
-      return response.json();
-    }
-
-    function mostrarUsuario(sesion) {
-      document.getElementById("userName").textContent =
-        sesion.nombre || sesion.usuario || "Usuario";
-      document.getElementById("userRole").textContent =
-        sesion.rol || "";
-      document.getElementById("welcomeName").textContent =
-        sesion.nombre || sesion.usuario || "Usuario";
-    }
-
-    function obtenerPermisosLocales() {
-      try {
-        const permisos = JSON.parse(
-          sessionStorage.getItem("mg_eventos_permisos") || "[]"
-        );
-        return Array.isArray(permisos) ? permisos : [];
-      } catch (error) {
-        return [];
-      }
-    }
-
-    function aplicarPermisos(permisos) {
-      document.querySelectorAll(".module").forEach((modulo) => {
-        const permiso = modulo.dataset.permission;
-        const tienePermiso = permisos.includes(permiso);
-        const lock = modulo.querySelector(".module-lock");
-        const action = modulo.querySelector(".module-action");
-
-        if (tienePermiso) {
-          modulo.classList.add("enabled");
-          modulo.classList.remove("disabled");
-          lock.textContent = "";
-          action.textContent = "Ingresar →";
-        } else {
-          modulo.classList.remove("enabled");
-          modulo.classList.add("disabled");
-          lock.textContent = "🔒";
-          action.textContent = "Sin permiso";
+        function openLoginModal() {
+            loginModal.classList.add("is-open");
+            loginModal.setAttribute("aria-hidden", "false");
+            loginMessage.textContent = "";
+            document.getElementById("loginUsuario").focus();
         }
-      });
-    }
 
-    async function validarSesion() {
-      const token = obtenerToken();
+        function closeLoginModal() {
+            loginModal.classList.remove("is-open");
+            loginModal.setAttribute("aria-hidden", "true");
+        }
 
-      if (!token) {
-        window.location.href = "index.html";
-        return;
-      }
-
-      try {
-        const resultado = await llamarAPI({
-          accion: "sesion",
-          token: token
+        accessButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            openLoginModal();
         });
 
-        if (!resultado || !resultado.ok) {
-          limpiarSesion();
-          window.location.href = "index.html";
-          return;
-        }
+        loginModalClose.addEventListener("click", closeLoginModal);
+        loginModalOverlay.addEventListener("click", closeLoginModal);
 
-        sessionStorage.setItem(
-          "mg_eventos_usuario",
-          resultado.usuario || ""
-        );
-        sessionStorage.setItem(
-          "mg_eventos_rol",
-          resultado.rol || ""
-        );
-        sessionStorage.setItem(
-          "mg_eventos_permisos",
-          JSON.stringify(resultado.permisos || [])
-        );
-        sessionStorage.setItem(
-          "mg_eventos_expira",
-          resultado.expira || ""
-        );
-
-        mostrarUsuario({
-          usuario: resultado.usuario,
-          nombre:
-            sessionStorage.getItem("mg_eventos_nombre") ||
-            resultado.usuario,
-          rol: resultado.rol
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                loginModal.classList.contains("is-open")
+            ) {
+                closeLoginModal();
+            }
         });
 
-        aplicarPermisos(resultado.permisos || []);
-      } catch (error) {
-        limpiarSesion();
-        window.location.href = "index.html";
-      }
-    }
+        async function realizarLogin(usuario, password) {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    accion: "login",
+                    usuario: usuario,
+                    password: password
+                })
+            });
 
-    async function abrirModulo(permiso) {
-      const permisos = obtenerPermisosLocales();
+            const data = await response.json();
 
-      if (!permisos.includes(permiso)) {
-        document.getElementById("modalTitle").textContent =
-          "Acceso restringido";
-        document.getElementById("modalMessage").textContent =
-          "Tu usuario no tiene permisos para acceder a este módulo.";
-        document.getElementById("modal").classList.add("show");
-        return;
-      }
+            if (!data.ok) {
+                return {
+                    tipo: "credenciales",
+                    data: data
+                };
+            }
 
-      const token = obtenerToken();
+            return {
+                tipo: "exito",
+                data: data
+            };
+        }
 
-      if (!token) {
-        limpiarSesion();
-        window.location.href = "index.html";
-        return;
-      }
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-      try {
-        const resultado = await llamarAPI({
-          accion: "permiso",
-          token: token,
-          permiso: permiso
+            const usuario = document.getElementById("loginUsuario").value.trim();
+            const password = document.getElementById("loginPassword").value;
+            const submitButton = loginForm.querySelector(".login-submit");
+
+            if (!usuario || !password) {
+                loginMessage.textContent = "Ingresa usuario y contraseña.";
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = "VERIFICANDO...";
+            loginMessage.textContent = "";
+
+            let resultado = null;
+
+            try {
+                resultado = await realizarLogin(usuario, password);
+            } catch (error) {
+                loginMessage.textContent = "Conectando nuevamente...";
+
+                await new Promise((resolve) => {
+                    setTimeout(resolve, 1000);
+                });
+
+                try {
+                    resultado = await realizarLogin(usuario, password);
+                } catch (errorSegundoIntento) {
+                    loginMessage.textContent =
+                        "No fue posible conectar con el sistema de seguridad. Intenta nuevamente.";
+                    return;
+                }
+            }
+
+            if (resultado.tipo === "credenciales") {
+                loginMessage.textContent =
+                    resultado.data.mensaje ||
+                    "Usuario o contraseña incorrectos.";
+                return;
+            }
+
+            const data = resultado.data;
+
+            sessionStorage.setItem(
+                "mg_eventos_token",
+                data.token
+            );
+
+            sessionStorage.setItem(
+                "mg_eventos_usuario",
+                data.usuario
+            );
+
+            sessionStorage.setItem(
+                "mg_eventos_nombre",
+                data.nombre
+            );
+
+            sessionStorage.setItem(
+                "mg_eventos_rol",
+                data.rol
+            );
+
+            sessionStorage.setItem(
+                "mg_eventos_permisos",
+                JSON.stringify(data.permisos || [])
+            );
+
+            sessionStorage.setItem(
+                "mg_eventos_expira",
+                data.expira
+            );
+
+            window.location.href = "panel.html";
         });
 
-        if (!resultado || !resultado.ok || !resultado.autorizado) {
-          document.getElementById("modalTitle").textContent =
-            "Acceso restringido";
-          document.getElementById("modalMessage").textContent =
-            "El servidor no autorizó el acceso a este módulo.";
-          document.getElementById("modal").classList.add("show");
-          return;
+        const heroVideo = document.querySelector(".hero-video");
+        const heroFade = document.querySelector(".hero-fade");
+
+        const videos = [
+            "videos/hero-qr.mp4",
+            "videos/hero-evento.mp4"
+        ];
+
+        let currentVideo = 0;
+        let changingVideo = false;
+
+        function playNextVideo() {
+            if (!heroVideo || !heroFade || changingVideo) {
+                return;
+            }
+
+            changingVideo = true;
+            heroFade.style.opacity = "1";
+
+            setTimeout(() => {
+                currentVideo =
+                    (currentVideo + 1) % videos.length;
+
+                heroVideo.src = videos[currentVideo];
+                heroVideo.load();
+
+                const playPromise = heroVideo.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {});
+                }
+
+                setTimeout(() => {
+                    heroFade.style.opacity = "0";
+                    changingVideo = false;
+                }, 180);
+            }, 550);
         }
 
-        if (permiso === "LEER_QR") {
-          window.location.href = URL_LEER_QR;
-          return;
-        }
-
-        const nombreModulo =
-          NOMBRES_MODULOS[permiso] || "Módulo";
-
-        document.getElementById("modalTitle").textContent =
-          nombreModulo;
-        document.getElementById("modalMessage").textContent =
-          "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
-        document.getElementById("modal").classList.add("show");
-      } catch (error) {
-        document.getElementById("modalTitle").textContent =
-          "Error de conexión";
-        document.getElementById("modalMessage").textContent =
-          "No fue posible validar el permiso con el servidor.";
-        document.getElementById("modal").classList.add("show");
-      }
-    }
-
-    function cerrarModal() {
-      document.getElementById("modal").classList.remove("show");
-    }
-
-    async function cerrarSesion() {
-      const token = obtenerToken();
-
-      if (!token) {
-        limpiarSesion();
-        window.location.href = "index.html";
-        return;
-      }
-
-      try {
-        await llamarAPI({
-          accion: "logout",
-          token: token
+        heroVideo.addEventListener("ended", () => {
+            playNextVideo();
         });
-      } catch (error) {
-      } finally {
-        limpiarSesion();
-        window.location.href = "index.html";
-      }
-    }
 
-    document.getElementById("modal").addEventListener(
-      "click",
-      function(event) {
-        if (event.target === this) {
-          cerrarModal();
-        }
-      }
-    );
+        window.addEventListener("load", () => {
+            if (!heroVideo) {
+                return;
+            }
 
-    validarSesion();
-  </script>
+            const playPromise = heroVideo.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
+            }
+        });
+    </script>
 </body>
 </html>
