@@ -467,14 +467,25 @@ let validacionEnCurso = false;
 function obtenerToken() {
   return sessionStorage.getItem("mg_eventos_token") || "";
 }
+function obtenerNombreReal() {
+  return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
+}
+function guardarNombreReal(nombre) {
+  const nombreLimpio = String(nombre || "").trim();
+  if (!nombreLimpio) {
+    return;
+  }
+  sessionStorage.setItem("mg_eventos_nombre", nombreLimpio);
+  sessionStorage.setItem("mg_eventos_nombre_real", nombreLimpio);
+}
 function limpiarSesion() {
   sessionStorage.removeItem("mg_eventos_token");
   sessionStorage.removeItem("mg_eventos_usuario");
   sessionStorage.removeItem("mg_eventos_nombre");
+  sessionStorage.removeItem("mg_eventos_nombre_real");
   sessionStorage.removeItem("mg_eventos_rol");
   sessionStorage.removeItem("mg_eventos_permisos");
   sessionStorage.removeItem("mg_eventos_expira");
-  sessionStorage.removeItem("mg_eventos_nombre_panel");
   sessionStorage.removeItem("mg_eventos_qr_token");
   sessionStorage.removeItem("mg_eventos_qr_validado");
 }
@@ -529,14 +540,13 @@ function aplicarPermisos(permisos) {
 function cargarDatosLocales() {
   const token = obtenerToken();
   const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
-  const nombreGuardado = sessionStorage.getItem("mg_eventos_nombre") || "";
-  const nombrePanel = sessionStorage.getItem("mg_eventos_nombre_panel") || "";
-  const nombre = nombreGuardado || nombrePanel || usuario;
+  const nombreGuardado = obtenerNombreReal();
   const rol = sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = obtenerPermisosLocales();
   if (!token) {
     return false;
   }
+  const nombre = nombreGuardado || usuario;
   if (nombre || usuario || rol) {
     mostrarUsuario({
       usuario: usuario,
@@ -544,25 +554,32 @@ function cargarDatosLocales() {
       rol: rol
     });
   }
-  if (nombreGuardado && nombreGuardado !== usuario) {
-    sessionStorage.setItem("mg_eventos_nombre_panel", nombreGuardado);
+  if (nombreGuardado) {
+    guardarNombreReal(nombreGuardado);
   }
   aplicarPermisos(permisos);
   return true;
 }
 function actualizarDatosSesion(resultado) {
-  const nombreGuardado = sessionStorage.getItem("mg_eventos_nombre") || "";
-  const nombrePanel = sessionStorage.getItem("mg_eventos_nombre_panel") || "";
-  const nombre = resultado.nombre || nombreGuardado || nombrePanel || resultado.usuario || "Usuario";
+  const nombreServidor = String(resultado.nombre || "").trim();
+  const nombreGuardado = obtenerNombreReal();
   const usuario = resultado.usuario || sessionStorage.getItem("mg_eventos_usuario") || "";
   const rol = resultado.rol || sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : obtenerPermisosLocales();
+  const nombre = nombreServidor || nombreGuardado || sessionStorage.getItem("mg_eventos_nombre") || usuario || "Usuario";
   sessionStorage.setItem("mg_eventos_usuario", usuario);
-  sessionStorage.setItem("mg_eventos_nombre", nombre);
-  sessionStorage.setItem("mg_eventos_nombre_panel", nombre);
+  if (nombreServidor) {
+    guardarNombreReal(nombreServidor);
+  } else if (nombreGuardado) {
+    guardarNombreReal(nombreGuardado);
+  } else if (nombre) {
+    guardarNombreReal(nombre);
+  }
   sessionStorage.setItem("mg_eventos_rol", rol);
   sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
-  sessionStorage.setItem("mg_eventos_expira", resultado.expira || sessionStorage.getItem("mg_eventos_expira") || "");
+  if (resultado.expira) {
+    sessionStorage.setItem("mg_eventos_expira", resultado.expira);
+  }
   mostrarUsuario({
     usuario: usuario,
     nombre: nombre,
@@ -613,9 +630,9 @@ async function abrirModulo(permiso) {
     return;
   }
   if (permiso === "LEER_QR") {
-    const nombre = sessionStorage.getItem("mg_eventos_nombre") || sessionStorage.getItem("mg_eventos_nombre_panel") || "";
+    const nombre = obtenerNombreReal();
     if (nombre) {
-      sessionStorage.setItem("mg_eventos_nombre_panel", nombre);
+      guardarNombreReal(nombre);
     }
     window.location.href = QR_URL;
     return;
