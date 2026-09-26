@@ -594,10 +594,21 @@
         const loginForm = document.getElementById("loginForm");
         const loginMessage = document.getElementById("loginMessage");
 
-        function openLoginModal() {
+        function limpiarSesion() {
+            sessionStorage.removeItem("mg_eventos_token");
+            sessionStorage.removeItem("mg_eventos_usuario");
+            sessionStorage.removeItem("mg_eventos_nombre");
+            sessionStorage.removeItem("mg_eventos_rol");
+            sessionStorage.removeItem("mg_eventos_permisos");
+            sessionStorage.removeItem("mg_eventos_expira");
+            sessionStorage.removeItem("mg_eventos_qr_token");
+            sessionStorage.removeItem("mg_eventos_qr_validado");
+        }
+
+        function openLoginModal(mensaje = "") {
             loginModal.classList.add("is-open");
             loginModal.setAttribute("aria-hidden", "false");
-            loginMessage.textContent = "";
+            loginMessage.textContent = mensaje;
             document.getElementById("loginUsuario").focus();
         }
 
@@ -606,9 +617,61 @@
             loginModal.setAttribute("aria-hidden", "true");
         }
 
-        accessButton.addEventListener("click", (event) => {
+        async function acceder() {
+            const token = sessionStorage.getItem("mg_eventos_token") || "";
+
+            if (!token) {
+                openLoginModal();
+                return;
+            }
+
+            const textoOriginal = accessButton.textContent;
+            accessButton.textContent = "🔐 VERIFICANDO...";
+            accessButton.style.pointerEvents = "none";
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+                    body: JSON.stringify({
+                        accion: "sesion",
+                        token: token
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                const data = await response.json();
+
+                if (!data.ok) {
+                    limpiarSesion();
+                    openLoginModal("Tu sesión ha expirado o ya no es válida. Ingresa nuevamente.");
+                    return;
+                }
+
+                sessionStorage.setItem("mg_eventos_usuario", data.usuario || "");
+                sessionStorage.setItem("mg_eventos_nombre", data.nombre || "");
+                sessionStorage.setItem("mg_eventos_rol", data.rol || "");
+                sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(data.permisos || []));
+                sessionStorage.setItem("mg_eventos_expira", data.expira || "");
+
+                window.location.href = "panel.html";
+            } catch (error) {
+                console.error("Error verificando sesión:", error);
+                openLoginModal("No fue posible verificar la sesión. Intenta nuevamente.");
+            } finally {
+                accessButton.textContent = textoOriginal;
+                accessButton.style.pointerEvents = "";
+            }
+        }
+
+        accessButton.addEventListener("click", async (event) => {
             event.preventDefault();
-            openLoginModal();
+            await acceder();
         });
 
         loginModalClose.addEventListener("click", closeLoginModal);
