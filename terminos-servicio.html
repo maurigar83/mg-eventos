@@ -3,11 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Términos de Servicio - MG Eventos</title>
-  <meta name="description" content="Términos de Servicio de MG Eventos">
+  <meta
+    name="description"
+    content="Términos de Servicio de MG Eventos"
+  >
+
+  <link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       line-height: 1.6;
       margin: 0;
       padding: 0;
@@ -15,12 +26,47 @@
       color: #222;
     }
 
+    header {
+      width: 100%;
+      background: #ffffff;
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    .brand span {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
     .container {
       max-width: 900px;
       margin: 40px auto;
       padding: 40px;
       background: #fff;
-      box-sizing: border-box;
     }
 
     h1 {
@@ -47,7 +93,50 @@
       font-size: 14px;
     }
 
+    footer {
+      width: 100%;
+      padding: 25px 20px;
+      text-align: center;
+      border-top: 1px solid #eeeeee;
+      color: #9ca3af;
+      font-size: 13px;
+      background: #ffffff;
+    }
+
+    .footer-links {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .footer-links a {
+      color: #6b7280;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .footer-links a:hover {
+      color: #d9ad55;
+    }
+
+    .footer-links span {
+      color: #9ca3af;
+    }
+
     @media (max-width: 600px) {
+      .header-container {
+        padding: 10px 15px;
+        justify-content: center;
+      }
+
+      .brand span {
+        font-size: 18px;
+      }
+
       .container {
         margin: 0;
         padding: 24px 20px;
@@ -60,14 +149,44 @@
       h2 {
         font-size: 21px;
       }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .footer-links span {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <header>
+    <div class="header-container">
+      <a
+        href="index.html"
+        class="brand"
+        aria-label="MG Eventos - Inicio"
+      >
+        <img
+          src="images/mg-eventos-logo.png"
+          alt="MG Eventos"
+        >
+        <span>MG Eventos</span>
+      </a>
+    </div>
+  </header>
+
   <main class="container">
+
     <h1>Términos de Servicio</h1>
 
-    <p class="date">Última actualización: 26 de septiembre de 2026</p>
+    <p class="date">
+      Última actualización: 26 de septiembre de 2026
+    </p>
 
     <p>
       Estos Términos de Servicio regulan el acceso y uso de los servicios,
@@ -175,7 +294,9 @@
 
     <p>
       Puedes consultar nuestra
-      <a href="politica-privacidad.html">Política de Privacidad</a>.
+      <a href="politica-privacidad.html">
+        Política de Privacidad
+      </a>.
     </p>
 
     <h2>11. Contacto</h2>
@@ -187,8 +308,34 @@
 
     <p>
       <strong>Correo electrónico:</strong>
-      <a href="mailto:mgeventos.co@gmail.com">mgeventos.co@gmail.com</a>
+      <a href="mailto:mgeventos.co@gmail.com">
+        mgeventos.co@gmail.com
+      </a>
     </p>
+
   </main>
+
+  <footer>
+    <div>© 2026 MG Eventos</div>
+
+    <div class="footer-links">
+      <a href="politica-privacidad.html">
+        Política de Privacidad
+      </a>
+
+      <span>·</span>
+
+      <a href="terminos-servicio.html">
+        Términos de Servicio
+      </a>
+
+      <span>·</span>
+
+      <a href="eliminacion-datos.html">
+        Eliminación de Datos
+      </a>
+    </div>
+  </footer>
+
 </body>
 </html>
