@@ -20,10 +20,6 @@
             min-height: 100vh;
         }
 
-        /* =========================
-           ENCABEZADO
-        ========================== */
-
         header {
             width: 100%;
             background: #ffffff;
@@ -60,10 +56,6 @@
             font-weight: 700;
             letter-spacing: 0.3px;
         }
-
-        /* =========================
-           NAVEGACIÓN
-        ========================== */
 
         .navigation {
             display: flex;
@@ -106,10 +98,6 @@
             transform: none;
         }
 
-        /* =========================
-           CONTENIDO PRINCIPAL
-        ========================== */
-
         main {
             width: 100%;
         }
@@ -118,40 +106,37 @@
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 25px 20px 70px;
+            padding: 15px 20px 40px;
             text-align: center;
         }
 
         .events-section h1 {
             font-size: 32px;
             line-height: 1.2;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #111827;
             letter-spacing: 0.5px;
         }
 
         .intro {
             max-width: 650px;
-            margin: 0 auto 40px;
+            margin: 0 auto 25px;
             font-size: 17px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #4b5563;
         }
 
-        /* =========================
-           TARJETAS DE EVENTOS
-        ========================== */
-
         .events-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+            grid-template-columns: repeat(3, 280px);
             justify-content: center;
-            gap: 30px;
-            max-width: 1000px;
+            gap: 24px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .event-card {
+            width: 280px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
             border-radius: 18px;
@@ -180,48 +165,54 @@
         }
 
         .event-content {
-            padding: 18px 18px 20px;
+            padding: 15px 15px 17px;
         }
 
         .event-content h2 {
             font-size: 20px;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
             color: #111827;
-        }
-
-        .event-content p {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #4b5563;
-            margin-bottom: 15px;
         }
 
         .event-date {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 9px;
             color: #111827;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
+        }
+
+        .event-content p {
+            font-size: 14px;
+            line-height: 1.45;
+            color: #4b5563;
+            margin-bottom: 13px;
         }
 
         .event-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 8px;
+            flex-wrap: nowrap;
         }
 
         .event-button {
-            display: inline-block;
-            padding: 10px 20px;
+            flex: 1;
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
             border: 2px solid #d9ad55;
             border-radius: 25px;
             background: #111827;
             color: #ffffff;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            text-align: center;
             transition: transform 0.2s ease, background 0.2s ease;
         }
 
@@ -231,34 +222,32 @@
         }
 
         .more-info-button {
-            background: #ffffff;
-            color: #111827;
+            background: #111827;
+            color: #ffffff;
         }
 
         .more-info-button:hover {
-            background: #d9ad55;
-            color: #111827;
-            transform: translateY(-2px);
+            background: #1f2937;
+            color: #ffffff;
         }
-
-        /* =========================
-           PIE DE PÁGINA
-        ========================== */
 
         footer {
             width: 100%;
-            padding: 25px 20px;
+            padding: 20px;
             text-align: center;
             border-top: 1px solid #eeeeee;
             color: #9ca3af;
             font-size: 13px;
         }
 
-        /* =========================
-           MÓVILES
-        ========================== */
+        @media (max-width: 950px) {
+            .events-grid {
+                grid-template-columns: repeat(2, 280px);
+                max-width: 584px;
+            }
+        }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .header-container {
                 padding: 10px 15px;
                 gap: 10px;
@@ -293,7 +282,7 @@
             }
 
             .events-section {
-                padding: 20px 15px 50px;
+                padding: 15px 15px 35px;
             }
 
             .events-section h1 {
@@ -302,77 +291,69 @@
 
             .intro {
                 font-size: 16px;
-                margin-bottom: 30px;
+                margin-bottom: 22px;
             }
 
             .events-grid {
-                grid-template-columns: minmax(0, 320px);
-                gap: 25px;
+                grid-template-columns: minmax(0, 280px);
+                gap: 20px;
+            }
+
+            .event-card {
+                width: 280px;
             }
 
             .event-content {
-                padding: 18px 16px 20px;
+                padding: 15px 14px 17px;
             }
 
             .event-actions {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
+                gap: 7px;
             }
 
             .event-button {
+                padding: 10px 6px;
+                font-size: 11px;
+                letter-spacing: 0.4px;
+            }
+        }
+
+        @media (max-width: 330px) {
+            .events-grid {
+                grid-template-columns: minmax(0, 100%);
+            }
+
+            .event-card {
                 width: 100%;
-                text-align: center;
+            }
+
+            .event-button {
+                font-size: 10px;
+                padding: 9px 4px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- =========================
-         ENCABEZADO
-    ========================== -->
-
     <header>
         <div class="header-container">
             <a href="../index.html" class="brand" aria-label="MG Eventos - Inicio">
                 <img src="../images/mg-eventos-logo.png" alt="MG Eventos">
                 <span>MG Eventos</span>
             </a>
-
             <nav class="navigation">
-                <span class="nav-link active" aria-current="page">
-                    EVENTOS
-                </span>
-
-                <a href="../servicios/index.html" class="nav-link">
-                    SERVICIOS
-                </a>
-
-                <a href="../contacto/index.html" class="nav-link">
-                    CONTACTO
-                </a>
+                <span class="nav-link active" aria-current="page">EVENTOS</span>
+                <a href="../servicios/index.html" class="nav-link">SERVICIOS</a>
+                <a href="../contacto/index.html" class="nav-link">CONTACTO</a>
             </nav>
         </div>
     </header>
 
-    <!-- =========================
-         CONTENIDO
-    ========================== -->
-
     <main>
         <section class="events-section">
             <h1>PRÓXIMOS EVENTOS</h1>
-
-            <p class="intro">
-                Conoce los próximos encuentros y eventos
-                que estamos preparando para ti.
-            </p>
-
+            <p class="intro">Conoce los próximos encuentros y eventos que estamos preparando para ti.</p>
             <div class="events-grid">
-                <!-- =========================
-                     EVENTO: ADVIENTO
-                ========================== -->
-
                 <article class="event-card">
                     <a href="adviento/index.html" class="event-image-link" aria-label="Ver evento Adviento">
                         <img
@@ -381,42 +362,24 @@
                             class="event-image"
                         >
                     </a>
-
                     <div class="event-content">
                         <h2>ADVIENTO</h2>
-
-                        <span class="event-date">
-                            SÁBADO 28 DE NOVIEMBRE DE 2026
-                        </span>
-
-                        <p>
-                            Tiempo de volver a empezar
-                            a través del perdón y la sanación.
-                        </p>
-
+                        <span class="event-date">SÁBADO 28 DE NOVIEMBRE DE 2026</span>
+                        <p>Tiempo de volver a empezar a través del perdón y la sanación.</p>
                         <div class="event-actions">
-                            <a href="adviento/index.html" class="event-button">
-                                VER EVENTO
-                            </a>
-
+                            <a href="adviento/index.html" class="event-button">VER EVENTO</a>
                             <a
                                 href="https://api.whatsapp.com/send/?phone=573225276778&text=Quiero+m%C3%A1s+informaci%C3%B3n+del+evento+%2AADVIENTO%2A%3A+tiempo+de+volver+a+empezar+a+trav%C3%A9s+del+%2APERD%C3%93N+Y+LA+SANACI%C3%93N%2A&type=phone_number&app_absent=0"
                                 class="event-button more-info-button"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                            >
-                                MÁS INFORMACIÓN
-                            </a>
+                            >MÁS INFORMACIÓN</a>
                         </div>
                     </div>
                 </article>
             </div>
         </section>
     </main>
-
-    <!-- =========================
-         PIE DE PÁGINA
-    ========================== -->
 
     <footer>
         © 2026 MG Eventos
