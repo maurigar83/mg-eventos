@@ -6,506 +6,574 @@
 <title>MG Eventos | Panel de gestión</title>
 <style>
 * {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 body {
-font-family: Arial, Helvetica, sans-serif;
-background: #f5f7fa;
-color: #111827;
-min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fa;
+  color: #111827;
+  min-height: 100vh;
 }
 .header {
-width: 100%;
-background: #ffffff;
-border-bottom: 1px solid #e5e7eb;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
 }
 .header-container {
-width: 100%;
-max-width: 1180px;
-margin: 0 auto;
-padding: 14px 24px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 20px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 .brand {
-display: flex;
-align-items: center;
-gap: 12px;
-text-decoration: none;
-color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #111827;
 }
 .brand-mark {
-width: 48px;
-height: 48px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 50%;
-background: #111827;
-color: #d9ad55;
-font-size: 17px;
-font-weight: 800;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #111827;
+  color: #d9ad55;
+  font-size: 17px;
+  font-weight: 800;
 }
 .brand-text {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .brand-name {
-font-size: 19px;
-font-weight: 700;
+  font-size: 19px;
+  font-weight: 700;
 }
 .brand-subtitle {
-margin-top: 2px;
-color: #6b7280;
-font-size: 12px;
+  margin-top: 2px;
+  color: #6b7280;
+  font-size: 12px;
 }
 .header-user {
-display: flex;
-align-items: center;
-gap: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 .user-info {
-text-align: right;
+  text-align: right;
 }
 .user-name {
-font-size: 14px;
-font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 }
 .user-role {
-margin-top: 2px;
-color: #9ca3af;
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 0.7px;
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
 }
 .logout-button {
-padding: 9px 17px;
-border: 1px solid #d9ad55;
-border-radius: 22px;
-background: #ffffff;
-color: #111827;
-font-size: 12px;
-font-weight: 700;
-cursor: pointer;
-transition: background 0.2s ease, color 0.2s ease;
+  padding: 9px 17px;
+  border: 1px solid #d9ad55;
+  border-radius: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .logout-button:hover {
-background: #d9ad55;
-color: #111827;
+  background: #d9ad55;
+  color: #111827;
 }
 .main {
-width: 100%;
-max-width: 1180px;
-margin: 0 auto;
-padding: 40px 24px 40px;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
 }
 .welcome {
-margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .welcome-label {
-margin-bottom: 6px;
-color: #b58b3b;
-font-size: 12px;
-font-weight: 800;
-letter-spacing: 1.2px;
-text-transform: uppercase;
+  margin-bottom: 7px;
+  color: #b58b3b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 .welcome h1 {
-font-size: 34px;
-line-height: 1.15;
-color: #111827;
+  font-size: 34px;
+  line-height: 1.2;
+  color: #111827;
 }
 .welcome p {
-max-width: 700px;
-margin-top: 8px;
-color: #6b7280;
-font-size: 15px;
-line-height: 1.5;
+  max-width: 700px;
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.5;
 }
 .session-card {
-width: 100%;
-margin-bottom: 28px;
-padding: 15px 20px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 20px;
-border: 1px solid #e5e7eb;
-border-radius: 14px;
-background: #ffffff;
+  width: 100%;
+  margin-bottom: 28px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
 }
 .session-left {
-display: flex;
-align-items: center;
-gap: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .session-icon {
-width: 36px;
-height: 36px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 50%;
-background: #ecfdf5;
-color: #059669;
-font-size: 18px;
-font-weight: 700;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 17px;
+  font-weight: 700;
 }
 .session-text {
-display: flex;
-flex-direction: column;
-gap: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 .session-text strong {
-font-size: 14px;
+  font-size: 14px;
 }
 .session-text span {
-color: #6b7280;
-font-size: 12px;
+  color: #6b7280;
+  font-size: 12px;
 }
 .session-status {
-color: #059669;
-font-size: 11px;
-font-weight: 800;
-letter-spacing: 0.8px;
+  color: #059669;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
 }
 .section-title {
-margin-bottom: 14px;
-font-size: 21px;
+  margin-bottom: 12px;
+  font-size: 21px;
 }
 .modules {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 .module {
-min-height: 195px;
-padding: 20px;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-border: 1px solid #e5e7eb;
-border-radius: 16px;
-background: #ffffff;
-cursor: pointer;
-transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  min-height: 150px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .module.enabled:hover {
-transform: translateY(-3px);
-border-color: #d9ad55;
-box-shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+  transform: translateY(-3px);
+  border-color: #d9ad55;
+  box-shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
 }
 .module.disabled {
-cursor: not-allowed;
-opacity: 0.55;
+  cursor: not-allowed;
+  opacity: 0.55;
 }
-.module-top {
-display: flex;
-align-items: center;
-justify-content: space-between;
+.module-main {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  align-items: start;
+  gap: 13px;
 }
 .module-icon {
-width: 44px;
-height: 44px;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 11px;
-background: #f3f4f6;
-font-size: 21px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #f3f4f6;
+  font-size: 22px;
 }
-.module-lock {
-min-height: 20px;
-font-size: 15px;
+.module-icon svg {
+  width: 27px;
+  height: 27px;
+}
+.module-info {
+  min-width: 0;
+}
+.module-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 46px;
 }
 .module h3 {
-margin-top: 16px;
-font-size: 18px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.module-lock {
+  min-width: 18px;
+  font-size: 15px;
+  text-align: right;
 }
 .module p {
-margin-top: 6px;
-color: #6b7280;
-font-size: 13px;
-line-height: 1.45;
+  margin-top: 5px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.45;
 }
 .module-action {
-margin-top: 16px;
-color: #b58b3b;
-font-size: 12px;
-font-weight: 800;
-letter-spacing: 0.5px;
+  margin-top: 12px;
+  color: #b58b3b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 .module.disabled .module-action {
-color: #9ca3af;
+  color: #9ca3af;
 }
 .footer {
-margin-top: 40px;
-padding-top: 20px;
-border-top: 1px solid #e5e7eb;
-color: #9ca3af;
-font-size: 12px;
-text-align: center;
+  margin-top: 35px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
 }
 .modal {
-position: fixed;
-inset: 0;
-z-index: 1000;
-display: none;
-align-items: center;
-justify-content: center;
-padding: 20px;
-background: rgba(8, 18, 35, 0.72);
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 18, 35, 0.72);
 }
 .modal.show {
-display: flex;
+  display: flex;
 }
 .modal-box {
-width: 100%;
-max-width: 420px;
-padding: 32px;
-border-radius: 18px;
-background: #ffffff;
-text-align: center;
-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 18px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 .modal-icon {
-margin-bottom: 15px;
-font-size: 32px;
+  margin-bottom: 15px;
+  font-size: 32px;
 }
 .modal-box h2 {
-font-size: 22px;
+  font-size: 22px;
 }
 .modal-box p {
-margin-top: 10px;
-color: #6b7280;
-font-size: 14px;
-line-height: 1.6;
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.6;
 }
 .modal-button {
-margin-top: 22px;
-padding: 10px 22px;
-border: 0;
-border-radius: 22px;
-background: #111827;
-color: #ffffff;
-font-size: 12px;
-font-weight: 700;
-cursor: pointer;
+  margin-top: 22px;
+  padding: 10px 22px;
+  border: 0;
+  border-radius: 22px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
 }
 @media (max-width: 850px) {
-.modules {
-grid-template-columns: repeat(2, 1fr);
-gap: 10px;
-}
-.module {
-min-height: 175px;
-padding: 17px;
-}
+  .modules {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 600px) {
-.header-container {
-align-items: flex-start;
-flex-direction: column;
-padding: 14px 16px;
-}
-.header-user {
-width: 100%;
-justify-content: space-between;
-}
-.user-info {
-text-align: left;
-}
-.main {
-padding: 28px 16px 35px;
-}
-.welcome {
-margin-bottom: 18px;
-}
-.welcome-label {
-margin-bottom: 5px;
-font-size: 11px;
-}
-.welcome h1 {
-font-size: 27px;
-}
-.welcome p {
-font-size: 13px;
-line-height: 1.45;
-}
-.session-card {
-margin-bottom: 24px;
-padding: 13px 15px;
-}
-.session-icon {
-width: 34px;
-height: 34px;
-}
-.section-title {
-margin-bottom: 12px;
-font-size: 20px;
-}
-.modules {
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 8px;
-}
-.module {
-min-height: 170px;
-padding: 14px;
-border-radius: 14px;
-}
-.module-icon {
-width: 38px;
-height: 38px;
-border-radius: 10px;
-font-size: 18px;
-}
-.module-lock {
-min-height: 16px;
-font-size: 13px;
-}
-.module h3 {
-margin-top: 10px;
-font-size: 15px;
-}
-.module p {
-margin-top: 5px;
-font-size: 11px;
-line-height: 1.35;
-}
-.module-action {
-margin-top: 12px;
-font-size: 10px;
-letter-spacing: 0.4px;
-}
-.footer {
-margin-top: 30px;
-padding-top: 18px;
-}
+  .header-container {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+  .header-user {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .user-info {
+    text-align: left;
+  }
+  .main {
+    padding: 18px 12px 30px;
+  }
+  .welcome {
+    margin-bottom: 16px;
+  }
+  .welcome-label {
+    margin-bottom: 6px;
+    font-size: 11px;
+  }
+  .welcome h1 {
+    font-size: 27px;
+  }
+  .welcome p {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .session-card {
+    margin-bottom: 22px;
+    padding: 12px 14px;
+  }
+  .session-left {
+    gap: 9px;
+  }
+  .session-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+  .session-text strong {
+    font-size: 13px;
+  }
+  .session-text span {
+    font-size: 11px;
+  }
+  .section-title {
+    margin-bottom: 10px;
+    font-size: 19px;
+  }
+  .modules {
+    gap: 10px;
+  }
+  .module {
+    min-height: 135px;
+    padding: 13px 12px;
+    border-radius: 14px;
+  }
+  .module-main {
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 9px;
+  }
+  .module-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    font-size: 18px;
+  }
+  .module-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .module-title-row {
+    min-height: 38px;
+  }
+  .module h3 {
+    font-size: 16px;
+  }
+  .module p {
+    margin-top: 4px;
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .module-action {
+    margin-top: 9px;
+    font-size: 10.5px;
+  }
+  .module-lock {
+    font-size: 12px;
+  }
+  .footer {
+    margin-top: 25px;
+    padding-top: 16px;
+    font-size: 10px;
+  }
 }
 @media (max-width: 400px) {
-.brand-subtitle {
-display: none;
-}
-.welcome h1 {
-font-size: 24px;
-}
-.module {
-padding: 13px;
-}
-.module p {
-font-size: 10.5px;
-}
+  .brand-subtitle {
+    display: none;
+  }
+  .welcome h1 {
+    font-size: 24px;
+  }
+  .module {
+    padding: 11px 10px;
+  }
+  .module-main {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 7px;
+  }
+  .module-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .module-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .module-title-row {
+    min-height: 34px;
+  }
+  .module h3 {
+    font-size: 14px;
+  }
+  .module p {
+    font-size: 10.5px;
+  }
+  .module-action {
+    font-size: 10px;
+  }
 }
 </style>
 </head>
 <body>
 <header class="header">
-<div class="header-container">
-<a class="brand" href="https://maurigar83.github.io/mg-eventos/index.html">
-<div class="brand-mark">MG</div>
-<div class="brand-text">
-<span class="brand-name">MG Eventos</span>
-<span class="brand-subtitle">Gestión de eventos</span>
-</div>
-</a>
-<div class="header-user">
-<div class="user-info">
-<div class="user-name" id="userName">Cargando...</div>
-<div class="user-role" id="userRole">Cargando...</div>
-</div>
-<button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
-</div>
-</div>
+  <div class="header-container">
+    <a class="brand" href="https://maurigar83.github.io/mg-eventos/index.html">
+      <div class="brand-mark">MG</div>
+      <div class="brand-text">
+        <span class="brand-name">MG Eventos</span>
+        <span class="brand-subtitle">Gestión de eventos</span>
+      </div>
+    </a>
+    <div class="header-user">
+      <div class="user-info">
+        <div class="user-name" id="userName">Cargando...</div>
+        <div class="user-role" id="userRole">Cargando...</div>
+      </div>
+      <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
 </header>
 <main class="main">
-<section class="welcome">
-<div class="welcome-label">Panel de gestión</div>
-<h1>Bienvenido, <span id="welcomeName">Cargando...</span></h1>
-<p>Desde este panel puedes acceder a las herramientas disponibles según los permisos de tu usuario.</p>
-</section>
-<section class="session-card">
-<div class="session-left">
-<div class="session-icon">✓</div>
-<div class="session-text">
-<strong>Sesión activa</strong>
-<span>Tu acceso está actualmente habilitado.</span>
-</div>
-</div>
-<div class="session-status">ACTIVA</div>
-</section>
-<section>
-<h2 class="section-title">Módulos disponibles</h2>
-<div class="modules">
-<article class="module enabled" data-permission="LEER_QR" onclick="abrirModulo('LEER_QR')">
-<div>
-<div class="module-top">
-<div class="module-icon">📷</div>
-<div class="module-lock"></div>
-</div>
-<h3>Leer QR</h3>
-<p>Validación y control de ingreso de asistentes mediante código QR.</p>
-</div>
-<div class="module-action">Ingresar →</div>
-</article>
-<article class="module enabled" data-permission="VENDER" onclick="abrirModulo('VENDER')">
-<div>
-<div class="module-top">
-<div class="module-icon">🎟️</div>
-<div class="module-lock"></div>
-</div>
-<h3>Vender</h3>
-<p>Gestión de ventas, registro de compradores y emisión de boletas.</p>
-</div>
-<div class="module-action">Ingresar →</div>
-</article>
-<article class="module enabled" data-permission="REPORTES" onclick="abrirModulo('REPORTES')">
-<div>
-<div class="module-top">
-<div class="module-icon">📊</div>
-<div class="module-lock"></div>
-</div>
-<h3>Reportes</h3>
-<p>Consulta de información, ventas y estadísticas del evento.</p>
-</div>
-<div class="module-action">Ingresar →</div>
-</article>
-<article class="module enabled" data-permission="USUARIOS" onclick="abrirModulo('USUARIOS')">
-<div>
-<div class="module-top">
-<div class="module-icon">👥</div>
-<div class="module-lock"></div>
-</div>
-<h3>Usuarios</h3>
-<p>Administración de usuarios, roles y permisos del sistema.</p>
-</div>
-<div class="module-action">Ingresar →</div>
-</article>
-<article class="module enabled" data-permission="CONFIGURACION" onclick="abrirModulo('CONFIGURACION')">
-<div>
-<div class="module-top">
-<div class="module-icon">⚙️</div>
-<div class="module-lock"></div>
-</div>
-<h3>Configuración</h3>
-<p>Configuración general y parámetros administrativos de la plataforma.</p>
-</div>
-<div class="module-action">Ingresar →</div>
-</article>
-</div>
-</section>
-<footer class="footer">MG Eventos · Plataforma de gestión de eventos</footer>
+  <section class="welcome">
+    <div class="welcome-label">Panel de gestión</div>
+    <h1>Bienvenido, <span id="welcomeName">Cargando...</span></h1>
+    <p>Desde este panel puedes acceder a las herramientas disponibles según los permisos de tu usuario.</p>
+  </section>
+  <section class="session-card">
+    <div class="session-left">
+      <div class="session-icon">✓</div>
+      <div class="session-text">
+        <strong>Sesión activa</strong>
+        <span>Tu acceso está actualmente habilitado.</span>
+      </div>
+    </div>
+    <div class="session-status">ACTIVA</div>
+  </section>
+  <section>
+    <h2 class="section-title">Módulos disponibles</h2>
+    <div class="modules">
+      <article class="module enabled" data-permission="LEER_QR" onclick="abrirModulo('LEER_QR')">
+        <div class="module-main">
+          <div class="module-icon" aria-label="Código QR">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="6" height="6"></rect>
+              <rect x="15" y="3" width="6" height="6"></rect>
+              <rect x="3" y="15" width="6" height="6"></rect>
+              <path d="M15 15h3v3h-3zM18 18h3v3h-3zM15 21h3M21 15h-3M15 12v3M12 18h3M12 21h3"></path>
+            </svg>
+          </div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>Leer QR</h3>
+              <div class="module-lock"></div>
+            </div>
+            <p>Validación y control de ingreso de asistentes mediante código QR.</p>
+            <div class="module-action">Ingresar →</div>
+          </div>
+        </div>
+      </article>
+      <article class="module enabled" data-permission="VENDER" onclick="abrirModulo('VENDER')">
+        <div class="module-main">
+          <div class="module-icon">🎟️</div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>Vender</h3>
+              <div class="module-lock"></div>
+            </div>
+            <p>Gestión de ventas, registro de compradores y emisión de boletas.</p>
+            <div class="module-action">Ingresar →</div>
+          </div>
+        </div>
+      </article>
+      <article class="module enabled" data-permission="REPORTES" onclick="abrirModulo('REPORTES')">
+        <div class="module-main">
+          <div class="module-icon">📊</div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>Reportes</h3>
+              <div class="module-lock"></div>
+            </div>
+            <p>Consulta de información, ventas y estadísticas del evento.</p>
+            <div class="module-action">Ingresar →</div>
+          </div>
+        </div>
+      </article>
+      <article class="module enabled" data-permission="USUARIOS" onclick="abrirModulo('USUARIOS')">
+        <div class="module-main">
+          <div class="module-icon">👥</div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>Usuarios</h3>
+              <div class="module-lock"></div>
+            </div>
+            <p>Administración de usuarios, roles y permisos del sistema.</p>
+            <div class="module-action">Ingresar →</div>
+          </div>
+        </div>
+      </article>
+      <article class="module enabled" data-permission="CONFIGURACION" onclick="abrirModulo('CONFIGURACION')">
+        <div class="module-main">
+          <div class="module-icon">⚙️</div>
+          <div class="module-info">
+            <div class="module-title-row">
+              <h3>Configuración</h3>
+              <div class="module-lock"></div>
+            </div>
+            <p>Configuración general y parámetros administrativos de la plataforma.</p>
+            <div class="module-action">Ingresar →</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  <footer class="footer">MG Eventos · Plataforma de gestión de eventos</footer>
 </main>
 <div class="modal" id="modal">
-<div class="modal-box">
-<div class="modal-icon">🔐</div>
-<h2 id="modalTitle">Módulo</h2>
-<p id="modalMessage">Esta función será conectada posteriormente al sistema.</p>
-<button class="modal-button" type="button" onclick="cerrarModal()">Entendido</button>
-</div>
+  <div class="modal-box">
+    <div class="modal-icon">🔐</div>
+    <h2 id="modalTitle">Módulo</h2>
+    <p id="modalMessage">Esta función será conectada posteriormente al sistema.</p>
+    <button class="modal-button" type="button" onclick="cerrarModal()">Entendido</button>
+  </div>
 </div>
 <script src="config.js"></script>
 <script>
@@ -513,250 +581,250 @@ const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
 const QR_URL = "https://maurigar83.github.io/validacion-tickets/?lector=1";
 const NOMBRES_MODULOS = {
-LEER_QR: "Leer QR",
-VENDER: "Vender",
-REPORTES: "Reportes",
-USUARIOS: "Usuarios",
-CONFIGURACION: "Configuración"
+  LEER_QR: "Leer QR",
+  VENDER: "Vender",
+  REPORTES: "Reportes",
+  USUARIOS: "Usuarios",
+  CONFIGURACION: "Configuración"
 };
 let validacionEnCurso = false;
 function obtenerToken() {
-return sessionStorage.getItem("mg_eventos_token") || "";
+  return sessionStorage.getItem("mg_eventos_token") || "";
 }
 function obtenerNombreReal() {
-return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
+  return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
 }
 function guardarNombreReal(nombre) {
-const nombreLimpio = String(nombre || "").trim();
-if (!nombreLimpio) {
-return;
-}
-sessionStorage.setItem("mg_eventos_nombre", nombreLimpio);
-sessionStorage.setItem("mg_eventos_nombre_real", nombreLimpio);
+  const nombreLimpio = String(nombre || "").trim();
+  if (!nombreLimpio) {
+    return;
+  }
+  sessionStorage.setItem("mg_eventos_nombre", nombreLimpio);
+  sessionStorage.setItem("mg_eventos_nombre_real", nombreLimpio);
 }
 function limpiarSesion() {
-sessionStorage.removeItem("mg_eventos_token");
-sessionStorage.removeItem("mg_eventos_usuario");
-sessionStorage.removeItem("mg_eventos_nombre");
-sessionStorage.removeItem("mg_eventos_nombre_real");
-sessionStorage.removeItem("mg_eventos_rol");
-sessionStorage.removeItem("mg_eventos_permisos");
-sessionStorage.removeItem("mg_eventos_expira");
-sessionStorage.removeItem("mg_eventos_qr_token");
-sessionStorage.removeItem("mg_eventos_qr_validado");
+  sessionStorage.removeItem("mg_eventos_token");
+  sessionStorage.removeItem("mg_eventos_usuario");
+  sessionStorage.removeItem("mg_eventos_nombre");
+  sessionStorage.removeItem("mg_eventos_nombre_real");
+  sessionStorage.removeItem("mg_eventos_rol");
+  sessionStorage.removeItem("mg_eventos_permisos");
+  sessionStorage.removeItem("mg_eventos_expira");
+  sessionStorage.removeItem("mg_eventos_qr_token");
+  sessionStorage.removeItem("mg_eventos_qr_validado");
 }
 async function llamarAPI(datos) {
-const response = await fetch(API_URL, {
-method: "POST",
-headers: {
-"Content-Type": "text/plain;charset=utf-8"
-},
-body: JSON.stringify(datos)
-});
-if (!response.ok) {
-throw new Error("HTTP " + response.status);
-}
-return response.json();
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(datos)
+  });
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+  return response.json();
 }
 function mostrarUsuario(sesion) {
-const nombre = sesion.nombre || sesion.usuario || "Usuario";
-const rol = sesion.rol || "";
-document.getElementById("userName").textContent = nombre;
-document.getElementById("userRole").textContent = rol;
-document.getElementById("welcomeName").textContent = nombre;
+  const nombre = sesion.nombre || sesion.usuario || "Usuario";
+  const rol = sesion.rol || "";
+  document.getElementById("userName").textContent = nombre;
+  document.getElementById("userRole").textContent = rol;
+  document.getElementById("welcomeName").textContent = nombre;
 }
 function obtenerPermisosLocales() {
-try {
-const permisos = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
-return Array.isArray(permisos) ? permisos : [];
-} catch (error) {
-return [];
-}
+  try {
+    const permisos = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
+    return Array.isArray(permisos) ? permisos : [];
+  } catch (error) {
+    return [];
+  }
 }
 function aplicarPermisos(permisos) {
-const listaPermisos = Array.isArray(permisos) ? permisos : [];
-document.querySelectorAll(".module").forEach((modulo) => {
-const permiso = modulo.dataset.permission;
-const tienePermiso = listaPermisos.includes(permiso);
-const lock = modulo.querySelector(".module-lock");
-const action = modulo.querySelector(".module-action");
-if (tienePermiso) {
-modulo.classList.add("enabled");
-modulo.classList.remove("disabled");
-lock.textContent = "";
-action.textContent = "Ingresar →";
-} else {
-modulo.classList.remove("enabled");
-modulo.classList.add("disabled");
-lock.textContent = "🔒";
-action.textContent = "Sin permiso";
-}
-});
+  const listaPermisos = Array.isArray(permisos) ? permisos : [];
+  document.querySelectorAll(".module").forEach((modulo) => {
+    const permiso = modulo.dataset.permission;
+    const tienePermiso = listaPermisos.includes(permiso);
+    const lock = modulo.querySelector(".module-lock");
+    const action = modulo.querySelector(".module-action");
+    if (tienePermiso) {
+      modulo.classList.add("enabled");
+      modulo.classList.remove("disabled");
+      lock.textContent = "";
+      action.textContent = "Ingresar →";
+    } else {
+      modulo.classList.remove("enabled");
+      modulo.classList.add("disabled");
+      lock.textContent = "🔒";
+      action.textContent = "Sin permiso";
+    }
+  });
 }
 function cargarDatosLocales() {
-const token = obtenerToken();
-const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
-const nombreGuardado = obtenerNombreReal();
-const rol = sessionStorage.getItem("mg_eventos_rol") || "";
-const permisos = obtenerPermisosLocales();
-if (!token) {
-return false;
-}
-const nombre = nombreGuardado || usuario;
-if (nombre || usuario || rol) {
-mostrarUsuario({
-usuario: usuario,
-nombre: nombre,
-rol: rol
-});
-}
-if (nombreGuardado) {
-guardarNombreReal(nombreGuardado);
-}
-aplicarPermisos(permisos);
-return true;
+  const token = obtenerToken();
+  const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
+  const nombreGuardado = obtenerNombreReal();
+  const rol = sessionStorage.getItem("mg_eventos_rol") || "";
+  const permisos = obtenerPermisosLocales();
+  if (!token) {
+    return false;
+  }
+  const nombre = nombreGuardado || usuario;
+  if (nombre || usuario || rol) {
+    mostrarUsuario({
+      usuario: usuario,
+      nombre: nombre,
+      rol: rol
+    });
+  }
+  if (nombreGuardado) {
+    guardarNombreReal(nombreGuardado);
+  }
+  aplicarPermisos(permisos);
+  return true;
 }
 function actualizarDatosSesion(resultado) {
-const nombreServidor = String(resultado.nombre || "").trim();
-const nombreGuardado = obtenerNombreReal();
-const usuario = resultado.usuario || sessionStorage.getItem("mg_eventos_usuario") || "";
-const rol = resultado.rol || sessionStorage.getItem("mg_eventos_rol") || "";
-const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : obtenerPermisosLocales();
-const nombre = nombreServidor || nombreGuardado || sessionStorage.getItem("mg_eventos_nombre") || usuario || "Usuario";
-sessionStorage.setItem("mg_eventos_usuario", usuario);
-if (nombreServidor) {
-guardarNombreReal(nombreServidor);
-} else if (nombreGuardado) {
-guardarNombreReal(nombreGuardado);
-} else if (nombre) {
-guardarNombreReal(nombre);
-}
-sessionStorage.setItem("mg_eventos_rol", rol);
-sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
-if (resultado.expira) {
-sessionStorage.setItem("mg_eventos_expira", resultado.expira);
-}
-mostrarUsuario({
-usuario: usuario,
-nombre: nombre,
-rol: rol
-});
-aplicarPermisos(permisos);
+  const nombreServidor = String(resultado.nombre || "").trim();
+  const nombreGuardado = obtenerNombreReal();
+  const usuario = resultado.usuario || sessionStorage.getItem("mg_eventos_usuario") || "";
+  const rol = resultado.rol || sessionStorage.getItem("mg_eventos_rol") || "";
+  const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : obtenerPermisosLocales();
+  const nombre = nombreServidor || nombreGuardado || sessionStorage.getItem("mg_eventos_nombre") || usuario || "Usuario";
+  sessionStorage.setItem("mg_eventos_usuario", usuario);
+  if (nombreServidor) {
+    guardarNombreReal(nombreServidor);
+  } else if (nombreGuardado) {
+    guardarNombreReal(nombreGuardado);
+  } else if (nombre) {
+    guardarNombreReal(nombre);
+  }
+  sessionStorage.setItem("mg_eventos_rol", rol);
+  sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
+  if (resultado.expira) {
+    sessionStorage.setItem("mg_eventos_expira", resultado.expira);
+  }
+  mostrarUsuario({
+    usuario: usuario,
+    nombre: nombre,
+    rol: rol
+  });
+  aplicarPermisos(permisos);
 }
 async function validarSesion() {
-if (validacionEnCurso) {
-return;
-}
-const token = obtenerToken();
-if (!token) {
-limpiarSesion();
-window.location.replace(PUBLIC_URL);
-return;
-}
-validacionEnCurso = true;
-try {
-const resultado = await llamarAPI({
-accion: "sesion",
-token: token
-});
-if (!resultado || !resultado.ok) {
-limpiarSesion();
-window.location.replace(PUBLIC_URL);
-return;
-}
-actualizarDatosSesion(resultado);
-} catch (error) {
-console.warn("No fue posible validar la sesión en este momento:", error);
-} finally {
-validacionEnCurso = false;
-}
+  if (validacionEnCurso) {
+    return;
+  }
+  const token = obtenerToken();
+  if (!token) {
+    limpiarSesion();
+    window.location.replace(PUBLIC_URL);
+    return;
+  }
+  validacionEnCurso = true;
+  try {
+    const resultado = await llamarAPI({
+      accion: "sesion",
+      token: token
+    });
+    if (!resultado || !resultado.ok) {
+      limpiarSesion();
+      window.location.replace(PUBLIC_URL);
+      return;
+    }
+    actualizarDatosSesion(resultado);
+  } catch (error) {
+    console.warn("No fue posible validar la sesión en este momento:", error);
+  } finally {
+    validacionEnCurso = false;
+  }
 }
 async function abrirModulo(permiso) {
-const permisos = obtenerPermisosLocales();
-if (!permisos.includes(permiso)) {
-document.getElementById("modalTitle").textContent = "Acceso restringido";
-document.getElementById("modalMessage").textContent = "Tu usuario no tiene permisos para acceder a este módulo.";
-document.getElementById("modal").classList.add("show");
-return;
-}
-const token = obtenerToken();
-if (!token) {
-limpiarSesion();
-window.location.replace(PUBLIC_URL);
-return;
-}
-if (permiso === "LEER_QR") {
-const nombre = obtenerNombreReal();
-if (nombre) {
-guardarNombreReal(nombre);
-}
-window.location.href = QR_URL;
-return;
-}
-const modulo = document.querySelector('[data-permission="' + permiso + '"]');
-if (modulo) {
-modulo.style.pointerEvents = "none";
-}
-try {
-const resultado = await llamarAPI({
-accion: "permiso",
-token: token,
-permiso: permiso
-});
-if (!resultado || !resultado.ok || !resultado.autorizado) {
-document.getElementById("modalTitle").textContent = "Acceso restringido";
-document.getElementById("modalMessage").textContent = "El servidor no autorizó el acceso a este módulo.";
-document.getElementById("modal").classList.add("show");
-return;
-}
-const nombreModulo = NOMBRES_MODULOS[permiso] || "Módulo";
-document.getElementById("modalTitle").textContent = nombreModulo;
-document.getElementById("modalMessage").textContent = "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
-document.getElementById("modal").classList.add("show");
-} catch (error) {
-document.getElementById("modalTitle").textContent = "Error de conexión";
-document.getElementById("modalMessage").textContent = "No fue posible validar el permiso con el servidor. Tu sesión no se ha cerrado.";
-document.getElementById("modal").classList.add("show");
-} finally {
-if (modulo) {
-modulo.style.pointerEvents = "";
-}
-}
+  const permisos = obtenerPermisosLocales();
+  if (!permisos.includes(permiso)) {
+    document.getElementById("modalTitle").textContent = "Acceso restringido";
+    document.getElementById("modalMessage").textContent = "Tu usuario no tiene permisos para acceder a este módulo.";
+    document.getElementById("modal").classList.add("show");
+    return;
+  }
+  const token = obtenerToken();
+  if (!token) {
+    limpiarSesion();
+    window.location.replace(PUBLIC_URL);
+    return;
+  }
+  if (permiso === "LEER_QR") {
+    const nombre = obtenerNombreReal();
+    if (nombre) {
+      guardarNombreReal(nombre);
+    }
+    window.location.href = QR_URL;
+    return;
+  }
+  const modulo = document.querySelector('[data-permission="' + permiso + '"]');
+  if (modulo) {
+    modulo.style.pointerEvents = "none";
+  }
+  try {
+    const resultado = await llamarAPI({
+      accion: "permiso",
+      token: token,
+      permiso: permiso
+    });
+    if (!resultado || !resultado.ok || !resultado.autorizado) {
+      document.getElementById("modalTitle").textContent = "Acceso restringido";
+      document.getElementById("modalMessage").textContent = "El servidor no autorizó el acceso a este módulo.";
+      document.getElementById("modal").classList.add("show");
+      return;
+    }
+    const nombreModulo = NOMBRES_MODULOS[permiso] || "Módulo";
+    document.getElementById("modalTitle").textContent = nombreModulo;
+    document.getElementById("modalMessage").textContent = "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
+    document.getElementById("modal").classList.add("show");
+  } catch (error) {
+    document.getElementById("modalTitle").textContent = "Error de conexión";
+    document.getElementById("modalMessage").textContent = "No fue posible validar el permiso con el servidor. Tu sesión no se ha cerrado.";
+    document.getElementById("modal").classList.add("show");
+  } finally {
+    if (modulo) {
+      modulo.style.pointerEvents = "";
+    }
+  }
 }
 function cerrarModal() {
-document.getElementById("modal").classList.remove("show");
+  document.getElementById("modal").classList.remove("show");
 }
 function cerrarSesion() {
-const token = obtenerToken();
-limpiarSesion();
-window.location.replace(PUBLIC_URL);
-if (token) {
-fetch(API_URL, {
-method: "POST",
-headers: {
-"Content-Type": "text/plain;charset=utf-8"
-},
-body: JSON.stringify({
-accion: "logout",
-token: token
-}),
-keepalive: true
-}).catch(() => {});
-}
+  const token = obtenerToken();
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
+  if (token) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        accion: "logout",
+        token: token
+      }),
+      keepalive: true
+    }).catch(() => {});
+  }
 }
 document.getElementById("modal").addEventListener("click", function(event) {
-if (event.target === this) {
-cerrarModal();
-}
+  if (event.target === this) {
+    cerrarModal();
+  }
 });
 const tieneSesionLocal = cargarDatosLocales();
 if (!tieneSesionLocal) {
-limpiarSesion();
-window.location.replace(PUBLIC_URL);
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
 } else {
-setTimeout(() => {
-validarSesion();
-}, 0);
+  setTimeout(() => {
+    validarSesion();
+  }, 0);
 }
 </script>
 </body>
