@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MG Eventos | Boletería y acceso para tus eventos</title>
 <meta name="description" content="MG Eventos facilita la venta de boletería y el control de acceso para eventos.">
-<link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+<link rel="icon" type="image/png" href="../images/mg-eventos-logo.png">
 <style>
 * {
 box-sizing: border-box;
@@ -39,7 +39,7 @@ justify-content: space-between;
 .brand {
 display: flex;
 align-items: center;
-gap: 12px;
+gap: 14px;
 text-decoration: none;
 color: #111827;
 }
@@ -54,6 +54,7 @@ font-size: 14px;
 font-weight: 700;
 letter-spacing: 0.8px;
 color: #d9ad55;
+text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 .navigation {
 display: flex;
@@ -465,13 +466,13 @@ transition: none;
 <header>
 <div class="header-container">
 <a href="index.html" class="brand" aria-label="MG Eventos - Inicio">
-<img src="images/mg-eventos-logo.png" alt="MG Eventos">
+<img src="../images/mg-eventos-logo.png" alt="MG Eventos">
 <span>IDEAS QUE CONECTAN</span>
 </a>
 <nav class="navigation">
-<a href="eventos/index.html" class="nav-link">EVENTOS</a>
-<a href="servicios/index.html" class="nav-link">SERVICIOS</a>
-<a href="contacto/index.html" class="nav-link">CONTACTO</a>
+<a href="../eventos/index.html" class="nav-link">EVENTOS</a>
+<a href="../servicios/index.html" class="nav-link">SERVICIOS</a>
+<a href="../contacto/index.html" class="nav-link">CONTACTO</a>
 <a href="#" class="nav-link access-link" id="accessButton" aria-label="Acceso de administración">🔐 ACCESO</a>
 </nav>
 </div>
@@ -494,13 +495,13 @@ transition: none;
 </div>
 <main>
 <section class="hero">
-<video class="hero-video" autoplay muted playsinline preload="auto" poster="images/mg-eventos-logo.png" aria-hidden="true">
-<source src="videos/hero-qr.mp4" type="video/mp4">
+<video class="hero-video" autoplay muted playsinline preload="auto" poster="../images/mg-eventos-logo.png" aria-hidden="true">
+<source src="../videos/hero-qr.mp4" type="video/mp4">
 </video>
 <div class="hero-overlay" aria-hidden="true"></div>
 <div class="hero-fade" aria-hidden="true"></div>
 <div class="hero-content">
-<img src="images/mg-eventos-logo.png" alt="MG Eventos" class="hero-logo">
+<img src="../images/mg-eventos-logo.png" alt="MG Eventos" class="hero-logo">
 <h1>Boletería y acceso para tus eventos</h1>
 <p>Facilitamos la venta de entradas y el control de acceso para que puedas gestionar tu evento de forma sencilla y segura.</p>
 </div>
@@ -509,21 +510,21 @@ transition: none;
 <div class="events-content">
 <h2>Próximos eventos</h2>
 <p>Conoce nuestros próximos eventos y encuentra toda la información que necesitas para participar.</p>
-<a href="eventos/index.html" class="events-button">VER EVENTOS</a>
+<a href="../eventos/index.html" class="events-button">VER EVENTOS</a>
 </div>
 </section>
 </main>
 <footer>
 <div class="footer-links">
-<a href="politica-privacidad.html">Política de Privacidad</a>
+<a href="../politica-privacidad.html">Política de Privacidad</a>
 <span>·</span>
-<a href="terminos-servicio.html">Términos de Servicio</a>
+<a href="../terminos-servicio.html">Términos de Servicio</a>
 <span>·</span>
-<a href="eliminacion-datos.html">Eliminación de Datos</a>
+<a href="../eliminacion-datos.html">Eliminación de Datos</a>
 </div>
 <div>© 2026 MG Eventos</div>
 </footer>
-<script src="config.js"></script>
+<script src="../config.js"></script>
 <script>
 const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PANEL_URL = "https://maurigar83.github.io/mg-eventos/panel.html";
@@ -640,7 +641,7 @@ sessionStorage.setItem("mg_eventos_nombre", data.nombre);
 sessionStorage.setItem("mg_eventos_rol", data.rol);
 sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(data.permisos || []));
 sessionStorage.setItem("mg_eventos_expira", data.expira);
-window.location.href = "panel.html";
+window.location.href = "../panel.html";
 } catch (error) {
 loginMessage.textContent = "No fue posible conectar con el sistema de seguridad. Intenta nuevamente.";
 } finally {
@@ -651,8 +652,8 @@ submitButton.textContent = "INGRESAR";
 const heroVideo = document.querySelector(".hero-video");
 const heroFade = document.querySelector(".hero-fade");
 const videos = [
-"videos/hero-qr.mp4",
-"videos/hero-evento.mp4"
+"../videos/hero-qr.mp4",
+"../videos/hero-evento.mp4"
 ];
 let currentVideo = 0;
 let changingVideo = false;
