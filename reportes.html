@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+<title>MG Eventos | Reportes</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fa;
+  color: #111827;
+  min-height: 100vh;
+}
+
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #111827;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #111827;
+  color: #d9ad55;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  margin-top: 2px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-role {
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.logout-button {
+  padding: 9px 17px;
+  border: 1px solid #d9ad55;
+  border-radius: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.logout-button:hover {
+  background: #d9ad55;
+  color: #111827;
+}
+
+.main {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: #111827;
+}
+
+.welcome {
+  margin-bottom: 24px;
+}
+
+.welcome-label {
+  margin-bottom: 6px;
+  color: #b58b3b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.welcome h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  color: #111827;
+}
+
+.welcome p {
+  max-width: 700px;
+  margin-top: 9px;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.stat-label {
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.stat-value.loading {
+  color: #9ca3af;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.section-title {
+  margin-bottom: 12px;
+  font-size: 21px;
+}
+
+.search-card {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.search-row input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.search-row input:focus {
+  outline: none;
+  border-color: #d9ad55;
+}
+
+.search-button {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 10px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.search-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.search-hint {
+  margin-top: 10px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  border-color: #d9ad55;
+}
+
+.result-main strong {
+  font-size: 15px;
+}
+
+.result-main div {
+  margin-top: 3px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.result-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #f3f4f6;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.empty-state,
+.error-state {
+  padding: 16px 18px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.empty-state {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.error-state {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.footer {
+  margin-top: 35px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* MODAL FICHA DEL COMPRADOR */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 18, 35, 0.72);
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.ficha-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ficha-header h2 {
+  font-size: 20px;
+}
+
+.ficha-header p {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.ficha-close {
+  border: 0;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.ficha-block {
+  margin-bottom: 18px;
+}
+
+.ficha-block-title {
+  margin-bottom: 8px;
+  color: #b58b3b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.ficha-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.ficha-item span {
+  display: block;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.ficha-item strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.ficha-doc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.ficha-doc-link {
+  padding: 9px 16px;
+  border-radius: 20px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.comm-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+}
+
+.comm-row + .comm-row {
+  margin-top: 10px;
+}
+
+.comm-info strong {
+  font-size: 14px;
+}
+
+.comm-info div {
+  margin-top: 2px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.comm-button {
+  padding: 9px 16px;
+  border: 1px solid #d9ad55;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.comm-button:hover {
+  background: #d9ad55;
+}
+
+.comm-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  background: #ffffff;
+}
+
+.ficha-feedback {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.ficha-feedback.ok {
+  color: #059669;
+}
+
+.ficha-feedback.error {
+  color: #b91c1c;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(8, 18, 35, 0.85);
+}
+
+.loading-overlay.show {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 46px;
+  height: 46px;
+  border: 4px solid rgba(217, 173, 85, 0.25);
+  border-top-color: #d9ad55;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+.loading-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 850px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-container {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+
+  .header-user {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .user-info {
+    text-align: left;
+  }
+
+  .main {
+    padding: 18px 12px 30px;
+  }
+
+  .welcome h1 {
+    font-size: 24px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .search-row {
+    flex-direction: column;
+  }
+
+  .result-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ficha-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comm-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comm-button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a class="brand" href="https://maurigar83.github.io/mg-eventos/index.html">
+      <div class="brand-mark">MG</div>
+      <div class="brand-text">
+        <span class="brand-name">MG Eventos</span>
+        <span class="brand-subtitle">Gestión de eventos</span>
+      </div>
+    </a>
+    <div class="header-user">
+      <div class="user-info">
+        <div class="user-name" id="userName">Cargando...</div>
+        <div class="user-role" id="userRole">Cargando...</div>
+      </div>
+      <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <a class="back-link" href="panel.html">← Volver al panel</a>
+  <section class="welcome">
+    <div class="welcome-label">Reportes</div>
+    <h1>Consulta de ventas y compradores</h1>
+    <p>Resumen general del evento y búsqueda de compradores por nombre, cédula, teléfono o serial de boleta.</p>
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="stat-card">
+      <div class="stat-label">Boletas</div>
+      <div class="stat-value loading" id="statBoletas">Cargando...</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Ingresos</div>
+      <div class="stat-value loading" id="statIngresos">Cargando...</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Compradores</div>
+      <div class="stat-value loading" id="statCompradores">Cargando...</div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Buscar comprador</h2>
+    <div class="search-card">
+      <div class="search-row">
+        <input id="searchInput" type="text" placeholder="Nombre, cédula, teléfono o serial de boleta">
+        <button class="search-button" id="searchButton" type="button" onclick="buscarComprador()">Buscar</button>
+      </div>
+      <div class="search-hint">Escribe al menos parte del dato y presiona Buscar o Enter.</div>
+    </div>
+    <div class="results" id="results"></div>
+  </section>
+
+  <footer class="footer">MG Eventos · Plataforma de gestión de eventos</footer>
+</main>
+
+<div class="modal" id="fichaModal">
+  <div class="modal-box">
+    <div class="ficha-header">
+      <div>
+        <h2 id="fichaNombre">Comprador</h2>
+        <p id="fichaCedula">Cédula</p>
+      </div>
+      <button class="ficha-close" type="button" onclick="cerrarFicha()">✕</button>
+    </div>
+
+    <div class="ficha-block">
+      <div class="ficha-block-title">Datos</div>
+      <div class="ficha-grid">
+        <div class="ficha-item">
+          <span>Nombre</span>
+          <strong id="fichaDatoNombre">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Cédula</span>
+          <strong id="fichaDatoCedula">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Teléfono</span>
+          <strong id="fichaDatoTelefono">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Correo</span>
+          <strong id="fichaDatoCorreo">-</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="ficha-block">
+      <div class="ficha-block-title">Compra</div>
+      <div class="ficha-grid">
+        <div class="ficha-item">
+          <span>Boletas</span>
+          <strong id="fichaDatoBoletas">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Tipo</span>
+          <strong id="fichaDatoTipo">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Valor</span>
+          <strong id="fichaDatoValor">-</strong>
+        </div>
+        <div class="ficha-item">
+          <span>Fecha de pago</span>
+          <strong id="fichaDatoFecha">-</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="ficha-block">
+      <div class="ficha-block-title">Documento</div>
+      <div class="ficha-doc">
+        <span id="fichaDocEstado">PDF original</span>
+        <a class="ficha-doc-link" id="fichaDocLink" href="#" target="_blank" rel="noopener">Ver PDF</a>
+      </div>
+    </div>
+
+    <div class="ficha-block">
+      <div class="ficha-block-title">Comunicación</div>
+      <div class="comm-row">
+        <div class="comm-info">
+          <strong>Correo</strong>
+          <div id="fichaCorreoEstado">-</div>
+        </div>
+        <button class="comm-button" id="botonReenviarCorreo" type="button" onclick="reenviarCorreo()">Reenviar</button>
+      </div>
+      <div class="comm-row">
+        <div class="comm-info">
+          <strong>WhatsApp</strong>
+          <div id="fichaWhatsAppEstado">-</div>
+        </div>
+        <button class="comm-button" id="botonReenviarWhatsApp" type="button" onclick="reenviarWhatsApp()">Reenviar</button>
+      </div>
+      <div class="ficha-feedback" id="fichaFeedback"></div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Cargando...</div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const API_URL = CONFIG.SEGURIDAD_API_URL;
+const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
+
+let cedulaActual = "";
+
+function obtenerToken() {
+  return sessionStorage.getItem("mg_eventos_token") || "";
+}
+
+function obtenerNombreReal() {
+  return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
+}
+
+function limpiarSesion() {
+  sessionStorage.removeItem("mg_eventos_token");
+  sessionStorage.removeItem("mg_eventos_usuario");
+  sessionStorage.removeItem("mg_eventos_nombre");
+  sessionStorage.removeItem("mg_eventos_nombre_real");
+  sessionStorage.removeItem("mg_eventos_rol");
+  sessionStorage.removeItem("mg_eventos_permisos");
+  sessionStorage.removeItem("mg_eventos_expira");
+}
+
+async function llamarAPI(datos) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(datos)
+  });
+
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+
+  return response.json();
+}
+
+function mostrarCargando(texto) {
+  document.getElementById("loadingText").textContent = texto || "Cargando...";
+  document.getElementById("loadingOverlay").classList.add("show");
+}
+
+function ocultarCargando() {
+  document.getElementById("loadingOverlay").classList.remove("show");
+}
+
+function formatearMoneda(valor) {
+  const numero = Number(valor) || 0;
+  return "$" + numero.toLocaleString("es-CO");
+}
+
+function mostrarUsuario(nombre, rol) {
+  document.getElementById("userName").textContent = nombre || "Usuario";
+  document.getElementById("userRole").textContent = rol || "";
+}
+
+function cargarDatosLocales() {
+  const token = obtenerToken();
+
+  if (!token) {
+    return false;
+  }
+
+  const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
+  const nombre = obtenerNombreReal() || usuario;
+  const rol = sessionStorage.getItem("mg_eventos_rol") || "";
+  const permisos = (function() {
+    try {
+      const lista = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
+      return Array.isArray(lista) ? lista : [];
+    } catch (error) {
+      return [];
+    }
+  })();
+
+  mostrarUsuario(nombre, rol);
+
+  if (!permisos.includes("REPORTES")) {
+    document.body.innerHTML =
+      '<div style="padding:60px 20px;text-align:center;color:#6b7280;">' +
+      '<h1 style="color:#111827;margin-bottom:10px;">Acceso restringido</h1>' +
+      '<p>Tu usuario no tiene permisos para acceder a Reportes.</p>' +
+      '<p style="margin-top:16px;"><a href="panel.html" style="color:#b58b3b;font-weight:700;">Volver al panel</a></p>' +
+      "</div>";
+    return true;
+  }
+
+  return true;
+}
+
+async function validarSesion() {
+  const token = obtenerToken();
+
+  if (!token) {
+    limpiarSesion();
+    window.location.replace(PUBLIC_URL);
+    return;
+  }
+
+  try {
+    const resultado = await llamarAPI({ accion: "sesion", token: token });
+
+    if (!resultado || !resultado.ok) {
+      limpiarSesion();
+      window.location.replace(PUBLIC_URL);
+      return;
+    }
+
+    mostrarUsuario(obtenerNombreReal() || resultado.usuario, resultado.rol);
+    cargarResumen();
+  } catch (error) {
+    console.warn("No fue posible validar la sesión en este momento:", error);
+    cargarResumen();
+  }
+}
+
+async function cargarResumen() {
+  const token = obtenerToken();
+
+  try {
+    const resultado = await llamarAPI({ accion: "resumen_reportes", token: token });
+
+    if (!resultado || !resultado.ok) {
+      document.getElementById("statBoletas").textContent = "-";
+      document.getElementById("statIngresos").textContent = "-";
+      document.getElementById("statCompradores").textContent = "-";
+      return;
+    }
+
+    const statBoletas = document.getElementById("statBoletas");
+    const statIngresos = document.getElementById("statIngresos");
+    const statCompradores = document.getElementById("statCompradores");
+
+    statBoletas.classList.remove("loading");
+    statIngresos.classList.remove("loading");
+    statCompradores.classList.remove("loading");
+
+    statBoletas.textContent = resultado.boletas;
+    statIngresos.textContent = formatearMoneda(resultado.ingresos);
+    statCompradores.textContent = resultado.compradores;
+  } catch (error) {
+    console.warn("No fue posible cargar el resumen:", error);
+  }
+}
+
+async function buscarComprador() {
+  const input = document.getElementById("searchInput");
+  const boton = document.getElementById("searchButton");
+  const resultados = document.getElementById("results");
+  const query = input.value.trim();
+
+  if (!query) {
+    resultados.innerHTML = '<div class="empty-state">Escribe un dato para buscar.</div>';
+    return;
+  }
+
+  boton.disabled = true;
+  resultados.innerHTML = '<div class="empty-state">Buscando...</div>';
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "buscar_comprador",
+      token: obtenerToken(),
+      query: query
+    });
+
+    if (!resultado || !resultado.ok) {
+      resultados.innerHTML =
+        '<div class="error-state">' + ((resultado && resultado.mensaje) || "No se pudo realizar la búsqueda.") + "</div>";
+      return;
+    }
+
+    if (!resultado.resultados.length) {
+      resultados.innerHTML = '<div class="empty-state">No se encontraron compradores con ese dato.</div>';
+      return;
+    }
+
+    resultados.innerHTML = "";
+
+    resultado.resultados.forEach(function(comprador) {
+      const card = document.createElement("div");
+      card.className = "result-card";
+      card.onclick = function() {
+        abrirFicha(comprador.cedula);
+      };
+      card.innerHTML =
+        '<div class="result-main">' +
+        "<strong>" + escaparTexto(comprador.nombre) + "</strong>" +
+        "<div>" +
+        (comprador.cedula ? "C.C. " + escaparTexto(comprador.cedula) + " · " : "") +
+        escaparTexto(comprador.telefono || "Sin teléfono") +
+        "</div>" +
+        "</div>" +
+        '<div class="result-badge">' + comprador.boletas + (comprador.boletas === 1 ? " boleta" : " boletas") + "</div>";
+      resultados.appendChild(card);
+    });
+  } catch (error) {
+    resultados.innerHTML = '<div class="error-state">Error de conexión. Intenta nuevamente.</div>';
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function escaparTexto(texto) {
+  const div = document.createElement("div");
+  div.textContent = texto == null ? "" : String(texto);
+  return div.innerHTML;
+}
+
+async function abrirFicha(cedula) {
+  mostrarCargando("Cargando ficha del comprador...");
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "ficha_comprador",
+      token: obtenerToken(),
+      cedula: cedula
+    });
+
+    ocultarCargando();
+
+    if (!resultado || !resultado.ok) {
+      alert((resultado && resultado.mensaje) || "No se pudo cargar la ficha del comprador.");
+      return;
+    }
+
+    cedulaActual = resultado.cedula;
+
+    document.getElementById("fichaNombre").textContent = resultado.nombre || "Comprador";
+    document.getElementById("fichaCedula").textContent = "Cédula " + (resultado.cedula || "-");
+
+    document.getElementById("fichaDatoNombre").textContent = resultado.nombre || "-";
+    document.getElementById("fichaDatoCedula").textContent = resultado.cedula || "-";
+    document.getElementById("fichaDatoTelefono").textContent = resultado.telefono || "-";
+    document.getElementById("fichaDatoCorreo").textContent = resultado.correo || "-";
+
+    document.getElementById("fichaDatoBoletas").textContent = resultado.boletas;
+    document.getElementById("fichaDatoTipo").textContent = resultado.tipo || "-";
+    document.getElementById("fichaDatoValor").textContent = formatearMoneda(resultado.valorTotal);
+    document.getElementById("fichaDatoFecha").textContent = resultado.fechaPago || "-";
+
+    const docLink = document.getElementById("fichaDocLink");
+    const docEstado = document.getElementById("fichaDocEstado");
+
+    if (resultado.enlacePDF) {
+      docLink.href = resultado.enlacePDF;
+      docLink.style.display = "inline-block";
+      docEstado.textContent = "PDF original disponible";
+    } else {
+      docLink.style.display = "none";
+      docEstado.textContent = "Todavía no hay un PDF generado";
+    }
+
+    document.getElementById("fichaCorreoEstado").textContent =
+      (resultado.correo ? resultado.correo + " · " : "") + (resultado.estadoEmail || "Sin enviar") +
+      (resultado.fechaEmail ? " (" + resultado.fechaEmail + ")" : "");
+
+    document.getElementById("fichaWhatsAppEstado").textContent =
+      (resultado.telefono ? resultado.telefono + " · " : "") + (resultado.estadoWhatsApp || "Sin enviar") +
+      (resultado.fechaWhatsApp ? " (" + resultado.fechaWhatsApp + ")" : "");
+
+    document.getElementById("fichaFeedback").textContent = "";
+    document.getElementById("fichaFeedback").className = "ficha-feedback";
+
+    document.getElementById("fichaModal").classList.add("show");
+  } catch (error) {
+    ocultarCargando();
+    alert("Error de conexión al cargar la ficha del comprador.");
+  }
+}
+
+function cerrarFicha() {
+  document.getElementById("fichaModal").classList.remove("show");
+  cedulaActual = "";
+}
+
+async function reenviarCorreo() {
+  if (!cedulaActual) {
+    return;
+  }
+
+  const boton = document.getElementById("botonReenviarCorreo");
+  const feedback = document.getElementById("fichaFeedback");
+
+  boton.disabled = true;
+  feedback.textContent = "Reenviando correo...";
+  feedback.className = "ficha-feedback";
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "reenviar_correo",
+      token: obtenerToken(),
+      cedula: cedulaActual
+    });
+
+    if (resultado && resultado.ok) {
+      feedback.textContent = resultado.mensaje;
+      feedback.className = "ficha-feedback ok";
+    } else {
+      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo reenviar el correo.";
+      feedback.className = "ficha-feedback error";
+    }
+  } catch (error) {
+    feedback.textContent = "Error de conexión al reenviar el correo.";
+    feedback.className = "ficha-feedback error";
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+async function reenviarWhatsApp() {
+  if (!cedulaActual) {
+    return;
+  }
+
+  const boton = document.getElementById("botonReenviarWhatsApp");
+  const feedback = document.getElementById("fichaFeedback");
+
+  boton.disabled = true;
+  feedback.textContent = "Reenviando por WhatsApp...";
+  feedback.className = "ficha-feedback";
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "reenviar_whatsapp",
+      token: obtenerToken(),
+      cedula: cedulaActual
+    });
+
+    if (resultado && resultado.ok) {
+      feedback.textContent = resultado.mensaje;
+      feedback.className = "ficha-feedback ok";
+    } else {
+      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo reenviar por WhatsApp.";
+      feedback.className = "ficha-feedback error";
+    }
+  } catch (error) {
+    feedback.textContent = "Error de conexión al reenviar por WhatsApp.";
+    feedback.className = "ficha-feedback error";
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+document.getElementById("searchInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    buscarComprador();
+  }
+});
+
+document.getElementById("fichaModal").addEventListener("click", function(event) {
+  if (event.target === this) {
+    cerrarFicha();
+  }
+});
+
+function cerrarSesion() {
+  const token = obtenerToken();
+
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
+
+  if (token) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        accion: "logout",
+        token: token
+      }),
+      keepalive: true
+    }).catch(() => {});
+  }
+}
+
+const tieneSesionLocal = cargarDatosLocales();
+
+if (!tieneSesionLocal) {
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
+} else {
+  setTimeout(() => {
+    validarSesion();
+  }, 0);
+}
+</script>
+</body>
+</html>
