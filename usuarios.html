@@ -488,24 +488,33 @@ body {
 
   .header-user {
     width: 100%;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 6px;
+  }
+
+  .header-back-button,
+  .logout-button {
+    padding: 7px 10px;
+    font-size: 10.5px;
   }
 
   .user-info {
-    margin-left: 0;
-    text-align: left;
-    order: 3;
-    flex: 1 1 100%;
+    margin-left: auto;
+    text-align: right;
+    flex: 0 1 auto;
+    min-width: 0;
   }
 
-  .header-back-button {
-    order: 1;
+  .user-name {
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .logout-button {
-    order: 2;
+  .user-role {
+    font-size: 9.5px;
   }
 
   .main {
