@@ -892,6 +892,11 @@ async function abrirModulo(permiso) {
     return;
   }
 
+  if (permiso === "USUARIOS") {
+    window.location.href = "usuarios.html";
+    return;
+  }
+
   if (permiso === "VENDER") {
     const moduloVender = document.querySelector('[data-permission="VENDER"]');
 
