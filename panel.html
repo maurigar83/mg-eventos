@@ -866,7 +866,7 @@ async function abrirModulo(permiso) {
         return;
       }
 
-      window.location.href = VENTAS_URL + "?acceso=" + encodeURIComponent(acceso.codigo);
+      window.location.href = CONFIG.VENTAS_WRAPPER_URL + "?acceso=" + encodeURIComponent(acceso.codigo);
     } catch (error) {
       document.getElementById("modalTitle").textContent = "Error de conexión";
       document.getElementById("modalMessage").textContent = "No fue posible abrir Ventas. Tu sesión no se ha cerrado.";
