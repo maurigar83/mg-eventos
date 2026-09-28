@@ -1008,15 +1008,21 @@ document.getElementById("modal").addEventListener("click", function(event) {
   }
 });
 
-const tieneSesionLocal = cargarDatosLocales();
+const parametrosURL = new URLSearchParams(window.location.search);
 
-if (!tieneSesionLocal) {
-  limpiarSesion();
-  window.location.replace(PUBLIC_URL);
+if (parametrosURL.get("logout") === "1") {
+  cerrarSesion();
 } else {
-  setTimeout(() => {
-    validarSesion();
-  }, 0);
+  const tieneSesionLocal = cargarDatosLocales();
+
+  if (!tieneSesionLocal) {
+    limpiarSesion();
+    window.location.replace(PUBLIC_URL);
+  } else {
+    setTimeout(() => {
+      validarSesion();
+    }, 0);
+  }
 }
 </script>
 </body>
