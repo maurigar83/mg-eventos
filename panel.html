@@ -887,6 +887,11 @@ async function abrirModulo(permiso) {
     return;
   }
 
+  if (permiso === "REPORTES") {
+    window.location.href = "reportes.html";
+    return;
+  }
+
   if (permiso === "VENDER") {
     const moduloVender = document.querySelector('[data-permission="VENDER"]');
 
