@@ -11,12 +11,12 @@
 html{scroll-behavior:smooth}
 body{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#111827;min-height:100vh;line-height:1.6}
 header{width:100%;background:#fff;border-bottom:1px solid #eee}
-.header-container{width:100%;max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:#111827}
-.brand img{width:48px;height:48px;object-fit:contain;border-radius:50%}
-.brand-divider{width:1px;height:34px;background:#c58f48;flex-shrink:0}
-.brand-slogan{font-size:15px;font-weight:700;letter-spacing:.5px;color:#c58f48;white-space:nowrap;line-height:1}
-.e-invertida{display:inline-block;font-size:.96em;font-weight:700;color:#111;line-height:1;transform:translateY(1px)}
+.header-container{width:100%;max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:15px;text-decoration:none;color:#111827}
+.brand img{width:54px;height:54px;object-fit:contain;border-radius:50%;display:block}
+.brand-divider{width:2px;height:39px;background:#c58f48;flex-shrink:0}
+.brand-slogan{font-size:17px;font-weight:800;letter-spacing:.35px;color:#c58f48;white-space:nowrap;line-height:1}
+.e-invertida{display:inline-block;font-size:.95em;font-weight:800;color:#111;line-height:1;transform:translateY(1px)}
 .navigation{display:flex;align-items:center;gap:10px}
 .nav-link{display:inline-flex;align-items:center;justify-content:center;min-width:100px;padding:9px 18px;border:1px solid #d9ad55;border-radius:25px;background:#fff;color:#111827;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.7px;transition:background .2s ease,color .2s ease,transform .2s ease}
 .nav-link:hover{background:#d9ad55;color:#111827;transform:translateY(-1px)}
@@ -40,7 +40,6 @@ footer{width:100%;padding:25px 20px;text-align:center;border-top:1px solid #eee;
 .footer-links{font-size:11px;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin-bottom:10px}
 .footer-links a{color:#6b7280;text-decoration:none;transition:color .2s ease;white-space:nowrap}
 .footer-links a:hover{color:#d9ad55}
-.footer-links span{color:#9ca3af}
 @keyframes heroFadeUp{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(0)}}
 .login-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
 .login-modal.is-open{display:flex}
@@ -56,14 +55,13 @@ footer{width:100%;padding:25px 20px;text-align:center;border-top:1px solid #eee;
 .login-modal-close{position:absolute;top:10px;right:14px;border:0;background:transparent;color:#111827;font-size:32px;line-height:1;cursor:pointer}
 .login-message{min-height:20px;margin-top:15px;text-align:center;font-size:14px}
 @media(max-width:600px){
-.header-container{padding:10px 15px;gap:10px;flex-direction:column}
-.brand{width:100%;justify-content:center;gap:10px}
-.brand img{width:42px;height:42px}
-.brand-divider{height:30px}
-.brand-slogan{font-size:12px;letter-spacing:.35px}
-.navigation{width:100%;justify-content:center;gap:5px}
-.nav-link{min-width:auto;padding:8px 10px;font-size:11px;letter-spacing:.3px}
-.access-link{padding-left:9px;padding-right:9px}
+.header-container{padding:9px 12px;gap:9px}
+.brand{gap:10px}
+.brand img{width:45px;height:45px}
+.brand-divider{height:32px;width:2px}
+.brand-slogan{font-size:12px;letter-spacing:.15px}
+.navigation{gap:4px}
+.nav-link{min-width:auto;padding:8px 9px;font-size:10px;letter-spacing:.25px}
 .hero{min-height:520px}
 .hero-content{padding:65px 20px 70px}
 .hero-logo{width:145px;height:145px;margin-bottom:22px}
@@ -80,6 +78,12 @@ footer{padding:25px 10px}
 .login-modal{padding:15px}
 .login-modal-content{padding:32px 22px 24px}
 .login-modal-content h2{font-size:23px}
+}
+@media(max-width:480px){
+.header-container{flex-direction:column;padding:10px 12px}
+.brand{width:100%;justify-content:center}
+.navigation{width:100%;justify-content:center}
+.nav-link{padding:8px 10px;font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){
 .hero-logo,.hero h1,.hero p,.events-section{animation:none;opacity:1;transform:none}
