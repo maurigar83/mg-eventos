@@ -535,12 +535,22 @@ body {
   }
 
   .user-card {
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: flex-start;
+    row-gap: 10px;
+  }
+
+  .user-main {
+    flex: 1 1 100%;
+  }
+
+  .user-badges {
+    flex: 0 0 auto;
   }
 
   .user-actions {
-    width: 100%;
+    width: auto;
+    flex: 1 1 auto;
     justify-content: flex-start;
   }
 }
