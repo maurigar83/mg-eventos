@@ -397,7 +397,7 @@ body {
     transform: rotate(360deg);
   }
 }
- 
+
 @media (max-width: 850px) {
   .modules {
     grid-template-columns: repeat(2, 1fr);
@@ -652,7 +652,7 @@ body {
     <button class="modal-button" type="button" onclick="cerrarModal()">Entendido</button>
   </div>
 </div>
-  <div class="loading-overlay" id="loadingOverlay">
+<div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div class="loading-text">Cargando Ventas...</div>
 </div>
@@ -921,19 +921,6 @@ async function abrirModulo(permiso) {
       if (loadingOverlay) {
         loadingOverlay.classList.remove("show");
       }
-      document.getElementById("modalTitle").textContent = "Error de conexión";
-      document.getElementById("modalMessage").textContent = "No fue posible abrir Ventas. Tu sesión no se ha cerrado.";
-      document.getElementById("modal").classList.add("show");
-    } finally {
-      if (moduloVender) {
-        moduloVender.style.pointerEvents = "";
-      }
-    }
-    return;
-  }
-
-      window.location.href = CONFIG.VENTAS_URL + "?acceso=" + encodeURIComponent(acceso.codigo);
-    } catch (error) {
       document.getElementById("modalTitle").textContent = "Error de conexión";
       document.getElementById("modalMessage").textContent = "No fue posible abrir Ventas. Tu sesión no se ha cerrado.";
       document.getElementById("modal").classList.add("show");
