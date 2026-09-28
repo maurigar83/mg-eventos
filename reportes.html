@@ -197,6 +197,12 @@ body {
   font-weight: 600;
 }
 
+.stat-breakdown {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
 .section-title {
   margin-bottom: 12px;
   font-size: 21px;
@@ -629,10 +635,12 @@ body {
     <div class="stat-card">
       <div class="stat-label">Boletas</div>
       <div class="stat-value loading" id="statBoletas">Cargando...</div>
+      <div class="stat-breakdown" id="statBoletasDesglose"></div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Ingresos</div>
       <div class="stat-value loading" id="statIngresos">Cargando...</div>
+      <div class="stat-breakdown">Solo boletas General</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Compradores</div>
@@ -887,6 +895,9 @@ async function cargarResumen() {
     statBoletas.textContent = resultado.boletas;
     statIngresos.textContent = formatearMoneda(resultado.ingresos);
     statCompradores.textContent = resultado.compradores;
+
+    document.getElementById("statBoletasDesglose").textContent =
+      "General: " + resultado.boletasGeneral + " · Cortesía: " + resultado.boletasCortesia;
   } catch (error) {
     console.warn("No fue posible cargar el resumen:", error);
   }
@@ -1045,6 +1056,7 @@ async function reenviarCorreo() {
     if (resultado && resultado.ok) {
       feedback.textContent = resultado.mensaje;
       feedback.className = "ficha-feedback ok";
+      await refrescarEstadoComunicacion();
     } else {
       feedback.textContent = (resultado && resultado.mensaje) || "No se pudo reenviar el correo.";
       feedback.className = "ficha-feedback error";
@@ -1054,6 +1066,34 @@ async function reenviarCorreo() {
     feedback.className = "ficha-feedback error";
   } finally {
     boton.disabled = false;
+  }
+}
+
+async function refrescarEstadoComunicacion() {
+  if (!cedulaActual) {
+    return;
+  }
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "ficha_comprador",
+      token: obtenerToken(),
+      cedula: cedulaActual
+    });
+
+    if (!resultado || !resultado.ok) {
+      return;
+    }
+
+    document.getElementById("fichaCorreoEstado").textContent =
+      (resultado.correo ? resultado.correo + " · " : "") + (resultado.estadoEmail || "Sin enviar") +
+      (resultado.fechaEmail ? " (" + resultado.fechaEmail + ")" : "");
+
+    document.getElementById("fichaWhatsAppEstado").textContent =
+      (resultado.telefono ? resultado.telefono + " · " : "") + (resultado.estadoWhatsApp || "Sin enviar") +
+      (resultado.fechaWhatsApp ? " (" + resultado.fechaWhatsApp + ")" : "");
+  } catch (error) {
+    console.warn("No fue posible refrescar el estado de comunicación:", error);
   }
 }
 
@@ -1079,6 +1119,7 @@ async function reenviarWhatsApp() {
     if (resultado && resultado.ok) {
       feedback.textContent = resultado.mensaje;
       feedback.className = "ficha-feedback ok";
+      await refrescarEstadoComunicacion();
     } else {
       feedback.textContent = (resultado && resultado.mensaje) || "No se pudo reenviar por WhatsApp.";
       feedback.className = "ficha-feedback error";
