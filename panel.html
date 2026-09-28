@@ -545,6 +545,7 @@ body {
 const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
 const QR_URL = "https://maurigar83.github.io/validacion-tickets/?lector=1";
+const VENTAS_URL = CONFIG.BOLETAS_API_URL;
 const NOMBRES_MODULOS = {
   LEER_QR: "Leer QR",
   VENDER: "Vender",
@@ -731,6 +732,23 @@ async function abrirModulo(permiso) {
     modulo.style.pointerEvents = "none";
   }
   try {
+    if (permiso === "VENDER") {
+      const resultado = await llamarAPI({
+        accion: "generar_acceso_temporal",
+        token: token,
+        permiso: "VENDER"
+      });
+      if (!resultado || !resultado.ok || !resultado.codigo) {
+        document.getElementById("modalTitle").textContent = "Acceso restringido";
+        document.getElementById("modalMessage").textContent = resultado && resultado.mensaje
+          ? resultado.mensaje
+          : "No fue posible generar el acceso a ventas.";
+        document.getElementById("modal").classList.add("show");
+        return;
+      }
+      window.location.href = VENTAS_URL + "?acceso=" + encodeURIComponent(resultado.codigo);
+      return;
+    }
     const resultado = await llamarAPI({
       accion: "permiso",
       token: token,
