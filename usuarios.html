@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+<title>MG Eventos | Usuarios</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fa;
+  color: #111827;
+  min-height: 100vh;
+}
+
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #111827;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #111827;
+  color: #d9ad55;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  margin-top: 2px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-back-button {
+  padding: 9px 17px;
+  border: 1px solid #d9ad55;
+  border-radius: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.header-back-button:hover {
+  background: #d9ad55;
+  color: #111827;
+}
+
+.user-info {
+  text-align: right;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-role {
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.logout-button {
+  padding: 9px 17px;
+  border: 1px solid #d9ad55;
+  border-radius: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.logout-button:hover {
+  background: #d9ad55;
+  color: #111827;
+}
+
+.main {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+
+.welcome {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.welcome-label {
+  margin-bottom: 6px;
+  color: #b58b3b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.welcome h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  color: #111827;
+}
+
+.welcome p {
+  max-width: 700px;
+  margin-top: 9px;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.new-user-button {
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 22px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.new-user-button:hover {
+  background: #1f2937;
+}
+
+.section-title {
+  margin-bottom: 12px;
+  font-size: 21px;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.user-main {
+  min-width: 0;
+}
+
+.user-main strong {
+  font-size: 15px;
+}
+
+.user-main div {
+  margin-top: 3px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.user-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.badge-rol {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.badge-activo {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.badge-inactivo {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.action-button {
+  padding: 8px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.action-button:hover {
+  border-color: #d9ad55;
+  background: #fffaf0;
+}
+
+.action-button.danger {
+  border-color: #f3c6c1;
+  color: #b91c1c;
+}
+
+.action-button.danger:hover {
+  background: #fef2f2;
+  border-color: #b91c1c;
+}
+
+.action-button.success {
+  border-color: #a7e3c4;
+  color: #059669;
+}
+
+.action-button.success:hover {
+  background: #ecfdf5;
+  border-color: #059669;
+}
+
+.action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.empty-state,
+.error-state {
+  padding: 16px 18px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.empty-state {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.error-state {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.footer {
+  margin-top: 35px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 18, 35, 0.72);
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.modal-header h2 {
+  font-size: 19px;
+}
+
+.modal-header p {
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.modal-close {
+  border: 0;
+  background: transparent;
+  color: #9ca3af;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #d9ad55;
+}
+
+.modal-submit {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.modal-feedback {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.modal-feedback.ok {
+  color: #059669;
+}
+
+.modal-feedback.error {
+  color: #b91c1c;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  background: rgba(8, 18, 35, 0.85);
+}
+
+.loading-overlay.show {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 46px;
+  height: 46px;
+  border: 4px solid rgba(217, 173, 85, 0.25);
+  border-top-color: #d9ad55;
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+.loading-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .header-container {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 16px;
+  }
+
+  .header-user {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .user-info {
+    text-align: left;
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  .header-back-button {
+    order: 1;
+  }
+
+  .logout-button {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .main {
+    padding: 18px 12px 30px;
+  }
+
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .welcome h1 {
+    font-size: 24px;
+  }
+
+  .new-user-button {
+    width: 100%;
+  }
+
+  .user-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a class="brand" href="https://maurigar83.github.io/mg-eventos/index.html">
+      <div class="brand-mark">MG</div>
+      <div class="brand-text">
+        <span class="brand-name">MG Eventos</span>
+        <span class="brand-subtitle">Gestión de eventos</span>
+      </div>
+    </a>
+    <div class="header-user">
+      <a class="header-back-button" href="panel.html">← Volver al panel</a>
+      <div class="user-info">
+        <div class="user-name" id="userName">Cargando...</div>
+        <div class="user-role" id="userRole">Cargando...</div>
+      </div>
+      <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <section class="welcome">
+    <div>
+      <div class="welcome-label">Usuarios</div>
+      <h1>Administración de usuarios</h1>
+      <p>Consulta los usuarios del sistema, gestiona su acceso, contraseña y rol.</p>
+    </div>
+    <button class="new-user-button" type="button" onclick="abrirCrearUsuario()">+ Nuevo usuario</button>
+  </section>
+
+  <section>
+    <h2 class="section-title">Usuarios del sistema</h2>
+    <div class="users" id="users">
+      <div class="empty-state">Cargando usuarios...</div>
+    </div>
+  </section>
+
+  <footer class="footer">MG Eventos · Plataforma de gestión de eventos</footer>
+</main>
+
+<!-- MODAL: CREAR USUARIO -->
+<div class="modal" id="modalCrear">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h2>Nuevo usuario</h2>
+        <p>Crea un usuario y define su rol inicial.</p>
+      </div>
+      <button class="modal-close" type="button" onclick="cerrarModal('modalCrear')">✕</button>
+    </div>
+    <div class="field">
+      <label for="crearUsuario">Usuario</label>
+      <input id="crearUsuario" type="text" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="crearNombre">Nombre</label>
+      <input id="crearNombre" type="text" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="crearRol">Rol</label>
+      <select id="crearRol">
+        <option value="LECTOR">LECTOR</option>
+        <option value="VENDEDOR">VENDEDOR</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="SUPERADMIN">SUPERADMIN</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="crearPassword">Contraseña</label>
+      <input id="crearPassword" type="password" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label for="crearConfirmacion">Confirmar contraseña</label>
+      <input id="crearConfirmacion" type="password" autocomplete="new-password">
+    </div>
+    <button class="modal-submit" id="botonCrear" type="button" onclick="crearUsuario()">Crear usuario</button>
+    <div class="modal-feedback" id="feedbackCrear"></div>
+  </div>
+</div>
+
+<!-- MODAL: CAMBIAR CONTRASEÑA -->
+<div class="modal" id="modalPassword">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h2>Cambiar contraseña</h2>
+        <p id="passwordUsuarioTexto">Usuario</p>
+      </div>
+      <button class="modal-close" type="button" onclick="cerrarModal('modalPassword')">✕</button>
+    </div>
+    <div class="field">
+      <label for="passwordNueva">Contraseña nueva</label>
+      <input id="passwordNueva" type="password" autocomplete="new-password">
+    </div>
+    <div class="field">
+      <label for="passwordConfirmacion">Confirmar contraseña</label>
+      <input id="passwordConfirmacion" type="password" autocomplete="new-password">
+    </div>
+    <button class="modal-submit" id="botonPassword" type="button" onclick="guardarPassword()">Guardar contraseña</button>
+    <div class="modal-feedback" id="feedbackPassword"></div>
+  </div>
+</div>
+
+<!-- MODAL: CAMBIAR ROL -->
+<div class="modal" id="modalRol">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h2>Cambiar rol</h2>
+        <p id="rolUsuarioTexto">Usuario</p>
+      </div>
+      <button class="modal-close" type="button" onclick="cerrarModal('modalRol')">✕</button>
+    </div>
+    <div class="field">
+      <label for="rolNuevo">Rol nuevo</label>
+      <select id="rolNuevo">
+        <option value="LECTOR">LECTOR</option>
+        <option value="VENDEDOR">VENDEDOR</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="SUPERADMIN">SUPERADMIN</option>
+      </select>
+    </div>
+    <button class="modal-submit" id="botonRol" type="button" onclick="guardarRol()">Guardar rol</button>
+    <div class="modal-feedback" id="feedbackRol"></div>
+  </div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Cargando...</div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const API_URL = CONFIG.SEGURIDAD_API_URL;
+const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
+
+let usuarioActualSesion = "";
+let usuarioObjetivoActual = "";
+
+function obtenerToken() {
+  return sessionStorage.getItem("mg_eventos_token") || "";
+}
+
+function obtenerNombreReal() {
+  return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
+}
+
+function limpiarSesion() {
+  sessionStorage.removeItem("mg_eventos_token");
+  sessionStorage.removeItem("mg_eventos_usuario");
+  sessionStorage.removeItem("mg_eventos_nombre");
+  sessionStorage.removeItem("mg_eventos_nombre_real");
+  sessionStorage.removeItem("mg_eventos_rol");
+  sessionStorage.removeItem("mg_eventos_permisos");
+  sessionStorage.removeItem("mg_eventos_expira");
+}
+
+async function llamarAPI(datos) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(datos)
+  });
+
+  if (!response.ok) {
+    throw new Error("HTTP " + response.status);
+  }
+
+  return response.json();
+}
+
+function mostrarCargando(texto) {
+  document.getElementById("loadingText").textContent = texto || "Cargando...";
+  document.getElementById("loadingOverlay").classList.add("show");
+}
+
+function ocultarCargando() {
+  document.getElementById("loadingOverlay").classList.remove("show");
+}
+
+function mostrarUsuario(nombre, rol) {
+  document.getElementById("userName").textContent = nombre || "Usuario";
+  document.getElementById("userRole").textContent = rol || "";
+}
+
+function formatearFecha(iso) {
+  if (!iso) {
+    return "-";
+  }
+  try {
+    const fecha = new Date(iso);
+    return fecha.toLocaleString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  } catch (error) {
+    return "-";
+  }
+}
+
+function escaparTexto(texto) {
+  const div = document.createElement("div");
+  div.textContent = texto == null ? "" : String(texto);
+  return div.innerHTML;
+}
+
+function cargarDatosLocales() {
+  const token = obtenerToken();
+
+  if (!token) {
+    return false;
+  }
+
+  const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
+  const nombre = obtenerNombreReal() || usuario;
+  const rol = sessionStorage.getItem("mg_eventos_rol") || "";
+  usuarioActualSesion = usuario.trim().toLowerCase();
+
+  const permisos = (function() {
+    try {
+      const lista = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
+      return Array.isArray(lista) ? lista : [];
+    } catch (error) {
+      return [];
+    }
+  })();
+
+  mostrarUsuario(nombre, rol);
+
+  if (!permisos.includes("USUARIOS")) {
+    document.body.innerHTML =
+      '<div style="padding:60px 20px;text-align:center;color:#6b7280;">' +
+      '<h1 style="color:#111827;margin-bottom:10px;">Acceso restringido</h1>' +
+      '<p>Tu usuario no tiene permisos para acceder a Usuarios.</p>' +
+      '<p style="margin-top:16px;"><a href="panel.html" style="color:#b58b3b;font-weight:700;">Volver al panel</a></p>' +
+      "</div>";
+    return true;
+  }
+
+  return true;
+}
+
+async function validarSesion() {
+  const token = obtenerToken();
+
+  if (!token) {
+    limpiarSesion();
+    window.location.replace(PUBLIC_URL);
+    return;
+  }
+
+  try {
+    const resultado = await llamarAPI({ accion: "sesion", token: token });
+
+    if (!resultado || !resultado.ok) {
+      limpiarSesion();
+      window.location.replace(PUBLIC_URL);
+      return;
+    }
+
+    mostrarUsuario(obtenerNombreReal() || resultado.usuario, resultado.rol);
+    cargarUsuarios();
+  } catch (error) {
+    console.warn("No fue posible validar la sesión en este momento:", error);
+    cargarUsuarios();
+  }
+}
+
+async function cargarUsuarios() {
+  const contenedor = document.getElementById("users");
+  contenedor.innerHTML = '<div class="empty-state">Cargando usuarios...</div>';
+
+  try {
+    const resultado = await llamarAPI({ accion: "usuarios", token: obtenerToken() });
+
+    if (!resultado || !resultado.ok) {
+      contenedor.innerHTML =
+        '<div class="error-state">' + ((resultado && resultado.mensaje) || "No se pudo cargar la lista de usuarios.") + "</div>";
+      return;
+    }
+
+    if (!resultado.usuarios.length) {
+      contenedor.innerHTML = '<div class="empty-state">Todavía no hay usuarios creados.</div>';
+      return;
+    }
+
+    contenedor.innerHTML = "";
+
+    resultado.usuarios.forEach(function(usuario) {
+      contenedor.appendChild(crearTarjetaUsuario(usuario));
+    });
+  } catch (error) {
+    contenedor.innerHTML = '<div class="error-state">Error de conexión al cargar los usuarios.</div>';
+  }
+}
+
+function crearTarjetaUsuario(usuario) {
+  const esUsuarioActual = usuario.usuario.trim().toLowerCase() === usuarioActualSesion;
+  const activo = usuario.estado === "ACTIVO";
+
+  const card = document.createElement("div");
+  card.className = "user-card";
+
+  const main = document.createElement("div");
+  main.className = "user-main";
+  main.innerHTML =
+    "<strong>" + escaparTexto(usuario.nombre || usuario.usuario) + "</strong>" +
+    "<div>@" + escaparTexto(usuario.usuario) + "</div>" +
+    "<div>Creado: " + formatearFecha(usuario.fechaCreacion) + " · Último acceso: " + formatearFecha(usuario.ultimoAcceso) + "</div>";
+
+  const badges = document.createElement("div");
+  badges.className = "user-badges";
+  badges.innerHTML =
+    '<span class="badge badge-rol">' + escaparTexto(usuario.rol) + "</span>" +
+    '<span class="badge ' + (activo ? "badge-activo" : "badge-inactivo") + '">' + (activo ? "ACTIVO" : "INACTIVO") + "</span>";
+
+  const actions = document.createElement("div");
+  actions.className = "user-actions";
+
+  const botonPassword = document.createElement("button");
+  botonPassword.className = "action-button";
+  botonPassword.type = "button";
+  botonPassword.textContent = "Cambiar contraseña";
+  botonPassword.onclick = function() {
+    abrirCambiarPassword(usuario.usuario, usuario.nombre);
+  };
+  actions.appendChild(botonPassword);
+
+  const botonRol = document.createElement("button");
+  botonRol.className = "action-button";
+  botonRol.type = "button";
+  botonRol.textContent = "Cambiar rol";
+  botonRol.disabled = esUsuarioActual;
+  botonRol.title = esUsuarioActual ? "No puedes cambiar tu propio rol." : "";
+  botonRol.onclick = function() {
+    abrirCambiarRol(usuario.usuario, usuario.nombre, usuario.rol);
+  };
+  actions.appendChild(botonRol);
+
+  const botonEstado = document.createElement("button");
+  botonEstado.className = "action-button " + (activo ? "danger" : "success");
+  botonEstado.type = "button";
+  botonEstado.textContent = activo ? "Desactivar" : "Reactivar";
+  botonEstado.disabled = esUsuarioActual && activo;
+  botonEstado.title = esUsuarioActual && activo ? "No puedes desactivar tu propio usuario." : "";
+  botonEstado.onclick = function() {
+    if (activo) {
+      desactivarUsuario(usuario.usuario, usuario.nombre);
+    } else {
+      reactivarUsuario(usuario.usuario, usuario.nombre);
+    }
+  };
+  actions.appendChild(botonEstado);
+
+  card.appendChild(main);
+  card.appendChild(badges);
+  card.appendChild(actions);
+
+  return card;
+}
+
+async function desactivarUsuario(usuario, nombre) {
+  if (!confirm("¿Desactivar a " + (nombre || usuario) + "? Su sesión activa se cerrará de inmediato.")) {
+    return;
+  }
+
+  mostrarCargando("Desactivando usuario...");
+
+  try {
+    const resultado = await llamarAPI({ accion: "desactivar_usuario", token: obtenerToken(), usuario: usuario });
+    ocultarCargando();
+
+    if (!resultado || !resultado.ok) {
+      alert((resultado && resultado.mensaje) || "No se pudo desactivar el usuario.");
+      return;
+    }
+
+    cargarUsuarios();
+  } catch (error) {
+    ocultarCargando();
+    alert("Error de conexión al desactivar el usuario.");
+  }
+}
+
+async function reactivarUsuario(usuario, nombre) {
+  if (!confirm("¿Reactivar a " + (nombre || usuario) + "?")) {
+    return;
+  }
+
+  mostrarCargando("Reactivando usuario...");
+
+  try {
+    const resultado = await llamarAPI({ accion: "reactivar_usuario", token: obtenerToken(), usuario: usuario });
+    ocultarCargando();
+
+    if (!resultado || !resultado.ok) {
+      alert((resultado && resultado.mensaje) || "No se pudo reactivar el usuario.");
+      return;
+    }
+
+    cargarUsuarios();
+  } catch (error) {
+    ocultarCargando();
+    alert("Error de conexión al reactivar el usuario.");
+  }
+}
+
+function abrirModal(id) {
+  document.getElementById(id).classList.add("show");
+}
+
+function cerrarModal(id) {
+  document.getElementById(id).classList.remove("show");
+}
+
+function abrirCrearUsuario() {
+  document.getElementById("crearUsuario").value = "";
+  document.getElementById("crearNombre").value = "";
+  document.getElementById("crearRol").value = "LECTOR";
+  document.getElementById("crearPassword").value = "";
+  document.getElementById("crearConfirmacion").value = "";
+  document.getElementById("feedbackCrear").textContent = "";
+  document.getElementById("feedbackCrear").className = "modal-feedback";
+  abrirModal("modalCrear");
+}
+
+async function crearUsuario() {
+  const usuario = document.getElementById("crearUsuario").value.trim();
+  const nombre = document.getElementById("crearNombre").value.trim();
+  const rol = document.getElementById("crearRol").value;
+  const password = document.getElementById("crearPassword").value;
+  const confirmacion = document.getElementById("crearConfirmacion").value;
+  const boton = document.getElementById("botonCrear");
+  const feedback = document.getElementById("feedbackCrear");
+
+  if (!usuario || !nombre || !password) {
+    feedback.textContent = "Completa todos los campos.";
+    feedback.className = "modal-feedback error";
+    return;
+  }
+
+  if (password !== confirmacion) {
+    feedback.textContent = "Las contraseñas no coinciden.";
+    feedback.className = "modal-feedback error";
+    return;
+  }
+
+  boton.disabled = true;
+  feedback.textContent = "Creando usuario...";
+  feedback.className = "modal-feedback";
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "crear_usuario",
+      token: obtenerToken(),
+      usuario: usuario,
+      nombre: nombre,
+      rol: rol,
+      password: password
+    });
+
+    if (resultado && resultado.ok) {
+      feedback.textContent = "Usuario creado correctamente.";
+      feedback.className = "modal-feedback ok";
+      cargarUsuarios();
+      setTimeout(function() {
+        cerrarModal("modalCrear");
+      }, 900);
+    } else {
+      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo crear el usuario.";
+      feedback.className = "modal-feedback error";
+    }
+  } catch (error) {
+    feedback.textContent = "Error de conexión al crear el usuario.";
+    feedback.className = "modal-feedback error";
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function abrirCambiarPassword(usuario, nombre) {
+  usuarioObjetivoActual = usuario;
+  document.getElementById("passwordUsuarioTexto").textContent = nombre || usuario;
+  document.getElementById("passwordNueva").value = "";
+  document.getElementById("passwordConfirmacion").value = "";
+  document.getElementById("feedbackPassword").textContent = "";
+  document.getElementById("feedbackPassword").className = "modal-feedback";
+  abrirModal("modalPassword");
+}
+
+async function guardarPassword() {
+  const nueva = document.getElementById("passwordNueva").value;
+  const confirmacion = document.getElementById("passwordConfirmacion").value;
+  const boton = document.getElementById("botonPassword");
+  const feedback = document.getElementById("feedbackPassword");
+
+  if (!nueva) {
+    feedback.textContent = "Escribe la contraseña nueva.";
+    feedback.className = "modal-feedback error";
+    return;
+  }
+
+  if (nueva !== confirmacion) {
+    feedback.textContent = "Las contraseñas no coinciden.";
+    feedback.className = "modal-feedback error";
+    return;
+  }
+
+  boton.disabled = true;
+  feedback.textContent = "Guardando...";
+  feedback.className = "modal-feedback";
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "cambiar_password_usuario",
+      token: obtenerToken(),
+      usuario: usuarioObjetivoActual,
+      password: nueva
+    });
+
+    if (resultado && resultado.ok) {
+      feedback.textContent = resultado.mensaje;
+      feedback.className = "modal-feedback ok";
+      setTimeout(function() {
+        cerrarModal("modalPassword");
+      }, 900);
+    } else {
+      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo cambiar la contraseña.";
+      feedback.className = "modal-feedback error";
+    }
+  } catch (error) {
+    feedback.textContent = "Error de conexión al cambiar la contraseña.";
+    feedback.className = "modal-feedback error";
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function abrirCambiarRol(usuario, nombre, rolActual) {
+  usuarioObjetivoActual = usuario;
+  document.getElementById("rolUsuarioTexto").textContent = (nombre || usuario) + " · Rol actual: " + rolActual;
+  document.getElementById("rolNuevo").value = rolActual;
+  document.getElementById("feedbackRol").textContent = "";
+  document.getElementById("feedbackRol").className = "modal-feedback";
+  abrirModal("modalRol");
+}
+
+async function guardarRol() {
+  const rolNuevo = document.getElementById("rolNuevo").value;
+  const boton = document.getElementById("botonRol");
+  const feedback = document.getElementById("feedbackRol");
+
+  boton.disabled = true;
+  feedback.textContent = "Guardando...";
+  feedback.className = "modal-feedback";
+
+  try {
+    const resultado = await llamarAPI({
+      accion: "cambiar_rol_usuario",
+      token: obtenerToken(),
+      usuario: usuarioObjetivoActual,
+      rol: rolNuevo
+    });
+
+    if (resultado && resultado.ok) {
+      feedback.textContent = resultado.mensaje;
+      feedback.className = "modal-feedback ok";
+      cargarUsuarios();
+      setTimeout(function() {
+        cerrarModal("modalRol");
+      }, 900);
+    } else {
+      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo cambiar el rol.";
+      feedback.className = "modal-feedback error";
+    }
+  } catch (error) {
+    feedback.textContent = "Error de conexión al cambiar el rol.";
+    feedback.className = "modal-feedback error";
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+document.querySelectorAll(".modal").forEach(function(modal) {
+  modal.addEventListener("click", function(event) {
+    if (event.target === this) {
+      this.classList.remove("show");
+    }
+  });
+});
+
+function cerrarSesion() {
+  const token = obtenerToken();
+
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
+
+  if (token) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        accion: "logout",
+        token: token
+      }),
+      keepalive: true
+    }).catch(() => {});
+  }
+}
+
+const tieneSesionLocal = cargarDatosLocales();
+
+if (!tieneSesionLocal) {
+  limpiarSesion();
+  window.location.replace(PUBLIC_URL);
+} else {
+  setTimeout(() => {
+    validarSesion();
+  }, 0);
+}
+</script>
+</body>
+</html>
