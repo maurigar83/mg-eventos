@@ -76,7 +76,25 @@ body {
 .header-user {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
+}
+
+.header-back-button {
+  padding: 9px 17px;
+  border: 1px solid #d9ad55;
+  border-radius: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.header-back-button:hover {
+  background: #d9ad55;
+  color: #111827;
 }
 
 .user-info {
@@ -118,21 +136,6 @@ body {
   max-width: 1180px;
   margin: 0 auto;
   padding: 24px 24px 40px;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 18px;
-  color: #6b7280;
-  font-size: 13px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.back-link:hover {
-  color: #111827;
 }
 
 .welcome {
@@ -557,11 +560,24 @@ body {
 
   .header-user {
     width: 100%;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
   }
 
   .user-info {
     text-align: left;
+    order: 3;
+    flex: 1 1 100%;
+  }
+
+  .header-back-button {
+    order: 1;
+  }
+
+  .logout-button {
+    order: 2;
+    margin-left: auto;
   }
 
   .main {
@@ -615,6 +631,7 @@ body {
       </div>
     </a>
     <div class="header-user">
+      <a class="header-back-button" href="panel.html">← Volver al panel</a>
       <div class="user-info">
         <div class="user-name" id="userName">Cargando...</div>
         <div class="user-role" id="userRole">Cargando...</div>
@@ -624,7 +641,6 @@ body {
   </div>
 </header>
 <main class="main">
-  <a class="back-link" href="panel.html">← Volver al panel</a>
   <section class="welcome">
     <div class="welcome-label">Reportes</div>
     <h1>Consulta de ventas y compradores</h1>
