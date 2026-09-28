@@ -11,17 +11,20 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: #f5f7fa;
   color: #111827;
   min-height: 100vh;
 }
+
 .header {
   width: 100%;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
+
 .header-container {
   width: 100%;
   max-width: 1180px;
@@ -32,6 +35,7 @@ body {
   justify-content: space-between;
   gap: 20px;
 }
+
 .brand {
   display: flex;
   align-items: center;
@@ -39,6 +43,7 @@ body {
   text-decoration: none;
   color: #111827;
 }
+
 .brand-mark {
   width: 48px;
   height: 48px;
@@ -51,31 +56,38 @@ body {
   font-size: 17px;
   font-weight: 800;
 }
+
 .brand-text {
   display: flex;
   flex-direction: column;
 }
+
 .brand-name {
   font-size: 19px;
   font-weight: 700;
 }
+
 .brand-subtitle {
   margin-top: 2px;
   color: #6b7280;
   font-size: 12px;
 }
+
 .header-user {
   display: flex;
   align-items: center;
   gap: 18px;
 }
+
 .user-info {
   text-align: right;
 }
+
 .user-name {
   font-size: 14px;
   font-weight: 700;
 }
+
 .user-role {
   margin-top: 3px;
   color: #9ca3af;
@@ -83,6 +95,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.7px;
 }
+
 .logout-button {
   padding: 9px 17px;
   border: 1px solid #d9ad55;
@@ -94,19 +107,23 @@ body {
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
 }
+
 .logout-button:hover {
   background: #d9ad55;
   color: #111827;
 }
+
 .main {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   padding: 24px 24px 40px;
 }
+
 .welcome {
   margin-bottom: 20px;
 }
+
 .welcome-label {
   margin-bottom: 6px;
   color: #b58b3b;
@@ -115,11 +132,13 @@ body {
   letter-spacing: 1.2px;
   text-transform: uppercase;
 }
+
 .welcome h1 {
   font-size: 32px;
   line-height: 1.2;
   color: #111827;
 }
+
 .welcome p {
   max-width: 700px;
   margin-top: 9px;
@@ -127,6 +146,7 @@ body {
   font-size: 15px;
   line-height: 1.5;
 }
+
 .session-card {
   width: 100%;
   margin-bottom: 24px;
@@ -139,11 +159,13 @@ body {
   border-radius: 14px;
   background: #ffffff;
 }
+
 .session-left {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .session-icon {
   width: 34px;
   height: 34px;
@@ -156,33 +178,40 @@ body {
   font-size: 16px;
   font-weight: 700;
 }
+
 .session-text {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
+
 .session-text strong {
   font-size: 14px;
 }
+
 .session-text span {
   color: #6b7280;
   font-size: 12px;
 }
+
 .session-status {
   color: #059669;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.8px;
 }
+
 .section-title {
   margin-bottom: 12px;
   font-size: 21px;
 }
+
 .modules {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
+
 .module {
   min-height: 150px;
   padding: 18px;
@@ -195,21 +224,25 @@ body {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
+
 .module.enabled:hover {
   transform: translateY(-3px);
   border-color: #d9ad55;
   box-shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
 }
+
 .module.disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
+
 .module-main {
   display: grid;
   grid-template-columns: 46px minmax(0, 1fr);
   align-items: center;
   gap: 12px;
 }
+
 .module-icon {
   width: 46px;
   height: 46px;
@@ -220,33 +253,40 @@ body {
   background: #f3f4f6;
   font-size: 22px;
 }
+
 .module-icon svg {
   width: 25px;
   height: 25px;
 }
+
 .module-info {
   min-width: 0;
 }
+
 .module-title-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
+
 .module h3 {
   font-size: 17px;
 }
+
 .module-lock {
   min-height: 20px;
   font-size: 15px;
   flex-shrink: 0;
 }
+
 .module > p {
   margin-top: 12px;
   color: #6b7280;
   font-size: 13px;
   line-height: 1.5;
 }
+
 .module-action {
   margin-top: 13px;
   color: #b58b3b;
@@ -254,9 +294,11 @@ body {
   font-weight: 800;
   letter-spacing: 0.5px;
 }
+
 .module.disabled .module-action {
   color: #9ca3af;
 }
+
 .footer {
   margin-top: 35px;
   padding-top: 20px;
@@ -265,6 +307,7 @@ body {
   font-size: 12px;
   text-align: center;
 }
+
 .modal {
   position: fixed;
   inset: 0;
@@ -275,9 +318,11 @@ body {
   padding: 20px;
   background: rgba(8, 18, 35, 0.72);
 }
+
 .modal.show {
   display: flex;
 }
+
 .modal-box {
   width: 100%;
   max-width: 420px;
@@ -287,19 +332,23 @@ body {
   text-align: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
+
 .modal-icon {
   margin-bottom: 15px;
   font-size: 32px;
 }
+
 .modal-box h2 {
   font-size: 22px;
 }
+
 .modal-box p {
   margin-top: 10px;
   color: #6b7280;
   font-size: 14px;
   line-height: 1.6;
 }
+
 .modal-button {
   margin-top: 22px;
   padding: 10px 22px;
@@ -311,107 +360,133 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
+
 @media (max-width: 850px) {
   .modules {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 }
+
 @media (max-width: 600px) {
   .header-container {
     align-items: flex-start;
     flex-direction: column;
     padding: 14px 16px;
   }
+
   .header-user {
     width: 100%;
     justify-content: space-between;
   }
+
   .user-info {
     text-align: left;
   }
+
   .main {
     padding: 18px 12px 30px;
   }
+
   .welcome {
     margin-bottom: 16px;
   }
+
   .welcome h1 {
     font-size: 26px;
   }
+
   .welcome p {
     margin-top: 8px;
     font-size: 13px;
     line-height: 1.5;
   }
+
   .session-card {
     margin-bottom: 20px;
     padding: 13px 15px;
   }
+
   .section-title {
     margin-bottom: 10px;
     font-size: 19px;
   }
+
   .modules {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
+
   .module {
     min-height: 170px;
     padding: 14px;
   }
+
   .module-main {
     grid-template-columns: 38px minmax(0, 1fr);
     gap: 9px;
   }
+
   .module-icon {
     width: 38px;
     height: 38px;
     border-radius: 10px;
     font-size: 19px;
   }
+
   .module-icon svg {
     width: 21px;
     height: 21px;
   }
+
   .module h3 {
     font-size: 14px;
   }
+
   .module-lock {
     font-size: 13px;
   }
+
   .module > p {
     margin-top: 10px;
     font-size: 11px;
     line-height: 1.45;
   }
+
   .module-action {
     margin-top: 10px;
     font-size: 10px;
   }
 }
+
 @media (max-width: 400px) {
   .brand-subtitle {
     display: none;
   }
+
   .welcome h1 {
     font-size: 24px;
   }
+
   .module {
     padding: 12px;
   }
+
   .module-main {
     grid-template-columns: 35px minmax(0, 1fr);
     gap: 8px;
   }
+
   .module-icon {
     width: 35px;
     height: 35px;
   }
+
   .module-icon svg {
     width: 19px;
     height: 19px;
   }
+
   .module h3 {
     font-size: 13px;
   }
@@ -545,7 +620,7 @@ body {
 const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
 const QR_URL = "https://maurigar83.github.io/validacion-tickets/?lector=1";
-const VENTAS_URL = CONFIG.BOLETAS_API_URL;
+const VENTAS_URL = "https://sites.google.com/view/ticketsevento2026/p%C3%A1gina-principal";
 const NOMBRES_MODULOS = {
   LEER_QR: "Leer QR",
   VENDER: "Vender",
@@ -553,21 +628,28 @@ const NOMBRES_MODULOS = {
   USUARIOS: "Usuarios",
   CONFIGURACION: "Configuración"
 };
+
 let validacionEnCurso = false;
+
 function obtenerToken() {
   return sessionStorage.getItem("mg_eventos_token") || "";
 }
+
 function obtenerNombreReal() {
   return sessionStorage.getItem("mg_eventos_nombre_real") || sessionStorage.getItem("mg_eventos_nombre") || "";
 }
+
 function guardarNombreReal(nombre) {
   const nombreLimpio = String(nombre || "").trim();
+
   if (!nombreLimpio) {
     return;
   }
+
   sessionStorage.setItem("mg_eventos_nombre", nombreLimpio);
   sessionStorage.setItem("mg_eventos_nombre_real", nombreLimpio);
 }
+
 function limpiarSesion() {
   sessionStorage.removeItem("mg_eventos_token");
   sessionStorage.removeItem("mg_eventos_usuario");
@@ -579,6 +661,7 @@ function limpiarSesion() {
   sessionStorage.removeItem("mg_eventos_qr_token");
   sessionStorage.removeItem("mg_eventos_qr_validado");
 }
+
 async function llamarAPI(datos) {
   const response = await fetch(API_URL, {
     method: "POST",
@@ -587,18 +670,23 @@ async function llamarAPI(datos) {
     },
     body: JSON.stringify(datos)
   });
+
   if (!response.ok) {
     throw new Error("HTTP " + response.status);
   }
+
   return response.json();
 }
+
 function mostrarUsuario(sesion) {
   const nombre = sesion.nombre || sesion.usuario || "Usuario";
   const rol = sesion.rol || "";
+
   document.getElementById("userName").textContent = nombre;
   document.getElementById("userRole").textContent = rol;
   document.getElementById("welcomeName").textContent = nombre;
 }
+
 function obtenerPermisosLocales() {
   try {
     const permisos = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
@@ -607,13 +695,16 @@ function obtenerPermisosLocales() {
     return [];
   }
 }
+
 function aplicarPermisos(permisos) {
   const listaPermisos = Array.isArray(permisos) ? permisos : [];
+
   document.querySelectorAll(".module").forEach((modulo) => {
     const permiso = modulo.dataset.permission;
     const tienePermiso = listaPermisos.includes(permiso);
     const lock = modulo.querySelector(".module-lock");
     const action = modulo.querySelector(".module-action");
+
     if (tienePermiso) {
       modulo.classList.add("enabled");
       modulo.classList.remove("disabled");
@@ -627,16 +718,20 @@ function aplicarPermisos(permisos) {
     }
   });
 }
+
 function cargarDatosLocales() {
   const token = obtenerToken();
   const usuario = sessionStorage.getItem("mg_eventos_usuario") || "";
   const nombreGuardado = obtenerNombreReal();
   const rol = sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = obtenerPermisosLocales();
+
   if (!token) {
     return false;
   }
+
   const nombre = nombreGuardado || usuario;
+
   if (nombre || usuario || rol) {
     mostrarUsuario({
       usuario: usuario,
@@ -644,12 +739,15 @@ function cargarDatosLocales() {
       rol: rol
     });
   }
+
   if (nombreGuardado) {
     guardarNombreReal(nombreGuardado);
   }
+
   aplicarPermisos(permisos);
   return true;
 }
+
 function actualizarDatosSesion(resultado) {
   const nombreServidor = String(resultado.nombre || "").trim();
   const nombreGuardado = obtenerNombreReal();
@@ -657,7 +755,9 @@ function actualizarDatosSesion(resultado) {
   const rol = resultado.rol || sessionStorage.getItem("mg_eventos_rol") || "";
   const permisos = Array.isArray(resultado.permisos) ? resultado.permisos : obtenerPermisosLocales();
   const nombre = nombreServidor || nombreGuardado || sessionStorage.getItem("mg_eventos_nombre") || usuario || "Usuario";
+
   sessionStorage.setItem("mg_eventos_usuario", usuario);
+
   if (nombreServidor) {
     guardarNombreReal(nombreServidor);
   } else if (nombreGuardado) {
@@ -665,39 +765,50 @@ function actualizarDatosSesion(resultado) {
   } else if (nombre) {
     guardarNombreReal(nombre);
   }
+
   sessionStorage.setItem("mg_eventos_rol", rol);
   sessionStorage.setItem("mg_eventos_permisos", JSON.stringify(permisos));
+
   if (resultado.expira) {
     sessionStorage.setItem("mg_eventos_expira", resultado.expira);
   }
+
   mostrarUsuario({
     usuario: usuario,
     nombre: nombre,
     rol: rol
   });
+
   aplicarPermisos(permisos);
 }
+
 async function validarSesion() {
   if (validacionEnCurso) {
     return;
   }
+
   const token = obtenerToken();
+
   if (!token) {
     limpiarSesion();
     window.location.replace(PUBLIC_URL);
     return;
   }
+
   validacionEnCurso = true;
+
   try {
     const resultado = await llamarAPI({
       accion: "sesion",
       token: token
     });
+
     if (!resultado || !resultado.ok) {
       limpiarSesion();
       window.location.replace(PUBLIC_URL);
       return;
     }
+
     actualizarDatosSesion(resultado);
   } catch (error) {
     console.warn("No fue posible validar la sesión en este momento:", error);
@@ -705,61 +816,61 @@ async function validarSesion() {
     validacionEnCurso = false;
   }
 }
+
 async function abrirModulo(permiso) {
   const permisos = obtenerPermisosLocales();
+
   if (!permisos.includes(permiso)) {
     document.getElementById("modalTitle").textContent = "Acceso restringido";
     document.getElementById("modalMessage").textContent = "Tu usuario no tiene permisos para acceder a este módulo.";
     document.getElementById("modal").classList.add("show");
     return;
   }
+
   const token = obtenerToken();
+
   if (!token) {
     limpiarSesion();
     window.location.replace(PUBLIC_URL);
     return;
   }
+
   if (permiso === "LEER_QR") {
     const nombre = obtenerNombreReal();
+
     if (nombre) {
       guardarNombreReal(nombre);
     }
+
     window.location.href = QR_URL;
     return;
   }
+
+  if (permiso === "VENDER") {
+    window.location.href = VENTAS_URL;
+    return;
+  }
+
   const modulo = document.querySelector('[data-permission="' + permiso + '"]');
+
   if (modulo) {
     modulo.style.pointerEvents = "none";
   }
+
   try {
-    if (permiso === "VENDER") {
-      const resultado = await llamarAPI({
-        accion: "generar_acceso_temporal",
-        token: token,
-        permiso: "VENDER"
-      });
-      if (!resultado || !resultado.ok || !resultado.codigo) {
-        document.getElementById("modalTitle").textContent = "Acceso restringido";
-        document.getElementById("modalMessage").textContent = resultado && resultado.mensaje
-          ? resultado.mensaje
-          : "No fue posible generar el acceso a ventas.";
-        document.getElementById("modal").classList.add("show");
-        return;
-      }
-      window.location.href = VENTAS_URL + "?acceso=" + encodeURIComponent(resultado.codigo);
-      return;
-    }
     const resultado = await llamarAPI({
       accion: "permiso",
       token: token,
       permiso: permiso
     });
+
     if (!resultado || !resultado.ok || !resultado.autorizado) {
       document.getElementById("modalTitle").textContent = "Acceso restringido";
       document.getElementById("modalMessage").textContent = "El servidor no autorizó el acceso a este módulo.";
       document.getElementById("modal").classList.add("show");
       return;
     }
+
     const nombreModulo = NOMBRES_MODULOS[permiso] || "Módulo";
     document.getElementById("modalTitle").textContent = nombreModulo;
     document.getElementById("modalMessage").textContent = "La conexión de este módulo se realizará en la siguiente etapa del sistema.";
@@ -774,13 +885,17 @@ async function abrirModulo(permiso) {
     }
   }
 }
+
 function cerrarModal() {
   document.getElementById("modal").classList.remove("show");
 }
+
 function cerrarSesion() {
   const token = obtenerToken();
+
   limpiarSesion();
   window.location.replace(PUBLIC_URL);
+
   if (token) {
     fetch(API_URL, {
       method: "POST",
@@ -795,12 +910,15 @@ function cerrarSesion() {
     }).catch(() => {});
   }
 }
+
 document.getElementById("modal").addEventListener("click", function(event) {
   if (event.target === this) {
     cerrarModal();
   }
 });
+
 const tieneSesionLocal = cargarDatosLocales();
+
 if (!tieneSesionLocal) {
   limpiarSesion();
   window.location.replace(PUBLIC_URL);
