@@ -76,7 +76,7 @@ body {
 .header-user {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .header-back-button {
@@ -98,6 +98,7 @@ body {
 }
 
 .user-info {
+  margin-left: 18px;
   text-align: right;
 }
 
@@ -493,6 +494,7 @@ body {
   }
 
   .user-info {
+    margin-left: 0;
     text-align: left;
     order: 3;
     flex: 1 1 100%;
@@ -504,7 +506,6 @@ body {
 
   .logout-button {
     order: 2;
-    margin-left: auto;
   }
 
   .main {
@@ -548,11 +549,11 @@ body {
     </a>
     <div class="header-user">
       <a class="header-back-button" href="panel.html">← Volver al panel</a>
+      <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
       <div class="user-info">
         <div class="user-name" id="userName">Cargando...</div>
         <div class="user-role" id="userRole">Cargando...</div>
       </div>
-      <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
     </div>
   </div>
 </header>
