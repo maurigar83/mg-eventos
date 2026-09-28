@@ -164,7 +164,7 @@ body {
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 14px;
   margin-bottom: 30px;
 }
@@ -541,7 +541,7 @@ body {
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 950px) {
   .stats {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
@@ -633,9 +633,19 @@ body {
 
   <section class="stats" id="stats">
     <div class="stat-card">
-      <div class="stat-label">Boletas</div>
-      <div class="stat-value loading" id="statBoletas">Cargando...</div>
-      <div class="stat-breakdown" id="statBoletasDesglose"></div>
+      <div class="stat-label">Inventario</div>
+      <div class="stat-value loading" id="statInventario">Cargando...</div>
+      <div class="stat-breakdown" id="statInventarioDesglose"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Vendidas</div>
+      <div class="stat-value loading" id="statVendidas">Cargando...</div>
+      <div class="stat-breakdown" id="statVendidasDesglose"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Disponibles</div>
+      <div class="stat-value loading" id="statDisponibles">Cargando...</div>
+      <div class="stat-breakdown" id="statDisponiblesDesglose"></div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Ingresos</div>
@@ -877,27 +887,33 @@ async function cargarResumen() {
   try {
     const resultado = await llamarAPI({ accion: "resumen_reportes", token: token });
 
+    const idsValor = ["statInventario", "statVendidas", "statDisponibles", "statIngresos", "statCompradores"];
+
     if (!resultado || !resultado.ok) {
-      document.getElementById("statBoletas").textContent = "-";
-      document.getElementById("statIngresos").textContent = "-";
-      document.getElementById("statCompradores").textContent = "-";
+      idsValor.forEach(function (id) {
+        document.getElementById(id).textContent = "-";
+      });
       return;
     }
 
-    const statBoletas = document.getElementById("statBoletas");
-    const statIngresos = document.getElementById("statIngresos");
-    const statCompradores = document.getElementById("statCompradores");
+    idsValor.forEach(function (id) {
+      document.getElementById(id).classList.remove("loading");
+    });
 
-    statBoletas.classList.remove("loading");
-    statIngresos.classList.remove("loading");
-    statCompradores.classList.remove("loading");
+    document.getElementById("statInventario").textContent = resultado.inventarioTotal;
+    document.getElementById("statInventarioDesglose").textContent =
+      "General: " + resultado.inventarioGeneral + " · Cortesía: " + resultado.inventarioCortesia;
 
-    statBoletas.textContent = resultado.boletas;
-    statIngresos.textContent = formatearMoneda(resultado.ingresos);
-    statCompradores.textContent = resultado.compradores;
+    document.getElementById("statVendidas").textContent = resultado.vendidasTotal;
+    document.getElementById("statVendidasDesglose").textContent =
+      "General: " + resultado.vendidasGeneral + " · Cortesía: " + resultado.vendidasCortesia;
 
-    document.getElementById("statBoletasDesglose").textContent =
-      "General: " + resultado.boletasGeneral + " · Cortesía: " + resultado.boletasCortesia;
+    document.getElementById("statDisponibles").textContent = resultado.disponiblesTotal;
+    document.getElementById("statDisponiblesDesglose").textContent =
+      "General: " + resultado.disponiblesGeneral + " · Cortesía: " + resultado.disponiblesCortesia;
+
+    document.getElementById("statIngresos").textContent = formatearMoneda(resultado.ingresos);
+    document.getElementById("statCompradores").textContent = resultado.compradores;
   } catch (error) {
     console.warn("No fue posible cargar el resumen:", error);
   }
