@@ -590,11 +590,31 @@ body {
   }
 
   .stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .stat-label {
+    font-size: 10px;
   }
 
   .stat-value {
-    font-size: 24px;
+    margin-top: 5px;
+    font-size: 18px;
+  }
+
+  .stat-value.loading {
+    font-size: 13px;
+  }
+
+  .stat-breakdown {
+    margin-top: 4px;
+    font-size: 10.5px;
   }
 
   .search-row {
