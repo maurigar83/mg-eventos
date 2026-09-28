@@ -620,7 +620,7 @@ body {
 const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
 const QR_URL = "https://maurigar83.github.io/validacion-tickets/?lector=1";
-const VENTAS_URL = "https://sites.google.com/view/ticketsevento2026/p%C3%A1gina-principal";
+const VENTAS_URL = "https://script.google.com/macros/s/AKfycbxyBX5k1h-LsYNRFO_g-eDkkqoE3vE_N4AWZA4c9PS0fixYVIpGPRGc5bYnn-DDqFEd/exec";
 const NOMBRES_MODULOS = {
   LEER_QR: "Leer QR",
   VENDER: "Vender",
@@ -847,7 +847,35 @@ async function abrirModulo(permiso) {
   }
 
   if (permiso === "VENDER") {
-    window.location.href = VENTAS_URL;
+    const moduloVender = document.querySelector('[data-permission="VENDER"]');
+
+    if (moduloVender) {
+      moduloVender.style.pointerEvents = "none";
+    }
+
+    try {
+      const acceso = await llamarAPI({
+        accion: "generar_acceso_temporal",
+        token: token
+      });
+
+      if (!acceso || !acceso.ok || !acceso.codigo) {
+        document.getElementById("modalTitle").textContent = "Acceso restringido";
+        document.getElementById("modalMessage").textContent = (acceso && acceso.mensaje) || "El servidor no autorizó el acceso a Ventas.";
+        document.getElementById("modal").classList.add("show");
+        return;
+      }
+
+      window.location.href = VENTAS_URL + "?acceso=" + encodeURIComponent(acceso.codigo);
+    } catch (error) {
+      document.getElementById("modalTitle").textContent = "Error de conexión";
+      document.getElementById("modalMessage").textContent = "No fue posible abrir Ventas. Tu sesión no se ha cerrado.";
+      document.getElementById("modal").classList.add("show");
+    } finally {
+      if (moduloVender) {
+        moduloVender.style.pointerEvents = "";
+      }
+    }
     return;
   }
 
