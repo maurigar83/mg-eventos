@@ -32,7 +32,7 @@
     return [
       { texto: "Entre " + MIN + " y " + MAX + " caracteres", cumple: p.length >= MIN && p.length <= MAX },
       { texto: "Al menos una letra y un número", cumple: /[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(p) && /[0-9]/.test(p) },
-      { texto: "No contiene tu usuario", cumple: !p || u.length < 3 || min.indexOf(u) === -1 },
+      { texto: "No contiene tu usuario", cumple: !!p && (u.length < 3 || min.indexOf(u) === -1) },
       {
         texto: "No es repetitiva, una secuencia ni una clave común",
         cumple: !!p && !/^(.)\1+$/.test(p) && new Set(min.split("")).size >= 4 &&
