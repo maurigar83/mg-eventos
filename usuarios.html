@@ -255,6 +255,49 @@ body {
   color: #b91c1c;
 }
 
+.badge-pendiente {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.aviso-pendiente {
+  color: #b45309 !important;
+  font-weight: 700;
+}
+
+.enlace-caja {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 12px;
+  font-family: monospace;
+  word-break: break-all;
+  user-select: all;
+}
+
+.enlace-nota {
+  margin: 10px 0 4px;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.enlace-acciones {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.enlace-acciones .modal-submit {
+  margin-top: 0;
+}
+
+.modal-submit.whatsapp {
+  background: #128c7e;
+}
+
 .user-actions {
   display: flex;
   align-items: center;
@@ -583,7 +626,7 @@ body {
     <div>
       <div class="welcome-label">Usuarios</div>
       <h1>Administración de usuarios</h1>
-      <p>Consulta los usuarios del sistema, gestiona su acceso, contraseña y rol.</p>
+      <p>Crea usuarios con un enlace de activación: cada persona define su propia contraseña. Si alguien la olvida, usa “Restablecer acceso”.</p>
     </div>
     <button class="new-user-button" type="button" onclick="abrirCrearUsuario()">+ Nuevo usuario</button>
   </section>
@@ -604,7 +647,7 @@ body {
     <div class="modal-header">
       <div>
         <h2>Nuevo usuario</h2>
-        <p>Crea un usuario y define su rol inicial.</p>
+        <p>Se generará un enlace para que la persona defina su contraseña.</p>
       </div>
       <button class="modal-close" type="button" onclick="cerrarModal('modalCrear')">✕</button>
     </div>
@@ -625,39 +668,28 @@ body {
         <option value="SUPERADMIN">SUPERADMIN</option>
       </select>
     </div>
-    <div class="field">
-      <label for="crearPassword">Contraseña</label>
-      <input id="crearPassword" type="password" autocomplete="new-password">
-    </div>
-    <div class="field">
-      <label for="crearConfirmacion">Confirmar contraseña</label>
-      <input id="crearConfirmacion" type="password" autocomplete="new-password">
-    </div>
     <button class="modal-submit" id="botonCrear" type="button" onclick="crearUsuario()">Crear usuario</button>
     <div class="modal-feedback" id="feedbackCrear"></div>
   </div>
 </div>
 
-<!-- MODAL: CAMBIAR CONTRASEÑA -->
-<div class="modal" id="modalPassword">
+<!-- MODAL: ENLACE DE ACTIVACIÓN -->
+<div class="modal" id="modalEnlace">
   <div class="modal-box">
     <div class="modal-header">
       <div>
-        <h2>Cambiar contraseña</h2>
-        <p id="passwordUsuarioTexto">Usuario</p>
+        <h2 id="enlaceTitulo">Enlace de activación</h2>
+        <p id="enlaceUsuarioTexto">Usuario</p>
       </div>
-      <button class="modal-close" type="button" onclick="cerrarModal('modalPassword')">✕</button>
+      <button class="modal-close" type="button" onclick="cerrarModal('modalEnlace')">✕</button>
     </div>
-    <div class="field">
-      <label for="passwordNueva">Contraseña nueva</label>
-      <input id="passwordNueva" type="password" autocomplete="new-password">
+    <div class="enlace-caja" id="enlaceTexto"></div>
+    <p class="enlace-nota" id="enlaceNota"></p>
+    <div class="enlace-acciones">
+      <button class="modal-submit" type="button" onclick="copiarEnlace()">Copiar enlace</button>
+      <button class="modal-submit whatsapp" type="button" onclick="enviarEnlaceWhatsApp()">Enviar por WhatsApp</button>
     </div>
-    <div class="field">
-      <label for="passwordConfirmacion">Confirmar contraseña</label>
-      <input id="passwordConfirmacion" type="password" autocomplete="new-password">
-    </div>
-    <button class="modal-submit" id="botonPassword" type="button" onclick="guardarPassword()">Guardar contraseña</button>
-    <div class="modal-feedback" id="feedbackPassword"></div>
+    <div class="modal-feedback" id="feedbackEnlace"></div>
   </div>
 </div>
 
@@ -697,6 +729,7 @@ const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
 
 let usuarioActualSesion = "";
 let usuarioObjetivoActual = "";
+let enlaceActual = { enlace: "", nombre: "", usuario: "", vence: "" };
 
 function obtenerToken() {
   return sessionStorage.getItem("mg_eventos_token") || "";
@@ -863,6 +896,15 @@ async function cargarUsuarios() {
 function crearTarjetaUsuario(usuario) {
   const esUsuarioActual = usuario.usuario.trim().toLowerCase() === usuarioActualSesion;
   const activo = usuario.estado === "ACTIVO";
+  const pendiente = usuario.estado === "PENDIENTE";
+  const venceMs = usuario.activacionVence ? new Date(usuario.activacionVence).getTime() : 0;
+  const lineaPendiente = pendiente
+    ? '<div class="aviso-pendiente">' +
+      (venceMs > Date.now()
+        ? "Esperando activación · el enlace vence " + formatearFecha(usuario.activacionVence)
+        : "El enlace venció · genera uno nuevo") +
+      "</div>"
+    : "";
 
   const card = document.createElement("div");
   card.className = "user-card";
@@ -872,25 +914,29 @@ function crearTarjetaUsuario(usuario) {
   main.innerHTML =
     "<strong>" + escaparTexto(usuario.nombre || usuario.usuario) + "</strong>" +
     "<div>@" + escaparTexto(usuario.usuario) + "</div>" +
-    "<div>Creado: " + formatearFecha(usuario.fechaCreacion) + " · Último acceso: " + formatearFecha(usuario.ultimoAcceso) + "</div>";
+    "<div>Creado: " + formatearFecha(usuario.fechaCreacion) + " · Último acceso: " + formatearFecha(usuario.ultimoAcceso) + "</div>" +
+    lineaPendiente;
 
   const badges = document.createElement("div");
   badges.className = "user-badges";
   badges.innerHTML =
     '<span class="badge badge-rol">' + escaparTexto(usuario.rol) + "</span>" +
-    '<span class="badge ' + (activo ? "badge-activo" : "badge-inactivo") + '">' + (activo ? "ACTIVO" : "INACTIVO") + "</span>";
+    '<span class="badge ' + (activo ? "badge-activo" : pendiente ? "badge-pendiente" : "badge-inactivo") + '">' +
+    (activo ? "ACTIVO" : pendiente ? "PENDIENTE" : "INACTIVO") + "</span>";
 
   const actions = document.createElement("div");
   actions.className = "user-actions";
 
-  const botonPassword = document.createElement("button");
-  botonPassword.className = "action-button";
-  botonPassword.type = "button";
-  botonPassword.textContent = "Cambiar contraseña";
-  botonPassword.onclick = function() {
-    abrirCambiarPassword(usuario.usuario, usuario.nombre);
+  const botonAcceso = document.createElement("button");
+  botonAcceso.className = "action-button";
+  botonAcceso.type = "button";
+  botonAcceso.textContent = pendiente ? "Nuevo enlace" : "Restablecer acceso";
+  botonAcceso.disabled = esUsuarioActual;
+  botonAcceso.title = esUsuarioActual ? "Para tu propia contraseña usa “Cambiar mi contraseña” en el panel." : "";
+  botonAcceso.onclick = function() {
+    restablecerAcceso(usuario.usuario, usuario.nombre, pendiente);
   };
-  actions.appendChild(botonPassword);
+  actions.appendChild(botonAcceso);
 
   const botonRol = document.createElement("button");
   botonRol.className = "action-button";
@@ -904,13 +950,14 @@ function crearTarjetaUsuario(usuario) {
   actions.appendChild(botonRol);
 
   const botonEstado = document.createElement("button");
-  botonEstado.className = "action-button " + (activo ? "danger" : "success");
+  const puedeDesactivar = activo || pendiente;
+  botonEstado.className = "action-button " + (puedeDesactivar ? "danger" : "success");
   botonEstado.type = "button";
-  botonEstado.textContent = activo ? "Desactivar" : "Reactivar";
-  botonEstado.disabled = esUsuarioActual && activo;
-  botonEstado.title = esUsuarioActual && activo ? "No puedes desactivar tu propio usuario." : "";
+  botonEstado.textContent = puedeDesactivar ? "Desactivar" : "Reactivar";
+  botonEstado.disabled = esUsuarioActual && puedeDesactivar;
+  botonEstado.title = esUsuarioActual && puedeDesactivar ? "No puedes desactivar tu propio usuario." : "";
   botonEstado.onclick = function() {
-    if (activo) {
+    if (puedeDesactivar) {
       desactivarUsuario(usuario.usuario, usuario.nombre);
     } else {
       reactivarUsuario(usuario.usuario, usuario.nombre);
@@ -983,8 +1030,6 @@ function abrirCrearUsuario() {
   document.getElementById("crearUsuario").value = "";
   document.getElementById("crearNombre").value = "";
   document.getElementById("crearRol").value = "LECTOR";
-  document.getElementById("crearPassword").value = "";
-  document.getElementById("crearConfirmacion").value = "";
   document.getElementById("feedbackCrear").textContent = "";
   document.getElementById("feedbackCrear").className = "modal-feedback";
   abrirModal("modalCrear");
@@ -994,19 +1039,11 @@ async function crearUsuario() {
   const usuario = document.getElementById("crearUsuario").value.trim();
   const nombre = document.getElementById("crearNombre").value.trim();
   const rol = document.getElementById("crearRol").value;
-  const password = document.getElementById("crearPassword").value;
-  const confirmacion = document.getElementById("crearConfirmacion").value;
   const boton = document.getElementById("botonCrear");
   const feedback = document.getElementById("feedbackCrear");
 
-  if (!usuario || !nombre || !password) {
-    feedback.textContent = "Completa todos los campos.";
-    feedback.className = "modal-feedback error";
-    return;
-  }
-
-  if (password !== confirmacion) {
-    feedback.textContent = "Las contraseñas no coinciden.";
+  if (!usuario || !nombre) {
+    feedback.textContent = "Completa usuario y nombre.";
     feedback.className = "modal-feedback error";
     return;
   }
@@ -1021,17 +1058,14 @@ async function crearUsuario() {
       token: obtenerToken(),
       usuario: usuario,
       nombre: nombre,
-      rol: rol,
-      password: password
+      rol: rol
     });
 
     if (resultado && resultado.ok) {
-      feedback.textContent = "Usuario creado correctamente.";
-      feedback.className = "modal-feedback ok";
+      feedback.textContent = "";
+      cerrarModal("modalCrear");
       cargarUsuarios();
-      setTimeout(function() {
-        cerrarModal("modalCrear");
-      }, 900);
+      mostrarEnlace("Usuario creado", nombre, resultado.usuario, resultado.enlace, resultado.vence);
     } else {
       feedback.textContent = (resultado && resultado.mensaje) || "No se pudo crear el usuario.";
       feedback.className = "modal-feedback error";
@@ -1044,62 +1078,72 @@ async function crearUsuario() {
   }
 }
 
-function abrirCambiarPassword(usuario, nombre) {
-  usuarioObjetivoActual = usuario;
-  document.getElementById("passwordUsuarioTexto").textContent = nombre || usuario;
-  document.getElementById("passwordNueva").value = "";
-  document.getElementById("passwordConfirmacion").value = "";
-  document.getElementById("feedbackPassword").textContent = "";
-  document.getElementById("feedbackPassword").className = "modal-feedback";
-  abrirModal("modalPassword");
-}
-
-async function guardarPassword() {
-  const nueva = document.getElementById("passwordNueva").value;
-  const confirmacion = document.getElementById("passwordConfirmacion").value;
-  const boton = document.getElementById("botonPassword");
-  const feedback = document.getElementById("feedbackPassword");
-
-  if (!nueva) {
-    feedback.textContent = "Escribe la contraseña nueva.";
-    feedback.className = "modal-feedback error";
+async function restablecerAcceso(usuario, nombre, pendiente) {
+  const texto = pendiente
+    ? "¿Generar un enlace nuevo para " + (nombre || usuario) + "? El enlace anterior dejará de funcionar."
+    : "¿Restablecer el acceso de " + (nombre || usuario) + "?\n\n" +
+      "Su contraseña actual quedará anulada, se cerrarán sus sesiones y se generará un enlace (48 h, un solo uso) para que defina una nueva.";
+  if (!confirm(texto)) {
     return;
   }
 
-  if (nueva !== confirmacion) {
-    feedback.textContent = "Las contraseñas no coinciden.";
-    feedback.className = "modal-feedback error";
-    return;
-  }
-
-  boton.disabled = true;
-  feedback.textContent = "Guardando...";
-  feedback.className = "modal-feedback";
+  mostrarCargando("Generando enlace...");
 
   try {
-    const resultado = await llamarAPI({
-      accion: "cambiar_password_usuario",
-      token: obtenerToken(),
-      usuario: usuarioObjetivoActual,
-      password: nueva
-    });
+    const resultado = await llamarAPI({ accion: "restablecer_acceso", token: obtenerToken(), usuario: usuario });
+    ocultarCargando();
 
-    if (resultado && resultado.ok) {
-      feedback.textContent = resultado.mensaje;
-      feedback.className = "modal-feedback ok";
-      setTimeout(function() {
-        cerrarModal("modalPassword");
-      }, 900);
-    } else {
-      feedback.textContent = (resultado && resultado.mensaje) || "No se pudo cambiar la contraseña.";
-      feedback.className = "modal-feedback error";
+    if (!resultado || !resultado.ok) {
+      alert((resultado && resultado.mensaje) || "No se pudo restablecer el acceso.");
+      return;
     }
+
+    cargarUsuarios();
+    mostrarEnlace(pendiente ? "Nuevo enlace" : "Acceso restablecido", nombre, usuario, resultado.enlace, resultado.vence);
   } catch (error) {
-    feedback.textContent = "Error de conexión al cambiar la contraseña.";
-    feedback.className = "modal-feedback error";
-  } finally {
-    boton.disabled = false;
+    ocultarCargando();
+    alert("Error de conexión al restablecer el acceso.");
   }
+}
+
+function mostrarEnlace(titulo, nombre, usuario, enlace, vence) {
+  enlaceActual = { enlace: enlace || "", nombre: nombre || usuario, usuario: usuario, vence: vence || "" };
+  document.getElementById("enlaceTitulo").textContent = titulo;
+  document.getElementById("enlaceUsuarioTexto").textContent = (nombre || usuario) + " · @" + usuario;
+  document.getElementById("enlaceTexto").textContent = enlaceActual.enlace;
+  document.getElementById("enlaceNota").textContent =
+    "Envíaselo solo a esta persona. Sirve una sola vez; cuando defina su contraseña quedará ACTIVO. Válido hasta: " +
+    formatearFecha(enlaceActual.vence);
+  document.getElementById("feedbackEnlace").textContent = "";
+  document.getElementById("feedbackEnlace").className = "modal-feedback";
+  abrirModal("modalEnlace");
+}
+
+function textoMensajeEnlace() {
+  return "Hola " + enlaceActual.nombre + ", este es tu enlace para activar tu usuario *" + enlaceActual.usuario +
+    "* en MG Eventos y crear tu contraseña.\n\n" + enlaceActual.enlace +
+    "\n\nSirve una sola vez y es válido hasta: " + formatearFecha(enlaceActual.vence) + "\nNo lo compartas.";
+}
+
+async function copiarEnlace() {
+  const feedback = document.getElementById("feedbackEnlace");
+  try {
+    await navigator.clipboard.writeText(enlaceActual.enlace);
+    feedback.textContent = "Enlace copiado.";
+    feedback.className = "modal-feedback ok";
+  } catch (error) {
+    const rango = document.createRange();
+    rango.selectNodeContents(document.getElementById("enlaceTexto"));
+    const seleccion = window.getSelection();
+    seleccion.removeAllRanges();
+    seleccion.addRange(rango);
+    feedback.textContent = "Selecciónalo y cópialo manualmente.";
+    feedback.className = "modal-feedback error";
+  }
+}
+
+function enviarEnlaceWhatsApp() {
+  window.open("https://wa.me/?text=" + encodeURIComponent(textoMensajeEnlace()), "_blank", "noopener");
 }
 
 function abrirCambiarRol(usuario, nombre, rolActual) {

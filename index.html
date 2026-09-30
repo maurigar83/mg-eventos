@@ -646,6 +646,19 @@ submitButton.disabled = false;
 submitButton.textContent = "INGRESAR";
 }
 });
+// Llegada desde activar.html: abre el acceso con el usuario ya escrito.
+(function() {
+const parametros = new URLSearchParams(window.location.search);
+if (parametros.get("ingresar") === "1") {
+const usuarioActivado = (parametros.get("u") || "").slice(0, 40);
+history.replaceState(null, "", window.location.pathname);
+openLoginModal("Ingresa con tu nueva contraseña.");
+if (usuarioActivado) {
+document.getElementById("loginUsuario").value = usuarioActivado;
+document.getElementById("loginPassword").focus();
+}
+}
+})();
 const heroVideo = document.querySelector(".hero-video");
 const heroFade = document.querySelector(".hero-fade");
 const videos = [

@@ -114,6 +114,61 @@ body {
   color: #111827;
 }
 
+.clave-box {
+  max-width: 400px;
+  text-align: left;
+}
+
+.clave-box h2 {
+  text-align: center;
+}
+
+.clave-box label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.clave-box input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.clave-box input:focus {
+  outline: none;
+  border-color: #d9ad55;
+}
+
+.clave-acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.clave-acciones .modal-button.secundario {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.clave-acciones .modal-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#claveMensaje {
+  margin-top: 12px;
+  font-size: 13px;
+  text-align: center;
+  min-height: 18px;
+}
+
 .main {
   width: 100%;
   max-width: 1180px;
@@ -557,6 +612,7 @@ body {
       </div>
     </a>
     <div class="header-user">
+      <button class="logout-button" type="button" onclick="abrirCambiarClave()">Cambiar mi contraseña</button>
       <button class="logout-button" type="button" onclick="cerrarSesion()">Cerrar sesión</button>
       <div class="user-info">
         <div class="user-name" id="userName">Cargando...</div>
@@ -668,11 +724,33 @@ body {
     <button class="modal-button" type="button" onclick="cerrarModal()">Entendido</button>
   </div>
 </div>
+<div class="modal" id="modalClave">
+  <div class="modal-box clave-box">
+    <div class="modal-icon" style="text-align:center">🔑</div>
+    <h2>Cambiar mi contraseña</h2>
+    <form id="formClave" autocomplete="on" onsubmit="guardarClave(event)">
+      <input type="text" id="claveUsuario" autocomplete="username" style="display:none" tabindex="-1" aria-hidden="true">
+      <label for="claveActual">Contraseña actual</label>
+      <input id="claveActual" type="password" autocomplete="current-password" required>
+      <label for="claveNueva">Contraseña nueva</label>
+      <input id="claveNueva" type="password" autocomplete="new-password" maxlength="64" required>
+      <div id="claveReglas"></div>
+      <label for="claveConfirmacion">Confirmar contraseña nueva</label>
+      <input id="claveConfirmacion" type="password" autocomplete="new-password" maxlength="64" required>
+      <div id="claveMensaje"></div>
+      <div class="clave-acciones">
+        <button class="modal-button secundario" type="button" onclick="cerrarCambiarClave()">Cancelar</button>
+        <button class="modal-button" id="botonClave" type="submit" disabled>Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
 <div class="loading-overlay" id="loadingOverlay">
   <div class="loading-spinner"></div>
   <div class="loading-text">Cargando Ventas...</div>
 </div>
 <script src="config.js"></script>
+<script src="politica-password.js"></script>
 <script>
 const API_URL = CONFIG.SEGURIDAD_API_URL;
 const PUBLIC_URL = "https://maurigar83.github.io/mg-eventos/index.html";
@@ -1016,6 +1094,81 @@ function cerrarSesion() {
       keepalive: true
     }).catch(() => {});
   }
+}
+
+function usuarioSesion() {
+  return sessionStorage.getItem("mg_eventos_usuario") || "";
+}
+
+function abrirCambiarClave() {
+  ["claveActual", "claveNueva", "claveConfirmacion"].forEach(function(id) {
+    document.getElementById(id).value = "";
+  });
+  document.getElementById("claveUsuario").value = usuarioSesion();
+  document.getElementById("claveMensaje").textContent = "";
+  evaluarClave();
+  document.getElementById("modalClave").classList.add("show");
+  document.getElementById("claveActual").focus();
+}
+
+function cerrarCambiarClave() {
+  document.getElementById("modalClave").classList.remove("show");
+}
+
+function evaluarClave() {
+  const actual = document.getElementById("claveActual").value;
+  const nueva = document.getElementById("claveNueva").value;
+  const confirmacion = document.getElementById("claveConfirmacion").value;
+  const cumple = PoliticaPassword.pintar(document.getElementById("claveReglas"), nueva, usuarioSesion());
+  const mensaje = document.getElementById("claveMensaje");
+  if (confirmacion && nueva !== confirmacion) {
+    mensaje.textContent = "Las contraseñas nuevas no coinciden.";
+    mensaje.style.color = "#b91c1c";
+  } else if (nueva && actual && nueva === actual) {
+    mensaje.textContent = "La nueva debe ser distinta a la actual.";
+    mensaje.style.color = "#b91c1c";
+  } else {
+    mensaje.textContent = "";
+  }
+  document.getElementById("botonClave").disabled =
+    !(actual && cumple && nueva === confirmacion && nueva !== actual);
+}
+
+["claveActual", "claveNueva", "claveConfirmacion"].forEach(function(id) {
+  document.getElementById(id).addEventListener("input", evaluarClave);
+});
+
+async function guardarClave(event) {
+  event.preventDefault();
+  const boton = document.getElementById("botonClave");
+  const mensaje = document.getElementById("claveMensaje");
+  boton.disabled = true;
+  boton.textContent = "Guardando...";
+  try {
+    const resultado = await llamarAPI({
+      accion: "cambiar_password",
+      token: obtenerToken(),
+      passwordActual: document.getElementById("claveActual").value,
+      password: document.getElementById("claveNueva").value
+    });
+    if (resultado && resultado.ok) {
+      mensaje.textContent = "Contraseña actualizada. Vuelve a iniciar sesión.";
+      mensaje.style.color = "#059669";
+      const usuarioActual = usuarioSesion();
+      setTimeout(function() {
+        limpiarSesion();
+        window.location.replace(PUBLIC_URL + "?ingresar=1&u=" + encodeURIComponent(usuarioActual));
+      }, 1500);
+      return;
+    }
+    mensaje.textContent = (resultado && resultado.mensaje) || "No se pudo cambiar la contraseña.";
+    mensaje.style.color = "#b91c1c";
+  } catch (error) {
+    mensaje.textContent = "Error de conexión. Intenta de nuevo.";
+    mensaje.style.color = "#b91c1c";
+  }
+  boton.textContent = "Guardar";
+  evaluarClave();
 }
 
 document.getElementById("modal").addEventListener("click", function(event) {
