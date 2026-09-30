@@ -1115,7 +1115,7 @@ function cerrarCambiarClave() {
   document.getElementById("modalClave").classList.remove("show");
 }
 
-function evaluarClave() {
+function evaluarClave(conservarMensaje) {
   const actual = document.getElementById("claveActual").value;
   const nueva = document.getElementById("claveNueva").value;
   const confirmacion = document.getElementById("claveConfirmacion").value;
@@ -1127,7 +1127,7 @@ function evaluarClave() {
   } else if (nueva && actual && nueva === actual) {
     mensaje.textContent = "La nueva debe ser distinta a la actual.";
     mensaje.style.color = "#b91c1c";
-  } else {
+  } else if (!conservarMensaje) {
     mensaje.textContent = "";
   }
   document.getElementById("botonClave").disabled =
@@ -1135,7 +1135,9 @@ function evaluarClave() {
 }
 
 ["claveActual", "claveNueva", "claveConfirmacion"].forEach(function(id) {
-  document.getElementById(id).addEventListener("input", evaluarClave);
+  document.getElementById(id).addEventListener("input", function() {
+    evaluarClave(false);
+  });
 });
 
 async function guardarClave(event) {
@@ -1168,7 +1170,7 @@ async function guardarClave(event) {
     mensaje.style.color = "#b91c1c";
   }
   boton.textContent = "Guardar";
-  evaluarClave();
+  evaluarClave(true);
 }
 
 document.getElementById("modal").addEventListener("click", function(event) {
