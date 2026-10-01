@@ -116,21 +116,30 @@
             gap: 48px;
         }
 
-        .hero {
+        .video-column {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .flyer {
-            display: block;
-            width: auto;
-            max-width: 100%;
-            height: min(72vh, 600px);
-            object-fit: contain;
+        .video-wrapper {
+            width: min(100%, 400px);
             margin: 0 auto;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            border: none;
+            border-radius: 18px;
+            background: #071625;
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
+        }
+
+        .event-video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            background: #071625;
         }
 
         .event-info {
@@ -144,6 +153,14 @@
             margin-bottom: 16px;
             color: #111827;
             letter-spacing: 0.5px;
+        }
+
+        .special-invitation {
+            margin-bottom: 12px;
+            color: #111827;
+            font-size: 24px;
+            line-height: 1.25;
+            font-weight: 700;
         }
 
         .event-info > p {
@@ -185,7 +202,7 @@
             align-items: center;
             justify-content: center;
             padding: 15px 30px;
-            border: none;
+            border: 2px solid #d9ad55;
             border-radius: 30px;
             background: #111827;
             color: #ffffff;
@@ -200,64 +217,6 @@
         .info-button:hover {
             background: #1f2937;
             transform: translateY(-2px);
-        }
-
-        /* Sección del video */
-        .video-section {
-            width: 100%;
-            padding: 70px 20px 80px;
-            background: #0d2238;
-            color: #ffffff;
-            text-align: center;
-            border-top: 1px solid rgba(217, 173, 85, 0.35);
-        }
-
-        .video-section-inner {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .video-section h2 {
-            margin-bottom: 12px;
-            font-size: 30px;
-            line-height: 1.2;
-            letter-spacing: 0.5px;
-        }
-
-        .video-section > .video-section-inner > p {
-            max-width: 650px;
-            margin: 0 auto 30px;
-            color: #dbe4ee;
-            font-size: 17px;
-            line-height: 1.55;
-        }
-
-        .video-wrapper {
-            width: min(100%, 400px);
-            margin: 0 auto;
-            overflow: hidden;
-            border: none;
-            border-radius: 18px;
-            background: #071625;
-            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
-        }
-
-        .event-video {
-            display: block;
-            width: 100%;
-            height: auto;
-            aspect-ratio: 9 / 16;
-            object-fit: cover;
-            background: #071625;
-        }
-
-        .video-caption {
-            margin-top: 22px;
-            color: #d9ad55;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.8px;
         }
 
         /* Modal existente */
@@ -357,18 +316,25 @@
                 padding: 25px 20px 45px;
             }
 
-            .flyer {
+            .video-column {
+                margin-bottom: 28px;
+            }
+
+            .video-wrapper {
                 width: min(100%, 520px);
-                height: auto;
             }
 
             .event-info {
-                padding: 28px 0 0;
+                padding: 0;
                 text-align: center;
             }
 
             .event-info h1 {
                 font-size: 30px;
+            }
+
+            .special-invitation {
+                font-size: 22px;
             }
 
             .event-info > p {
@@ -426,18 +392,27 @@
                 padding: 12px 12px 30px;
             }
 
-            .flyer {
+            .video-column {
+                margin-bottom: 24px;
+            }
+
+            .video-wrapper {
                 width: 100%;
-                max-width: 100%;
+                max-width: 360px;
                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
             }
 
             .event-info {
-                padding: 24px 6px 0;
+                padding: 0 6px;
             }
 
             .event-info h1 {
                 font-size: 25px;
+                margin-bottom: 10px;
+            }
+
+            .special-invitation {
+                font-size: 21px;
                 margin-bottom: 10px;
             }
 
@@ -532,16 +507,32 @@
 
     <main>
         <section class="event-layout">
-            <div class="hero">
-                <img
-                    src="../../images/Flyer_adviento_v1.png"
-                    alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
-                    class="flyer"
-                >
+            <div class="video-column">
+                <div class="video-wrapper">
+                    <video
+                        id="eventVideo"
+                        class="event-video"
+                        autoplay
+                        muted
+                        playsinline
+                        controls
+                        preload="auto"
+                        poster="../../images/Flyer_adviento_v1.png"
+                    >
+                        <source src="../../videos/Video_Juan_Felipe.mp4" type="video/mp4">
+                        Tu navegador no admite la reproducción de video.
+                    </video>
+                </div>
             </div>
 
             <div class="event-info">
                 <h1>MUY PRONTO CONOCERÁS MÁS...</h1>
+
+                <h2 class="special-invitation">UNA INVITACIÓN ESPECIAL</h2>
+
+                <p>
+                    El Padre Juan Felipe quiere invitarte personalmente a vivir este encuentro de Adviento.
+                </p>
 
                 <p>
                     Una invitación a volver a empezar, a través del perdón y la sanación.
@@ -563,30 +554,6 @@
             </div>
         </section>
 
-        <section class="video-section">
-            <div class="video-section-inner">
-                <h2>UNA INVITACIÓN ESPECIAL</h2>
-
-                <p>
-                    El Padre Juan Felipe quiere invitarte personalmente a vivir este
-                    encuentro de Adviento.
-                </p>
-
-                <div class="video-wrapper">
-                    <video
-                        class="event-video"
-                        controls
-                        playsinline
-                        preload="metadata"
-                        poster="../../images/Flyer_adviento_v1.png"
-                    >
-                        <source src="../../videos/Video_Juan_Felipe.mp4" type="video/mp4">
-                        Tu navegador no admite la reproducción de video.
-                    </video>
-                </div>
-
-            </div>
-        </section>
     </main>
 
     <div id="infoModal" class="modal" onclick="closeModal(event)">
@@ -629,6 +596,13 @@
         function closeModal() {
             document.getElementById("infoModal").classList.remove("active");
         }
+
+        const eventVideo = document.getElementById("eventVideo");
+
+        eventVideo.addEventListener("ended", () => {
+            eventVideo.currentTime = 0;
+            eventVideo.pause();
+        });
     </script>
 </body>
 </html>
