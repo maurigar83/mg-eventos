@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Validación de Tickets</title>
+  <link rel="stylesheet" href="lector.css?v=12">
+  <script src="vendor/html5-qrcode-2.3.8.min.js"></script>
+</head>
+<body>
+  <h1>VALIDACIÓN DE TICKETS</h1>
+  <div class="acciones">
+    <button id="btnStart" type="button">
+      ESCANEAR TICKET
+    </button>
+    <button id="btnStop" type="button">
+      DETENER CÁMARA
+    </button>
+  </div>
+  <div id="reader"></div>
+  <div id="resultado" class="oculto" aria-live="assertive">
+    <div id="resultadoIcono"></div>
+    <h2 id="resultadoTitulo"></h2>
+    <div id="resultadoNombre"></div>
+    <div id="resultadoTipo"></div>
+    <div id="resultadoDetalle"></div>
+    <div id="resultadoCerrar">Toca la pantalla para escanear el siguiente</div>
+  </div>
+  <div id="mensaje">
+    Verificando acceso...
+  </div>
+  <button id="btnPanel" type="button">
+    ← VOLVER AL PANEL
+  </button>
+  <script src="../config.js?v=12"></script>
+  <script src="lector.js?v=12"></script>
+</body>
+</html>
