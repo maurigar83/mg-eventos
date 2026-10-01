@@ -6,23 +6,31 @@
     <title>Adviento | Tiempo de volver a empezar</title>
     <meta name="description" content="Adviento: tiempo de volver a empezar a través del perdón y la sanación.">
     <link rel="icon" type="image/png" href="../../images/mg-eventos-logo.png">
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #ffffff;
             color: #111827;
             min-height: 100vh;
         }
+
         header {
             width: 100%;
             background: #ffffff;
             border-bottom: 1px solid #eeeeee;
         }
+
         .header-container {
             width: 100%;
             max-width: 1100px;
@@ -32,6 +40,7 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .brand {
             display: flex;
             align-items: center;
@@ -39,22 +48,26 @@
             text-decoration: none;
             color: #111827;
         }
+
         .brand img {
             width: 48px;
             height: 48px;
             object-fit: contain;
             border-radius: 50%;
         }
+
         .brand span {
             font-size: 20px;
             font-weight: 700;
             letter-spacing: 0.3px;
         }
+
         .navigation {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .nav-link {
             display: inline-flex;
             align-items: center;
@@ -71,52 +84,60 @@
             letter-spacing: 0.7px;
             transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
+
         .nav-link:hover {
             background: #d9ad55;
             color: #111827;
             transform: translateY(-1px);
         }
-        .nav-link.active {
-            background: #d9ad55;
-            color: #111827;
-            cursor: default;
-        }
+
+        .nav-link.active,
         .nav-link.active:hover {
             background: #d9ad55;
             color: #111827;
+            cursor: default;
             transform: none;
         }
+
         main {
             width: 100%;
         }
+
+        /* Primera sección */
         .event-layout {
             width: 100%;
             max-width: 1100px;
+            min-height: calc(100vh - 73px);
             margin: 0 auto;
-            padding: 30px 20px 45px;
+            padding: 18px 20px 22px;
             display: grid;
-            grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
-            align-items: start;
-            gap: 50px;
+            grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
+            align-items: center;
+            gap: 48px;
         }
+
         .hero {
             width: 100%;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .flyer {
             display: block;
-            width: 100%;
-            max-width: 520px;
-            height: auto;
+            width: auto;
+            max-width: 100%;
+            height: min(72vh, 600px);
+            object-fit: contain;
             margin: 0 auto;
-            border-radius: 0;
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
         }
+
         .event-info {
             width: 100%;
-            padding: 0;
             text-align: left;
         }
+
         .event-info h1 {
             font-size: 36px;
             line-height: 1.15;
@@ -124,6 +145,7 @@
             color: #111827;
             letter-spacing: 0.5px;
         }
+
         .event-info > p {
             max-width: 560px;
             margin: 0 0 28px;
@@ -131,34 +153,39 @@
             line-height: 1.55;
             color: #4b5563;
         }
+
         .event-card {
             width: 100%;
             background: #f8fafc;
             border: 1px solid #e5e7eb;
             border-radius: 18px;
-            padding: 25px 25px;
+            padding: 25px;
             margin-bottom: 25px;
             box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
         }
+
         .event-card h2 {
             font-size: 24px;
             margin-bottom: 12px;
             color: #111827;
         }
+
         .event-card p {
             font-size: 17px;
             line-height: 1.6;
             color: #4b5563;
         }
+
         .event-card strong {
             color: #111827;
         }
+
         .info-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 15px 30px;
-            border: 2px solid #d9ad55;
+            border: none;
             border-radius: 30px;
             background: #111827;
             color: #ffffff;
@@ -169,18 +196,71 @@
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease;
         }
+
         .info-button:hover {
             background: #1f2937;
             transform: translateY(-2px);
         }
-        footer {
+
+        /* Sección del video */
+        .video-section {
             width: 100%;
-            padding: 20px;
+            padding: 70px 20px 80px;
+            background: #0d2238;
+            color: #ffffff;
             text-align: center;
-            border-top: 1px solid #eeeeee;
-            color: #9ca3af;
-            font-size: 13px;
+            border-top: 1px solid rgba(217, 173, 85, 0.35);
         }
+
+        .video-section-inner {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .video-section h2 {
+            margin-bottom: 12px;
+            font-size: 30px;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .video-section > .video-section-inner > p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: #dbe4ee;
+            font-size: 17px;
+            line-height: 1.55;
+        }
+
+        .video-wrapper {
+            width: min(100%, 400px);
+            margin: 0 auto;
+            overflow: hidden;
+            border: none;
+            border-radius: 18px;
+            background: #071625;
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
+        }
+
+        .event-video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            background: #071625;
+        }
+
+        .video-caption {
+            margin-top: 22px;
+            color: #d9ad55;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+        }
+
+        /* Modal existente */
         .modal {
             display: none;
             position: fixed;
@@ -191,9 +271,11 @@
             justify-content: center;
             padding: 20px;
         }
+
         .modal.active {
             display: flex;
         }
+
         .modal-content {
             width: 100%;
             max-width: 430px;
@@ -203,17 +285,20 @@
             text-align: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
+
         .modal-content h2 {
             margin-bottom: 15px;
             font-size: 25px;
             color: #111827;
         }
+
         .modal-content p {
             margin-bottom: 25px;
             color: #4b5563;
             font-size: 16px;
             line-height: 1.6;
         }
+
         .modal-buttons {
             display: flex;
             justify-content: center;
@@ -221,6 +306,7 @@
             gap: 12px;
             margin-top: 10px;
         }
+
         .close-button,
         .whatsapp-button {
             display: inline-flex;
@@ -236,42 +322,61 @@
             cursor: pointer;
             transition: transform 0.2s ease, opacity 0.2s ease;
         }
+
         .close-button {
             background: #111827;
         }
+
         .whatsapp-button {
             background: #25D366;
         }
+
         .close-button:hover,
         .whatsapp-button:hover {
             transform: translateY(-2px);
             opacity: 0.9;
         }
+
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #eeeeee;
+            color: #9ca3af;
+            font-size: 13px;
+            background: #ffffff;
+        }
+
+        /* Tablet */
         @media (max-width: 850px) {
             .event-layout {
-                grid-template-columns: 1fr;
+                min-height: auto;
                 max-width: 720px;
+                grid-template-columns: 1fr;
                 gap: 0;
-                padding: 20px 20px 40px;
+                padding: 25px 20px 45px;
             }
-            .hero {
-                margin-bottom: 0;
-            }
+
             .flyer {
-                max-width: 620px;
+                width: min(100%, 520px);
+                height: auto;
             }
+
             .event-info {
                 padding: 28px 0 0;
                 text-align: center;
             }
+
             .event-info h1 {
                 font-size: 30px;
             }
+
             .event-info > p {
                 margin-left: auto;
                 margin-right: auto;
                 font-size: 17px;
             }
+
             .event-card {
                 text-align: center;
                 max-width: 620px;
@@ -279,84 +384,126 @@
                 margin-right: auto;
             }
         }
+
+        /* Celular */
         @media (max-width: 600px) {
             .header-container {
                 padding: 10px 15px;
                 gap: 10px;
                 flex-direction: column;
             }
+
             .brand {
                 width: 100%;
                 justify-content: center;
             }
+
             .brand img {
                 width: 42px;
                 height: 42px;
             }
+
             .brand span {
                 font-size: 18px;
                 white-space: nowrap;
             }
+
             .navigation {
                 width: 100%;
                 justify-content: center;
                 gap: 5px;
                 flex-wrap: wrap;
             }
+
             .nav-link {
                 min-width: auto;
                 padding: 8px 10px;
                 font-size: 11px;
                 letter-spacing: 0.3px;
             }
+
             .event-layout {
                 padding: 12px 12px 30px;
             }
+
             .flyer {
                 width: 100%;
                 max-width: 100%;
                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
             }
+
             .event-info {
                 padding: 24px 6px 0;
             }
+
             .event-info h1 {
                 font-size: 25px;
                 margin-bottom: 10px;
             }
+
             .event-info > p {
                 font-size: 16px;
                 line-height: 1.5;
                 margin-bottom: 20px;
             }
+
             .event-card {
                 padding: 20px 17px;
                 margin-bottom: 20px;
             }
+
             .event-card h2 {
                 font-size: 21px;
                 margin-bottom: 10px;
             }
+
             .event-card p {
                 font-size: 15px;
                 line-height: 1.5;
             }
+
             .info-button {
                 width: 100%;
                 max-width: 330px;
                 padding: 14px 20px;
                 font-size: 14px;
             }
+
+            .video-section {
+                padding: 55px 15px 65px;
+            }
+
+            .video-section h2 {
+                font-size: 25px;
+            }
+
+            .video-section > .video-section-inner > p {
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+
+            .video-wrapper {
+                width: min(100%, 360px);
+                border-radius: 16px;
+            }
+
+            .video-caption {
+                font-size: 16px;
+            }
+
             .modal {
                 padding: 15px;
             }
+
             .modal-content {
                 padding: 30px 20px;
             }
+
             .modal-buttons {
                 flex-direction: column;
                 width: 100%;
             }
+
             .close-button,
             .whatsapp-button {
                 width: 100%;
@@ -365,6 +512,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-container">
@@ -372,6 +520,7 @@
                 <img src="../../images/mg-eventos-logo.png" alt="MG Eventos">
                 <span>MG Eventos</span>
             </a>
+
             <nav class="navigation">
                 <a href="../index.html" class="nav-link">EVENTOS</a>
                 <a href="../../servicios/index.html" class="nav-link">SERVICIOS</a>
@@ -380,34 +529,76 @@
             </nav>
         </div>
     </header>
+
     <main>
-        <div class="event-layout">
-            <section class="hero">
-                <img src="../../images/Flyer_adviento_v1.png" alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación" class="flyer">
-            </section>
-            <section class="event-info">
+        <section class="event-layout">
+            <div class="hero">
+                <img
+                    src="../../images/Flyer_adviento_v1.png"
+                    alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación"
+                    class="flyer"
+                >
+            </div>
+
+            <div class="event-info">
                 <h1>MUY PRONTO CONOCERÁS MÁS...</h1>
-                <p>Una invitación a volver a empezar, a través del perdón y la sanación.</p>
+
+                <p>
+                    Una invitación a volver a empezar, a través del perdón y la sanación.
+                </p>
+
                 <div class="event-card">
                     <h2>RETIRO DE ADVIENTO</h2>
+
                     <p>
                         <strong>SÁBADO 28 DE NOVIEMBRE DE 2026</strong>
                         <br>
                         8:00 A.M. a 3:00 P.M.
                     </p>
                 </div>
-                <button class="info-button" onclick="openModal()">MÁS INFORMACIÓN AQUÍ</button>
-            </section>
-        </div>
+
+                <button class="info-button" onclick="openModal()">
+                    MÁS INFORMACIÓN AQUÍ
+                </button>
+            </div>
+        </section>
+
+        <section class="video-section">
+            <div class="video-section-inner">
+                <h2>UNA INVITACIÓN ESPECIAL</h2>
+
+                <p>
+                    El Padre Juan Felipe quiere invitarte personalmente a vivir este
+                    encuentro de Adviento.
+                </p>
+
+                <div class="video-wrapper">
+                    <video
+                        class="event-video"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        poster="../../images/Flyer_adviento_v1.png"
+                    >
+                        <source src="../../videos/adviento.mp4" type="video/mp4">
+                        Tu navegador no admite la reproducción de video.
+                    </video>
+                </div>
+
+            </div>
+        </section>
     </main>
+
     <div id="infoModal" class="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2>MUY PRONTO</h2>
+
             <p>
                 Estamos preparando toda la información de este encuentro.
                 <br><br>
                 Vuelve pronto para conocer todos los detalles.
             </p>
+
             <div class="modal-buttons">
                 <a
                     class="whatsapp-button"
@@ -418,17 +609,23 @@
                 >
                     WHATSAPP
                 </a>
-                <button class="close-button" onclick="closeModal()">CERRAR</button>
+
+                <button class="close-button" onclick="closeModal()">
+                    CERRAR
+                </button>
             </div>
         </div>
     </div>
+
     <footer>
         © 2026 MG Eventos
     </footer>
+
     <script>
         function openModal() {
             document.getElementById("infoModal").classList.add("active");
         }
+
         function closeModal() {
             document.getElementById("infoModal").classList.remove("active");
         }
