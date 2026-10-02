@@ -3,158 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adviento | Tiempo de volver a empezar</title>
-    <meta name="description" content="Adviento: tiempo de volver a empezar a través del perdón y la sanación.">
-    <link rel="icon" type="image/png" href="../../images/mg-eventos-logo.png">
+    <title>Adviento | A través del perdón y la sanación</title>
+    <meta name="description" content="Retiro de Adviento: tiempo de volver a empezar a través del perdón y la sanación. Sábado 28 de noviembre de 2026.">
+    <link rel="icon" type="image/png" href="../../images/mg-eventos-logo-circulo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        /* Paleta MG Eventos (unificada con el dorado del logo) */
+        :root {
+            --dorado: #C4924F;
+            --dorado-texto: #8A5E2E;
+            --dorado-cursiva: #6E4A24;
+            --fondo: #F4EDDF;
+            --texto: #141B2D;
+            --texto-suave: #4A5068;
+            --borde: #E4D9C2;
+            --borde-suave: #D9C9A3;
+            --morado: #4A2C6B;            /* Acento solo de la campaña Adviento */
+            --morado-hover: #5B3A82;
+            --video-h: clamp(440px, calc(100vh - 240px), 600px);
         }
 
-        html {
-            scroll-behavior: smooth;
+        @supports (height: 100svh) {
+            :root { --video-h: clamp(440px, calc(100svh - 240px), 600px); }
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
-            color: #111827;
+            font-family: 'Archivo', Arial, Helvetica, sans-serif;
+            color: var(--texto);
+            background-color: var(--fondo);
+            background-image: url("../../images/textura-papel.png");
+            background-repeat: repeat;
             min-height: 100vh;
             min-height: 100svh;
             display: flex;
             flex-direction: column;
         }
 
+        /* ---------- Encabezado ---------- */
         header {
+            position: relative;
+            z-index: 50;
             width: 100%;
-            background: #ffffff;
-            border-bottom: 1px solid #eeeeee;
+            background: rgba(255, 255, 255, 0.72);
+            border-top: 4px solid var(--morado);
+            border-bottom: 1px solid var(--borde);
         }
 
         .header-container {
-            width: 100%;
-            max-width: 1100px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 12px 20px;
+            padding: 12px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             text-decoration: none;
-            color: #111827;
         }
 
-        .brand img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            border-radius: 50%;
-        }
+        .brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
+        .brand-divisor { width: 2px; height: 40px; background: var(--dorado); }
+        .brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 11px; }
 
-        .brand span {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-
-        .navigation {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .navigation { display: flex; align-items: center; gap: 10px; }
 
         .nav-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 100px;
-            padding: 9px 18px;
-            border: 1px solid #d9ad55;
-            border-radius: 25px;
-            background: #ffffff;
-            color: #111827;
+            padding: 10px 20px;
+            border: 2px solid var(--dorado);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--texto);
             text-decoration: none;
             font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.7px;
-            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            letter-spacing: 0.1em;
+            transition: background 0.2s ease, transform 0.2s ease;
         }
 
-        .nav-link:hover {
-            background: #d9ad55;
-            color: #111827;
-            transform: translateY(-1px);
-        }
+        .nav-link:hover { background: var(--dorado); transform: translateY(-1px); }
 
         .nav-link.active,
-        .nav-link.active:hover {
-            background: #d9ad55;
-            color: #111827;
-            cursor: default;
-            transform: none;
-        }
+        .nav-link.active:hover { background: var(--dorado); cursor: default; transform: none; }
 
-        main {
-            width: 100%;
-            flex: 1;
-            display: flex;
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--dorado);
+            border-radius: 50%;
+            background: #ffffff;
             align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
 
-        /* Primera sección: todo cabe en una pantalla de escritorio */
-        .event-layout {
+        .menu-toggle .icon-close { display: none; }
+        .menu-toggle[aria-expanded="true"] .icon-open { display: none; }
+        .menu-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+        /* ---------- Contenido principal ---------- */
+        main { width: 100%; flex: 1; display: flex; align-items: center; }
+
+        .hero {
             width: 100%;
-            max-width: 1040px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 16px 24px;
+            padding: 24px 32px;
             display: grid;
             grid-template-columns: auto minmax(0, 1fr);
-            align-items: center;
-            gap: 56px;
+            align-items: start;
+            gap: 64px;
         }
 
-        .video-column {
+        /* Columna del video (escritorio) */
+        .stage { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .stage-row { display: flex; align-items: center; gap: 16px; }
+
+        .arrow {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--borde-suave);
+            background: #ffffff;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(20, 27, 45, 0.08);
+            transition: transform 0.2s ease;
         }
 
-        /* Alto según la pantalla (header + footer + márgenes ≈ 170px) */
+        .arrow:hover { transform: scale(1.06); }
+
         .video-wrapper {
             position: relative;
-            height: clamp(420px, calc(100vh - 170px), 640px);
-            height: clamp(420px, calc(100svh - 170px), 640px);
+            height: var(--video-h);
             aspect-ratio: 9 / 16;
+            border-radius: 22px;
             overflow: hidden;
-            border-radius: 18px;
             background: #071625;
-            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24);
+            box-shadow: 0 22px 44px rgba(20, 27, 45, 0.18);
         }
 
-        .event-video {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background: #071625;
+        .event-video { display: block; width: 100%; height: 100%; object-fit: cover; background: #071625; }
+
+        .counter {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 3;
+            background: rgba(20, 27, 45, 0.78);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 999px;
         }
+
+        /* Tarjeta "Próximamente" */
+        .soon-panel {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 28px;
+            text-align: center;
+            background: #EFE6D2;
+            border: 1px solid var(--borde-suave);
+            border-radius: inherit;
+        }
+
+        .video-wrapper.is-soon .soon-panel { display: flex; }
+        .video-wrapper.is-soon .event-video { visibility: hidden; }
+
+        .soon-label { font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: var(--dorado-texto); }
+        .soon-text { font-size: 17px; line-height: 1.4; color: var(--texto-suave); }
 
         /* Flyer que aparece dentro del video al terminar */
         .video-end {
             position: absolute;
             inset: 0;
+            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #071625 url("../../images/Flyer_adviento_v1.png") center / cover;
+            background: #071625 url("../../images/Flyer_adviento_v2.png") center / cover;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.8s ease, visibility 0.8s ease;
@@ -169,17 +222,9 @@
             transform: scale(1.15);
         }
 
-        .video-end img {
-            position: relative;
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+        .video-end img { position: relative; width: 100%; height: auto; display: block; }
 
-        .video-wrapper.ended .video-end {
-            opacity: 1;
-            visibility: visible;
-        }
+        .video-wrapper.ended .video-end { opacity: 1; visibility: visible; }
 
         .replay-button {
             position: absolute;
@@ -189,100 +234,162 @@
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
-            border: 1px solid #d9ad55;
+            border: 1px solid var(--dorado);
             border-radius: 20px;
             background: rgba(17, 24, 39, 0.85);
             color: #ffffff;
+            font-family: inherit;
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.5px;
             cursor: pointer;
         }
 
-        .replay-button:hover {
-            background: #111827;
+        .replay-button:hover { background: #111827; }
+
+        .priest-name { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+        .priest-name small { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: var(--dorado-texto); }
+        .priest-name strong { font-size: 20px; font-weight: 800; }
+
+        /* Columna de texto: ocupa el alto del video */
+        .copy {
+            position: relative;
+            z-index: 0;
+            min-height: var(--video-h);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
         }
 
-        .event-info {
-            width: 100%;
-            text-align: left;
+        .wreath {
+            position: absolute;
+            z-index: -1;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            width: 600px;
+            max-width: 110%;
+            height: auto;
+            opacity: 0.17;
+            pointer-events: none;
         }
 
-        .event-info h1 {
-            font-size: 34px;
-            line-height: 1.15;
-            margin-bottom: 14px;
-            color: #111827;
-            letter-spacing: 0.5px;
+        .copy-top { display: flex; flex-direction: column; gap: 14px; padding-top: 18px; }
+
+        .gold-line { width: 56px; height: 2px; background: var(--dorado); }
+
+        .eyebrow { font-size: 20px; font-weight: 800; letter-spacing: 0.18em; color: var(--morado); }
+
+        .title { display: flex; flex-direction: column; gap: 2px; }
+
+        .title-lead {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 26px;
+            line-height: 1.1;
+            color: var(--dorado-cursiva);
         }
 
-        .soon {
-            margin: 4px 0 10px;
-            color: #111827;
-            font-size: 22px;
-            line-height: 1.25;
+        .title-main {
+            font-size: 44px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: var(--morado);
+        }
+
+        .tagline { font-size: 18px; font-weight: 500; color: var(--texto-suave); }
+
+        .copy-mid { display: flex; flex-direction: column; gap: 10px; }
+
+        .invite { display: flex; flex-direction: column; gap: 4px; }
+        .invite-title { font-size: 22px; font-weight: 800; }
+        .invite-hint { font-size: 15px; color: var(--texto-suave); }
+
+        .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .chip {
+            min-height: 44px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.3px;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #ffffff;
+            color: var(--texto);
+            border: 2px solid var(--borde);
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
-        .event-info p.lead {
-            max-width: 520px;
-            margin: 0 0 18px;
-            font-size: 21px;
-            line-height: 1.45;
-            color: #1f2937;
+        .chip:hover { border-color: var(--dorado); }
+        .chip.is-soon { background: transparent; color: var(--dorado-cursiva); border-style: dashed; border-color: var(--borde-suave); }
+        .chip[aria-pressed="true"] { background: var(--morado); color: #ffffff; border: 2px solid var(--morado); }
+
+        .quote { margin: 4px 0 0; display: flex; gap: 10px; min-height: 76px; }
+
+        .quote-mark {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 38px;
+            line-height: 0.8;
+            color: var(--dorado);
         }
+
+        .quote-body { display: flex; flex-direction: column; gap: 6px; }
+
+        .quote blockquote {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 21px;
+            line-height: 1.25;
+            color: #2E2440;
+        }
+
+        .quote figcaption { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--dorado-texto); }
+
+        .copy-bottom { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 
         .event-card {
             width: 100%;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 18px;
-            max-width: 480px;
-            padding: 20px 24px;
-            margin: 8px 0 22px;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            border: 1px solid var(--borde);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 24px;
         }
 
-        .event-card h2 {
-            font-size: 21px;
-            margin-bottom: 8px;
-            color: #111827;
-        }
-
-        .event-card p {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #4b5563;
-        }
-
-        .event-card strong {
-            color: #111827;
-        }
+        .event-card-item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; color: var(--texto-suave); }
+        .event-card-item.strong { font-size: 16px; font-weight: 700; color: var(--texto); }
 
         .info-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 15px 30px;
-            border: 2px solid #d9ad55;
-            border-radius: 30px;
-            background: #111827;
+            padding: 16px 34px;
+            border: 2px solid var(--dorado);
+            border-radius: 999px;
+            background: var(--morado);
             color: #ffffff;
-            text-decoration: none;
+            font-family: inherit;
             font-size: 15px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
             cursor: pointer;
             transition: transform 0.2s ease, background 0.2s ease;
         }
 
-        .info-button:hover {
-            background: #1f2937;
-            transform: translateY(-2px);
-        }
+        .info-button:hover { background: var(--morado-hover); transform: translateY(-2px); }
 
-        /* Modal existente */
+        /* Carrusel de celular (oculto en escritorio) */
+        .mobile-stage { display: none; }
+
+        /* ---------- Modal ---------- */
         .modal {
             display: none;
             position: fixed;
@@ -294,9 +401,7 @@
             padding: 20px;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
             width: 100%;
@@ -308,26 +413,10 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
         }
 
-        .modal-content h2 {
-            margin-bottom: 15px;
-            font-size: 25px;
-            color: #111827;
-        }
+        .modal-content h2 { margin-bottom: 15px; font-size: 25px; color: var(--texto); }
+        .modal-content p { margin-bottom: 25px; color: #4b5563; font-size: 16px; line-height: 1.6; }
 
-        .modal-content p {
-            margin-bottom: 25px;
-            color: #4b5563;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
-        }
+        .modal-buttons { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 10px; }
 
         .close-button,
         .whatsapp-button {
@@ -338,6 +427,7 @@
             border: none;
             border-radius: 25px;
             color: #ffffff;
+            font-family: inherit;
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
@@ -345,187 +435,169 @@
             transition: transform 0.2s ease, opacity 0.2s ease;
         }
 
-        .close-button {
-            background: #111827;
-        }
-
-        .whatsapp-button {
-            background: #25D366;
-        }
-
-        .close-button:hover,
-        .whatsapp-button:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
+        .close-button { background: var(--texto); }
+        .whatsapp-button { background: #25D366; }
+        .close-button:hover, .whatsapp-button:hover { transform: translateY(-2px); opacity: 0.9; }
 
         footer {
             width: 100%;
             padding: 14px 20px;
             text-align: center;
-            border-top: 1px solid #eeeeee;
-            color: #9ca3af;
-            font-size: 13px;
-            background: #ffffff;
+            border-top: 1px solid var(--borde);
+            color: #6B7085;
+            font-size: 14px;
         }
 
         /* Pantallas bajas (laptops pequeños) */
-        @media (max-height: 700px) and (min-width: 851px) {
-            .event-info h1 { font-size: 30px; margin-bottom: 10px; }
-            .event-info p.lead { font-size: 18px; margin-bottom: 12px; }
-            .soon { font-size: 19px; }
-            .event-card { padding: 16px 20px; margin-bottom: 16px; }
+        @media (max-height: 760px) and (min-width: 861px) {
+            .title-main { font-size: 38px; }
+            .title-lead { font-size: 23px; }
+            .eyebrow { font-size: 17px; }
+            .copy-top { gap: 10px; padding-top: 8px; }
+            .quote blockquote { font-size: 19px; }
+            .quote { min-height: 64px; }
         }
 
-        /* Tablet y celular: una sola columna */
-        @media (max-width: 850px) {
-            main {
-                display: block;
-            }
+        /* ---------- Menú hamburguesa ---------- */
+        @media (max-width: 760px) {
+            .header-container { padding: 10px 16px; }
+            .brand { gap: 10px; }
+            .brand-circulo { width: 44px; height: 44px; }
+            .brand-divisor { height: 34px; }
+            .brand-eslogan { height: 11px; top: 9px; }
 
-            .event-layout {
-                max-width: 620px;
-                grid-template-columns: 1fr;
-                gap: 28px;
-                padding: 24px 20px 40px;
-            }
-
-            .video-wrapper {
-                height: auto;
-                width: min(100%, 380px);
-            }
-
-            .event-info {
-                text-align: center;
-            }
-
-            .event-info h1 {
-                font-size: 28px;
-            }
-
-            .soon {
-                font-size: 20px;
-            }
-
-            .event-info p.lead {
-                margin-left: auto;
-                margin-right: auto;
-                font-size: 18px;
-            }
-
-            .event-card {
-                margin-left: auto;
-                margin-right: auto;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .header-container {
-                padding: 10px 15px;
-                gap: 10px;
-                flex-direction: column;
-            }
-
-            .brand {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .brand img {
-                width: 42px;
-                height: 42px;
-            }
-
-            .brand span {
-                font-size: 18px;
-                white-space: nowrap;
-            }
+            .menu-toggle { display: flex; }
 
             .navigation {
-                width: 100%;
-                justify-content: center;
-                gap: 5px;
-                flex-wrap: wrap;
-            }
-
-            .nav-link {
-                min-width: auto;
-                padding: 8px 10px;
-                font-size: 11px;
-                letter-spacing: 0.3px;
-            }
-
-            .event-layout {
-                padding: 14px 14px 30px;
-                gap: 24px;
-            }
-
-            .video-wrapper {
-                width: min(100%, 340px);
-                border-radius: 16px;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            }
-
-            .event-info h1 {
-                font-size: 24px;
-            }
-
-            .soon {
-                font-size: 18px;
-            }
-
-            .event-info p.lead {
-                font-size: 16px;
-                line-height: 1.5;
-            }
-
-            .event-card {
-                padding: 18px 16px;
-            }
-
-            .event-card h2 {
-                font-size: 19px;
-            }
-
-            .info-button {
-                width: 100%;
-                max-width: 330px;
-                padding: 14px 20px;
-                font-size: 14px;
-            }
-
-            .modal {
-                padding: 15px;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .modal-buttons {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
                 flex-direction: column;
-                width: 100%;
+                align-items: stretch;
+                gap: 10px;
+                padding: 12px 16px 18px;
+                background: #ffffff;
+                border-bottom: 1px solid var(--borde);
+                box-shadow: 0 16px 32px rgba(20, 27, 45, 0.14);
             }
 
-            .close-button,
-            .whatsapp-button {
-                width: 100%;
-                max-width: 220px;
+            header.nav-open .navigation { display: flex; }
+
+            .nav-link { padding: 14px 20px; font-size: 14px; }
+        }
+
+        /* ---------- Tablet y celular ---------- */
+        @media (max-width: 860px) {
+            main { display: block; }
+
+            .hero { display: block; max-width: 560px; padding: 0 0 28px; }
+
+            .stage { display: none; }
+
+            .copy { min-height: 0; display: block; }
+
+            .copy-top { align-items: center; text-align: center; padding: 28px 20px 8px; gap: 10px; position: relative; }
+
+            .wreath { width: 300px; top: -6px; opacity: 0.16; }
+
+            .gold-line { display: none; }
+            .eyebrow { font-size: 16px; }
+            .title { align-items: center; }
+            .title-lead { font-size: 22px; }
+            .title-main { font-size: 32px; line-height: 1.08; }
+            .tagline { font-size: 16px; }
+
+            .invite, .chips { display: none; }
+
+            .mobile-stage { display: block; }
+
+            .swipe-hint {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 14px 20px 0;
+                color: var(--dorado-cursiva);
+                font-size: 15px;
+                font-weight: 700;
             }
+
+            .carousel {
+                display: flex;
+                gap: 14px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding: 16px calc(50% - 140px) 6px;
+                scroll-padding: 0 calc(50% - 140px);
+                scrollbar-width: none;
+            }
+
+            .carousel::-webkit-scrollbar { display: none; }
+
+            .slide {
+                flex: 0 0 280px;
+                scroll-snap-align: center;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .slide .video-wrapper {
+                height: auto;
+                width: 280px;
+                border-radius: 20px;
+                box-shadow: 0 14px 28px rgba(20, 27, 45, 0.18);
+            }
+
+            .slide .priest-name strong { font-size: 19px; }
+
+            .dots { display: flex; justify-content: center; gap: 8px; padding-top: 12px; }
+            .dot { width: 8px; height: 8px; border-radius: 4px; background: var(--borde-suave); transition: width 0.2s ease, background 0.2s ease; }
+            .dot.active { width: 22px; background: var(--dorado-texto); }
+
+            .copy-mid { padding: 30px 28px 0; }
+
+            .quote { flex-direction: column; align-items: center; text-align: center; gap: 6px; min-height: 128px; margin: 0; }
+            .quote-mark { font-size: 30px; line-height: 0.6; height: 14px; }
+            .quote-body { align-items: center; }
+            .quote blockquote { font-size: 20px; line-height: 1.28; }
+
+            .copy-bottom { padding: 24px 20px 0; align-items: stretch; gap: 14px; }
+
+            .event-card { flex-direction: column; align-items: center; gap: 8px; padding: 14px 16px; text-align: center; }
+
+            .info-button { width: 100%; padding: 17px 20px; }
+
+            .modal { padding: 15px; }
+            .modal-content { padding: 30px 20px; }
+            .modal-buttons { flex-direction: column; width: 100%; }
+            .close-button, .whatsapp-button { width: 100%; max-width: 220px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            * { transition: none !important; }
         }
     </style>
 </head>
 
 <body>
-    <header>
+    <header id="siteHeader">
         <div class="header-container">
-            <a href="../../index.html" class="brand" aria-label="MG Eventos - Inicio">
-                <img src="../../images/mg-eventos-logo.png" alt="MG Eventos">
-                <span>MG Eventos</span>
+            <a href="https://mgeventos.co/index.html" class="brand" aria-label="MG Eventos - Inicio">
+                <img class="brand-circulo" src="../../images/mg-eventos-logo-circulo.png" alt="">
+                <span class="brand-divisor" aria-hidden="true"></span>
+                <img class="brand-eslogan" src="../../images/mg-eventos-eslogan.png" alt="">
             </a>
 
-            <nav class="navigation">
+            <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
+                <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+
+            <nav class="navigation" id="mainNav" aria-label="Menú principal">
                 <a href="../index.html" class="nav-link">EVENTOS</a>
                 <a href="../../servicios/index.html" class="nav-link">SERVICIOS</a>
                 <a href="../../contacto/index.html" class="nav-link">CONTACTO</a>
@@ -535,59 +607,102 @@
     </header>
 
     <main>
-        <section class="event-layout">
-            <div class="video-column">
-                <div class="video-wrapper" id="videoWrapper">
-                    <video
-                        id="eventVideo"
-                        class="event-video"
-                        autoplay
-                        muted
-                        playsinline
-                        controls
-                        preload="auto"
-                        poster="../../images/Flyer_adviento_v1.png"
-                    >
-                        <source src="../../videos/Video_Juan_Felipe.mp4" type="video/mp4">
-                        Tu navegador no admite la reproducción de video.
-                    </video>
+        <section class="hero">
+            <!-- Escritorio: un video grande con flechas -->
+            <div class="stage">
+                <div class="stage-row">
+                    <button type="button" class="arrow" id="prevButton" aria-label="Video anterior">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+                    </button>
 
-                    <div class="video-end" aria-hidden="true">
-                        <img src="../../images/Flyer_adviento_v1.png" alt="Flyer Retiro de Adviento: sábado 28 de noviembre de 2026, 8:00 a.m. a 3:00 p.m.">
-                        <button type="button" class="replay-button" id="replayButton">↻ VER DE NUEVO</button>
+                    <div class="video-wrapper" id="desktopWrapper">
+                        <video id="desktopVideo" class="event-video" muted playsinline controls preload="none"></video>
+
+                        <div class="soon-panel">
+                            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c1.6 2 2.1 3.2 2.1 4.2a2.1 2.1 0 0 1-4.2 0c0-1 .5-2.2 2.1-4.2z"/><path d="M12 9v2"/><rect x="8.5" y="11" width="7" height="10.5" rx="1"/></svg>
+                            <span class="soon-label">PRÓXIMAMENTE</span>
+                            <span class="soon-text">Muy pronto conocerás su mensaje</span>
+                        </div>
+
+                        <div class="video-end" aria-hidden="true">
+                            <img src="../../images/Flyer_adviento_v2.png" alt="">
+                            <button type="button" class="replay-button">↻ VER DE NUEVO</button>
+                        </div>
+
+                        <span class="counter" id="counter" aria-live="polite">1 / 4</span>
                     </div>
+
+                    <button type="button" class="arrow" id="nextButton" aria-label="Siguiente video">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+
+                <div class="priest-name">
+                    <small id="desktopPbro">PBRO.</small>
+                    <strong id="desktopName"></strong>
                 </div>
             </div>
 
-            <div class="event-info">
-                <h1>UNA INVITACIÓN ESPECIAL</h1>
+            <div class="copy">
+                <svg class="wreath" aria-hidden="true" viewBox="0 0 400 320" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="200" cy="250" rx="160" ry="52"/><ellipse cx="200" cy="250" rx="134" ry="38"/><ellipse cx="347.0" cy="250.0" rx="14" ry="5" transform="rotate(125 347.0 250.0)"/><ellipse cx="343.8" cy="259.4" rx="14" ry="5" transform="rotate(158 343.8 259.4)"/><ellipse cx="334.3" cy="268.3" rx="14" ry="5" transform="rotate(179 334.3 268.3)"/><ellipse cx="318.9" cy="276.5" rx="14" ry="5" transform="rotate(191 318.9 276.5)"/><ellipse cx="298.4" cy="283.4" rx="14" ry="5" transform="rotate(199 298.4 283.4)"/><ellipse cx="273.5" cy="289.0" rx="14" ry="5" transform="rotate(204 273.5 289.0)"/><ellipse cx="245.4" cy="292.8" rx="14" ry="5" transform="rotate(209 245.4 292.8)"/><ellipse cx="215.4" cy="294.8" rx="14" ry="5" transform="rotate(213 215.4 294.8)"/><ellipse cx="184.6" cy="294.8" rx="14" ry="5" transform="rotate(-143 184.6 294.8)"/><ellipse cx="154.6" cy="292.8" rx="14" ry="5" transform="rotate(-139 154.6 292.8)"/><ellipse cx="126.5" cy="289.0" rx="14" ry="5" transform="rotate(-134 126.5 289.0)"/><ellipse cx="101.6" cy="283.4" rx="14" ry="5" transform="rotate(-129 101.6 283.4)"/><ellipse cx="81.1" cy="276.5" rx="14" ry="5" transform="rotate(-121 81.1 276.5)"/><ellipse cx="65.7" cy="268.3" rx="14" ry="5" transform="rotate(-109 65.7 268.3)"/><ellipse cx="56.2" cy="259.4" rx="14" ry="5" transform="rotate(-88 56.2 259.4)"/><ellipse cx="53.0" cy="250.0" rx="14" ry="5" transform="rotate(-55 53.0 250.0)"/><ellipse cx="56.2" cy="240.6" rx="14" ry="5" transform="rotate(-22 56.2 240.6)"/><ellipse cx="65.7" cy="231.7" rx="14" ry="5" transform="rotate(-1 65.7 231.7)"/><ellipse cx="81.1" cy="223.5" rx="14" ry="5" transform="rotate(11 81.1 223.5)"/><ellipse cx="101.6" cy="216.6" rx="14" ry="5" transform="rotate(19 101.6 216.6)"/><ellipse cx="126.5" cy="211.0" rx="14" ry="5" transform="rotate(24 126.5 211.0)"/><ellipse cx="154.6" cy="207.2" rx="14" ry="5" transform="rotate(29 154.6 207.2)"/><ellipse cx="184.6" cy="205.2" rx="14" ry="5" transform="rotate(33 184.6 205.2)"/><ellipse cx="215.4" cy="205.2" rx="14" ry="5" transform="rotate(37 215.4 205.2)"/><ellipse cx="245.4" cy="207.2" rx="14" ry="5" transform="rotate(41 245.4 207.2)"/><ellipse cx="273.5" cy="211.0" rx="14" ry="5" transform="rotate(46 273.5 211.0)"/><ellipse cx="298.4" cy="216.6" rx="14" ry="5" transform="rotate(51 298.4 216.6)"/><ellipse cx="318.9" cy="223.5" rx="14" ry="5" transform="rotate(59 318.9 223.5)"/><ellipse cx="334.3" cy="231.7" rx="14" ry="5" transform="rotate(71 334.3 231.7)"/><ellipse cx="343.8" cy="240.6" rx="14" ry="5" transform="rotate(92 343.8 240.6)"/><rect x="50.9" y="99.6" width="22" height="135" rx="3"/><path d="M61.9 61.6c7 9 9 14 9 19a9 9 0 0 1-18 0c0-5 2-10 9-19z"/><path d="M61.9 89.6v10"/><rect x="138.7" y="57.7" width="22" height="150" rx="3"/><path d="M149.7 19.7c7 9 9 14 9 19a9 9 0 0 1-18 0c0-5 2-10 9-19z"/><path d="M149.7 47.7v10"/><rect x="239.3" y="57.7" width="22" height="150" rx="3"/><path d="M250.3 19.7c7 9 9 14 9 19a9 9 0 0 1-18 0c0-5 2-10 9-19z"/><path d="M250.3 47.7v10"/><rect x="327.1" y="99.6" width="22" height="135" rx="3"/><path d="M338.1 61.6c7 9 9 14 9 19a9 9 0 0 1-18 0c0-5 2-10 9-19z"/><path d="M338.1 89.6v10"/></svg>
 
-                <p class="lead">
-                    El Padre Juan Felipe quiere invitarte personalmente a vivir este encuentro de Adviento.
-                </p>
-
-                <h2 class="soon">MUY PRONTO CONOCERÁS MÁS...</h2>
-
-                <p class="lead">
-                    Una invitación a volver a empezar, a través del perdón y la sanación.
-                </p>
-
-                <div class="event-card">
-                    <h2>RETIRO DE ADVIENTO</h2>
-
-                    <p>
-                        <strong>SÁBADO 28 DE NOVIEMBRE DE 2026</strong>
-                        <br>
-                        8:00 A.M. a 3:00 P.M.
-                    </p>
+                <div class="copy-top">
+                    <div class="gold-line" aria-hidden="true"></div>
+                    <p class="eyebrow">RETIRO DE ADVIENTO</p>
+                    <h1 class="title">
+                        <span class="title-lead">a través del</span>
+                        <span class="title-main">perdón y la sanación</span>
+                    </h1>
+                    <p class="tagline">Tiempo de volver a empezar</p>
                 </div>
 
-                <button type="button" class="info-button" onclick="openModal()">
-                    MÁS INFORMACIÓN AQUÍ
-                </button>
+                <!-- Celular: carrusel deslizable -->
+                <div class="mobile-stage">
+                    <div class="swipe-hint">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M12 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M15 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a5 5 0 0 1-4-2l-2.5-3.5a1.5 1.5 0 0 1 2.3-1.9L9 15"/></svg>
+                        <span>Desliza para ver los 4 mensajes</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </div>
+                    <div class="carousel" id="carousel" aria-label="Videos de los sacerdotes"></div>
+                    <div class="dots" id="dots" aria-hidden="true"></div>
+                </div>
+
+                <div class="copy-mid">
+                    <div class="invite">
+                        <p class="invite-title">Cuatro sacerdotes te invitan</p>
+                        <p class="invite-hint">Toca un nombre para ver su mensaje:</p>
+                    </div>
+                    <div class="chips" id="chips"></div>
+
+                    <figure class="quote" aria-live="polite">
+                        <span class="quote-mark" aria-hidden="true">“</span>
+                        <div class="quote-body">
+                            <blockquote id="quoteText"></blockquote>
+                            <figcaption id="quoteAuthor"></figcaption>
+                        </div>
+                    </figure>
+                </div>
+
+                <div class="copy-bottom">
+                    <div class="event-card">
+                        <span class="event-card-item strong">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                            Sábado 28 de noviembre de 2026
+                        </span>
+                        <span class="event-card-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                            8:00 a.m. a 3:00 p.m.
+                        </span>
+                        <span class="event-card-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                            Teatro del Colegio María Auxiliadora, Medellín, Antioquia
+                        </span>
+                    </div>
+
+                    <button type="button" class="info-button" onclick="openModal()">MÁS INFORMACIÓN AQUÍ</button>
+                </div>
             </div>
         </section>
-
     </main>
 
     <div id="infoModal" class="modal" onclick="closeModal()">
@@ -611,18 +726,79 @@
                     WHATSAPP
                 </a>
 
-                <button type="button" class="close-button" onclick="closeModal()">
-                    CERRAR
-                </button>
+                <button type="button" class="close-button" onclick="closeModal()">CERRAR</button>
             </div>
         </div>
     </div>
 
-    <footer>
-        © 2026 MG Eventos
-    </footer>
+    <footer>© 2026 MG Eventos</footer>
 
     <script>
+        /* =========================================================
+           SACERDOTES Y VIDEOS
+           Para publicar un video nuevo: llena video, poster, name,
+           chip, quote y author, y cambia disponible a true.
+           ========================================================= */
+        const SLIDES = [
+            {
+                disponible: true,
+                name: "Juan Felipe Zapata",
+                chip: "Pbro. Felipe",
+                video: "../../videos/Video_Juan_Felipe.mp4",
+                poster: "../../images/poster-juan-felipe.jpg",
+                quote: "El tiempo del Adviento es una oportunidad para repensar, escuchar, reflexionar y mirar todo lo que Dios ha hecho en nuestra vida.",
+                author: "Pbro. Juan Felipe Zapata"
+            },
+            {
+                disponible: true,
+                name: "Wilson Lopera",
+                chip: "Pbro. Wilson",
+                video: "../../videos/Video_Wilson_Lopera.mp4",
+                poster: "../../images/poster-wilson-lopera.jpg",
+                quote: "Perdonar es el camino para sanar, para liberar, para buscar la perfección y la tranquilidad de nuestra vida.",
+                author: "Pbro. Wilson Lopera"
+            },
+            {
+                disponible: false,
+                name: "Próximamente",
+                chip: "Próximamente",
+                video: "",
+                poster: "",
+                quote: "Muy pronto conocerás su mensaje.",
+                author: ""
+            },
+            {
+                disponible: false,
+                name: "Próximamente",
+                chip: "Próximamente",
+                video: "",
+                poster: "",
+                quote: "Muy pronto conocerás su mensaje.",
+                author: ""
+            }
+        ];
+
+        const TOTAL = SLIDES.length;
+        const isMobile = () => window.matchMedia("(max-width: 860px)").matches;
+        let current = 0;
+
+        /* ---------- Menú hamburguesa ---------- */
+        const siteHeader = document.getElementById("siteHeader");
+        const menuToggle = document.getElementById("menuToggle");
+
+        function setMenu(open) {
+            siteHeader.classList.toggle("nav-open", open);
+            menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+            menuToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+        }
+
+        menuToggle.addEventListener("click", () => setMenu(!siteHeader.classList.contains("nav-open")));
+
+        document.querySelectorAll("#mainNav a").forEach((link) => {
+            link.addEventListener("click", () => setMenu(false));
+        });
+
+        /* ---------- Modal ---------- */
         function openModal() {
             document.getElementById("infoModal").classList.add("active");
         }
@@ -632,26 +808,175 @@
         }
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeModal();
+            if (e.key === "Escape") {
+                closeModal();
+                setMenu(false);
+            }
         });
 
-        // Al terminar el video aparece el flyer dentro del mismo recuadro
-        const eventVideo = document.getElementById("eventVideo");
-        const videoWrapper = document.getElementById("videoWrapper");
-        const replayButton = document.getElementById("replayButton");
+        /* ---------- Flyer al terminar cada video ---------- */
+        function attachEndScreen(wrapper, video) {
+            const replay = wrapper.querySelector(".replay-button");
+            video.addEventListener("ended", () => wrapper.classList.add("ended"));
+            video.addEventListener("play", () => wrapper.classList.remove("ended"));
+            if (replay) {
+                replay.addEventListener("click", () => {
+                    video.currentTime = 0;
+                    video.play();
+                });
+            }
+        }
 
-        eventVideo.addEventListener("ended", () => {
-            videoWrapper.classList.add("ended");
+        /* ---------- Cita ---------- */
+        const quoteText = document.getElementById("quoteText");
+        const quoteAuthor = document.getElementById("quoteAuthor");
+
+        function renderQuote(i) {
+            quoteText.textContent = SLIDES[i].quote;
+            quoteAuthor.textContent = SLIDES[i].author;
+            quoteAuthor.hidden = !SLIDES[i].author;
+        }
+
+        /* ---------- Escritorio ---------- */
+        const desktopWrapper = document.getElementById("desktopWrapper");
+        const desktopVideo = document.getElementById("desktopVideo");
+        const desktopName = document.getElementById("desktopName");
+        const counter = document.getElementById("counter");
+        const chipsBox = document.getElementById("chips");
+
+        attachEndScreen(desktopWrapper, desktopVideo);
+
+        SLIDES.forEach((slide, i) => {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "chip" + (slide.disponible ? "" : " is-soon");
+            chip.textContent = slide.chip;
+            chip.setAttribute("aria-pressed", "false");
+            chip.addEventListener("click", () => showDesktop(i, true));
+            chipsBox.appendChild(chip);
         });
 
-        eventVideo.addEventListener("play", () => {
-            videoWrapper.classList.remove("ended");
+        function showDesktop(i, fromUser) {
+            current = (i + TOTAL) % TOTAL;
+            const slide = SLIDES[current];
+
+            desktopWrapper.classList.remove("ended");
+            desktopWrapper.classList.toggle("is-soon", !slide.disponible);
+            desktopName.textContent = slide.name;
+            document.getElementById("desktopPbro").style.visibility = slide.disponible ? "visible" : "hidden";
+            counter.textContent = (current + 1) + " / " + TOTAL;
+
+            chipsBox.querySelectorAll(".chip").forEach((chip, k) => {
+                chip.setAttribute("aria-pressed", k === current ? "true" : "false");
+            });
+
+            renderQuote(current);
+
+            desktopVideo.pause();
+
+            if (!slide.disponible) {
+                desktopVideo.removeAttribute("src");
+                desktopVideo.load();
+                return;
+            }
+
+            desktopVideo.poster = slide.poster;
+            desktopVideo.src = slide.video;
+
+            if (fromUser) {
+                // El usuario eligió este mensaje: se reproduce con sonido
+                desktopVideo.muted = false;
+                desktopVideo.play().catch(() => {});
+            } else {
+                desktopVideo.muted = true;
+                desktopVideo.play().catch(() => {});
+            }
+        }
+
+        document.getElementById("prevButton").addEventListener("click", () => showDesktop(current - 1, true));
+        document.getElementById("nextButton").addEventListener("click", () => showDesktop(current + 1, true));
+
+        /* ---------- Celular ---------- */
+        const carousel = document.getElementById("carousel");
+        const dotsBox = document.getElementById("dots");
+        const mobileVideos = [];
+
+        SLIDES.forEach((slide, i) => {
+            const article = document.createElement("article");
+            article.className = "slide";
+            article.setAttribute("aria-label", (i + 1) + " de " + TOTAL);
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "video-wrapper" + (slide.disponible ? "" : " is-soon");
+
+            if (slide.disponible) {
+                const video = document.createElement("video");
+                video.className = "event-video";
+                video.controls = true;
+                video.playsInline = true;
+                video.preload = "none";
+                video.poster = slide.poster;
+                video.src = slide.video;
+                wrapper.appendChild(video);
+                wrapper.insertAdjacentHTML("beforeend",
+                    '<div class="video-end" aria-hidden="true"><img src="../../images/Flyer_adviento_v2.png" alt="">' +
+                    '<button type="button" class="replay-button">↻ VER DE NUEVO</button></div>');
+                attachEndScreen(wrapper, video);
+                video.addEventListener("play", () => {
+                    mobileVideos.forEach((other) => { if (other && other !== video) other.pause(); });
+                });
+                mobileVideos.push(video);
+            } else {
+                wrapper.innerHTML = desktopWrapper.querySelector(".soon-panel").outerHTML;
+                mobileVideos.push(null);
+            }
+
+            const name = document.createElement("div");
+            name.className = "priest-name";
+            if (slide.disponible) {
+                name.innerHTML = "<small>PBRO.</small>";
+                const strong = document.createElement("strong");
+                strong.textContent = slide.name;
+                name.appendChild(strong);
+            } else {
+                name.innerHTML = "<small>&nbsp;</small><strong>Próximamente</strong>";
+            }
+
+            article.appendChild(wrapper);
+            article.appendChild(name);
+            carousel.appendChild(article);
+
+            const dot = document.createElement("span");
+            dot.className = "dot" + (i === 0 ? " active" : "");
+            dotsBox.appendChild(dot);
         });
 
-        replayButton.addEventListener("click", () => {
-            eventVideo.currentTime = 0;
-            eventVideo.play();
-        });
+        let scrollTimer = null;
+        carousel.addEventListener("scroll", () => {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                const slideWidth = carousel.querySelector(".slide").offsetWidth + 14;
+                const i = Math.max(0, Math.min(TOTAL - 1, Math.round(carousel.scrollLeft / slideWidth)));
+                if (i === current) return;
+                current = i;
+                dotsBox.querySelectorAll(".dot").forEach((dot, k) => dot.classList.toggle("active", k === i));
+                mobileVideos.forEach((video, k) => { if (video && k !== i) video.pause(); });
+                renderQuote(i);
+            }, 80);
+        }, { passive: true });
+
+        /* ---------- Inicio ---------- */
+        if (isMobile()) {
+            renderQuote(0);
+            const first = mobileVideos[0];
+            if (first) {
+                first.muted = true;
+                first.preload = "auto";
+                first.play().catch(() => {});
+            }
+        } else {
+            showDesktop(0, false);
+        }
     </script>
 </body>
 </html>
