@@ -47,75 +47,12 @@
             flex-direction: column;
         }
 
-        /* ---------- Encabezado ---------- */
-        header {
-            position: relative;
-            z-index: 50;
-            width: 100%;
+        /* Encabezado compartido (assets/mg-header.css) con la franja morada de Adviento */
+        .mg-header {
             background: rgba(255, 255, 255, 0.72);
             border-top: 4px solid var(--morado);
             border-bottom: 1px solid var(--borde);
         }
-
-        .header-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 12px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            text-decoration: none;
-        }
-
-        .brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
-        .brand-divisor { width: 2px; height: 40px; background: var(--dorado); }
-        .brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 11px; }
-
-        .navigation { display: flex; align-items: center; gap: 10px; }
-
-        .nav-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 20px;
-            border: 2px solid var(--dorado);
-            border-radius: 999px;
-            background: transparent;
-            color: var(--texto);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            transition: background 0.2s ease, transform 0.2s ease;
-        }
-
-        .nav-link:hover { background: var(--dorado); transform: translateY(-1px); }
-
-        .nav-link.active,
-        .nav-link.active:hover { background: var(--dorado); cursor: default; transform: none; }
-
-        .menu-toggle {
-            display: none;
-            width: 44px;
-            height: 44px;
-            border: 2px solid var(--dorado);
-            border-radius: 50%;
-            background: #ffffff;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .menu-toggle .icon-close { display: none; }
-        .menu-toggle[aria-expanded="true"] .icon-open { display: none; }
-        .menu-toggle[aria-expanded="true"] .icon-close { display: block; }
 
         /* ---------- Contenido principal ---------- */
         main { width: 100%; flex: 1; display: flex; align-items: center; }
@@ -458,36 +395,6 @@
             .quote { min-height: 64px; }
         }
 
-        /* ---------- Menú hamburguesa ---------- */
-        @media (max-width: 760px) {
-            .header-container { padding: 10px 16px; }
-            .brand { gap: 10px; }
-            .brand-circulo { width: 44px; height: 44px; }
-            .brand-divisor { height: 34px; }
-            .brand-eslogan { height: 11px; top: 9px; }
-
-            .menu-toggle { display: flex; }
-
-            .navigation {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-                padding: 12px 16px 18px;
-                background: #ffffff;
-                border-bottom: 1px solid var(--borde);
-                box-shadow: 0 16px 32px rgba(20, 27, 45, 0.14);
-            }
-
-            header.nav-open .navigation { display: flex; }
-
-            .nav-link { padding: 14px 20px; font-size: 14px; }
-        }
-
         /* ---------- Tablet y celular ---------- */
         @media (max-width: 860px) {
             main { display: block; }
@@ -581,30 +488,32 @@
             * { transition: none !important; }
         }
     </style>
+    <link rel="stylesheet" href="../../assets/mg-header.css">
+    <script src="../../assets/mg-header.js" defer></script>
 </head>
 
 <body>
-    <header id="siteHeader">
-        <div class="header-container">
-            <a href="https://mgeventos.co/index.html" class="brand" aria-label="MG Eventos - Inicio">
-                <img class="brand-circulo" src="../../images/mg-eventos-logo-circulo.png" alt="">
-                <span class="brand-divisor" aria-hidden="true"></span>
-                <img class="brand-eslogan" src="../../images/mg-eventos-eslogan.png" alt="">
-            </a>
+    <header class="mg-header">
+    <div class="mg-header-inner">
+        <a href="https://mgeventos.co/index.html" class="mg-brand" aria-label="MG Eventos - Inicio">
+            <img class="mg-brand-circulo" src="../../images/mg-eventos-logo-circulo.png" alt="">
+            <span class="mg-brand-divisor" aria-hidden="true"></span>
+            <img class="mg-brand-eslogan" src="../../images/mg-eventos-eslogan.png" alt="">
+        </a>
 
-            <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Abrir menú">
-                <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-                <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-            </button>
+        <button type="button" class="mg-menu-toggle" aria-expanded="false" aria-controls="mgNav" aria-label="Abrir menú">
+            <svg class="mg-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg class="mg-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
 
-            <nav class="navigation" id="mainNav" aria-label="Menú principal">
-                <a href="../index.html" class="nav-link">EVENTOS</a>
-                <a href="../../servicios/index.html" class="nav-link">SERVICIOS</a>
-                <a href="../../contacto/index.html" class="nav-link">CONTACTO</a>
-                <span class="nav-link active" aria-current="page">ADVIENTO</span>
-            </nav>
-        </div>
-    </header>
+        <nav class="mg-nav" id="mgNav" aria-label="Menú principal">
+            <a href="../index.html" class="mg-nav-link">EVENTOS</a>
+            <a href="../../servicios/index.html" class="mg-nav-link">SERVICIOS</a>
+            <a href="../../contacto/index.html" class="mg-nav-link">CONTACTO</a>
+            <span class="mg-nav-link active" aria-current="page">ADVIENTO</span>
+        </nav>
+    </div>
+</header>
 
     <main>
         <section class="hero">
@@ -782,22 +691,6 @@
         const isMobile = () => window.matchMedia("(max-width: 860px)").matches;
         let current = 0;
 
-        /* ---------- Menú hamburguesa ---------- */
-        const siteHeader = document.getElementById("siteHeader");
-        const menuToggle = document.getElementById("menuToggle");
-
-        function setMenu(open) {
-            siteHeader.classList.toggle("nav-open", open);
-            menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
-            menuToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
-        }
-
-        menuToggle.addEventListener("click", () => setMenu(!siteHeader.classList.contains("nav-open")));
-
-        document.querySelectorAll("#mainNav a").forEach((link) => {
-            link.addEventListener("click", () => setMenu(false));
-        });
-
         /* ---------- Modal ---------- */
         function openModal() {
             document.getElementById("infoModal").classList.add("active");
@@ -808,10 +701,7 @@
         }
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                closeModal();
-                setMenu(false);
-            }
+            if (e.key === "Escape") closeModal();
         });
 
         /* ---------- Flyer al terminar cada video ---------- */

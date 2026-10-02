@@ -20,7 +20,7 @@
     <link
         rel="icon"
         type="image/png"
-        href="../images/mg-eventos-logo.png"
+        href="../images/mg-eventos-logo-circulo.png"
     >
 
     <style>
@@ -141,7 +141,7 @@
 
             padding: 9px 18px;
 
-            border: 1px solid #d9ad55;
+            border: 1px solid #C4924F;
 
             border-radius: 25px;
 
@@ -165,7 +165,7 @@
 
 
         .nav-link:hover {
-            background: #d9ad55;
+            background: #C4924F;
 
             color: #111827;
 
@@ -174,7 +174,7 @@
 
 
         .nav-link.active {
-            background: #d9ad55;
+            background: #C4924F;
 
             color: #111827;
 
@@ -183,7 +183,7 @@
 
 
         .nav-link.active:hover {
-            background: #d9ad55;
+            background: #C4924F;
 
             color: #111827;
 
@@ -357,7 +357,7 @@
         .service-card:hover {
             transform: translateY(-6px);
 
-            border-color: #d9ad55;
+            border-color: #C4924F;
 
             box-shadow:
                 0 14px 30px rgba(17, 24, 39, 0.10);
@@ -385,11 +385,11 @@
 
             background: #111827;
 
-            color: #d9ad55;
+            color: #C4924F;
 
             font-size: 29px;
 
-            border: 2px solid #d9ad55;
+            border: 2px solid #C4924F;
         }
 
 
@@ -476,7 +476,7 @@
 
             padding: 13px 28px;
 
-            border: 2px solid #d9ad55;
+            border: 2px solid #C4924F;
 
             border-radius: 30px;
 
@@ -530,14 +530,14 @@
 
 
         .cta-button:hover {
-            background: #d9ad55;
+            background: #C4924F;
 
             color: #111827;
 
             transform: scale(1.05);
 
             box-shadow:
-                0 8px 22px rgba(217, 173, 85, 0.25);
+                0 8px 22px rgba(196, 146, 79, 0.25);
         }
 
 
@@ -723,6 +723,8 @@
 
     </style>
 
+    <link rel="stylesheet" href="../assets/mg-header.css">
+    <script src="../assets/mg-header.js" defer></script>
 </head>
 
 
@@ -733,58 +735,26 @@
          ENCABEZADO
     ======================================== -->
 
-    <header>
+    <header class="mg-header">
+    <div class="mg-header-inner">
+        <a href="https://mgeventos.co/index.html" class="mg-brand" aria-label="MG Eventos - Inicio">
+            <img class="mg-brand-circulo" src="../images/mg-eventos-logo-circulo.png" alt="">
+            <span class="mg-brand-divisor" aria-hidden="true"></span>
+            <img class="mg-brand-eslogan" src="../images/mg-eventos-eslogan.png" alt="">
+        </a>
 
-        <div class="header-container">
+        <button type="button" class="mg-menu-toggle" aria-expanded="false" aria-controls="mgNav" aria-label="Abrir menú">
+            <svg class="mg-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg class="mg-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
 
-            <a
-                href="../index.html"
-                class="brand"
-                aria-label="MG Eventos - Inicio"
-            >
-
-                <img
-                    src="../images/mg-eventos-logo.png"
-                    alt="MG Eventos"
-                >
-
-                <span>
-                    MG Eventos
-                </span>
-
-            </a>
-
-
-            <nav class="navigation">
-
-                <a
-                    href="../eventos/index.html"
-                    class="nav-link"
-                >
-                    EVENTOS
-                </a>
-
-
-                <span
-                    class="nav-link active"
-                    aria-current="page"
-                >
-                    SERVICIOS
-                </span>
-
-
-                <a
-                    href="../contacto/index.html"
-                    class="nav-link"
-                >
-                    CONTACTO
-                </a>
-
-            </nav>
-
-        </div>
-
-    </header>
+        <nav class="mg-nav" id="mgNav" aria-label="Menú principal">
+            <a href="../eventos/index.html" class="mg-nav-link">EVENTOS</a>
+            <span class="mg-nav-link active" aria-current="page">SERVICIOS</span>
+            <a href="../contacto/index.html" class="mg-nav-link">CONTACTO</a>
+        </nav>
+    </div>
+</header>
 
 
     <!-- ========================================
