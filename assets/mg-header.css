@@ -1,0 +1,129 @@
+/* =========================================================
+   Encabezado compartido de MG Eventos
+   (logo + menú; en celular, menú de 3 rayitas)
+   Todas las páginas usan este archivo: un cambio aquí
+   se aplica a todo el sitio.
+   ========================================================= */
+
+:root {
+    --mg-dorado: #C4924F;
+    --mg-dorado-texto: #8A5E2E;
+    --mg-texto: #141B2D;
+    --mg-borde: #EEEEEE;
+}
+
+.mg-header {
+    position: relative;
+    z-index: 50;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid var(--mg-borde);
+}
+
+.mg-header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Logo: círculo + divisor + eslogan, siempre enlaza al inicio */
+.mg-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.mg-brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
+.mg-brand-divisor { width: 2px; height: 40px; background: var(--mg-dorado); }
+.mg-brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 11px; }
+
+.mg-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.mg-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border: 2px solid var(--mg-dorado);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--mg-texto);
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.mg-nav-link:hover { background: var(--mg-dorado); color: var(--mg-texto); transform: translateY(-1px); }
+
+.mg-nav-link.active,
+.mg-nav-link.active:hover { background: var(--mg-dorado); cursor: default; transform: none; }
+
+.mg-menu-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--mg-dorado);
+    border-radius: 50%;
+    background: #ffffff;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.mg-menu-toggle .mg-icon-close { display: none; }
+.mg-menu-toggle[aria-expanded="true"] .mg-icon-open { display: none; }
+.mg-menu-toggle[aria-expanded="true"] .mg-icon-close { display: block; }
+
+/* Celular: menú de 3 rayitas */
+@media (max-width: 760px) {
+    .mg-header-inner { padding: 10px 16px; }
+    .mg-brand { gap: 10px; }
+    .mg-brand-circulo { width: 44px; height: 44px; }
+    .mg-brand-divisor { height: 34px; }
+    .mg-brand-eslogan { height: 11px; top: 9px; }
+
+    .mg-menu-toggle { display: flex; }
+
+    .mg-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px 16px 18px;
+        background: #ffffff;
+        border-bottom: 1px solid var(--mg-borde);
+        box-shadow: 0 16px 32px rgba(20, 27, 45, 0.14);
+    }
+
+    .mg-header.nav-open .mg-nav { display: flex; }
+
+    .mg-nav-link { padding: 14px 20px; font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mg-nav-link { transition: none; }
+}
