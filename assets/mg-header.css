@@ -127,3 +127,27 @@
 @media (prefers-reduced-motion: reduce) {
     .mg-nav-link { transition: none; }
 }
+
+/* =========================================================
+   Enlaces legales del pie de página (todas las páginas)
+   ========================================================= */
+.mg-footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.mg-footer-links a {
+    color: #6b7280;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.mg-footer-links a:hover { color: var(--mg-dorado-texto); text-decoration: underline; }
+.mg-footer-links span { color: #9ca3af; }
