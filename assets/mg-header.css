@@ -75,7 +75,7 @@
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: #0B0B0B;
-    box-shadow: 0 0 0 1.5px var(--mg-dorado);
+    box-shadow: 0 0 0 1px var(--mg-dorado);
 }
 
 /* Inicio: solo el círculo (el eslogan grande está en la portada) */
