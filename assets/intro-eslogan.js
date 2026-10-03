@@ -19,7 +19,8 @@
         // Escala del eslogan: grande, pero sin salirse de la pantalla
         var texto_eslogan = eslogan.querySelector("span");
         var ancho = (texto_eslogan && texto_eslogan.offsetWidth) || eslogan.offsetWidth;
-        var disponible = window.innerWidth - 32;
+        // Deja aire a los lados: en celular el eslogan grande no llega a los bordes
+        var disponible = Math.min(window.innerWidth * 0.82, window.innerWidth - 64);
         var escala = Math.max(1, Math.min(2.7, disponible / ancho));
         var crece = (eslogan.offsetHeight * (escala - 1)) / 2;
 
