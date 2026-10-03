@@ -69,6 +69,7 @@
     letter-spacing: 0;
     vertical-align: 0.14em;
 }
+.mg-schwa-g { display: block; font-style: normal; line-height: 1; }
 
 /* Inicio: solo el círculo (el eslogan grande está en la portada) */
 .mg-header--solo-logo .mg-brand-divisor,
