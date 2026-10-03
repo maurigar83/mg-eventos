@@ -460,6 +460,28 @@ transition: none;
 </style>
     <link rel="stylesheet" href="assets/mg-header.css">
     <script src="assets/mg-header.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/intro-eslogan.css">
+    <script>
+    /* Intro del eslogan: solo al llegar al sitio (no al volver desde otra página
+       de MG Eventos), una vez por visita. Con ?intro en la dirección se fuerza. */
+    (function () {
+        try {
+            var forzar = /[?&]intro\b/.test(location.search);
+            if (!forzar) {
+                if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+                var ref = document.referrer || "";
+                if (ref && new URL(ref).host === location.host) return;
+                if (sessionStorage.getItem("mgIntroVista")) return;
+            }
+            sessionStorage.setItem("mgIntroVista", "1");
+            document.documentElement.classList.add("mg-intro");
+        } catch (e) {}
+    })();
+    </script>
+    <script src="assets/intro-eslogan.js" defer></script>
 </head>
 <body>
 <header class="mg-header">
@@ -506,8 +528,11 @@ transition: none;
 </video>
 <div class="hero-overlay" aria-hidden="true"></div>
 <div class="hero-fade" aria-hidden="true"></div>
+<div class="hero-intro-cover" aria-hidden="true"></div>
+<span class="intro-skip-hint" aria-hidden="true">Toca para saltar</span>
 <div class="hero-content">
 <img src="images/mg-eventos-logo-circulo.png" alt="MG Eventos" class="hero-logo">
+<div class="hero-eslogan" role="img" aria-label="Ideas que conectan"><span aria-hidden="true">Idəas quə con<span class="slot"><span class="hop"><span class="corre"><span class="gira"><span class="le">e</span><span class="lschwa">ə</span></span></span></span><span class="polvo d1"></span><span class="polvo d2"></span><span class="polvo d3"></span><span class="onda"></span><span class="chispa c1"></span><span class="chispa c2"></span><span class="chispa c3"></span></span>ctan</span></div>
 <h1>Boletería y acceso para tus eventos</h1>
 <p>Facilitamos la venta de entradas y el control de acceso para que puedas gestionar tu evento de forma sencilla y segura.</p>
 </div>
