@@ -52,29 +52,26 @@
     letter-spacing: 0.01em;
 }
 .mg-brand-eslogan { font-size: 13.5px; line-height: 1; padding-bottom: 7px; letter-spacing: 0.09em; }
-/* La ə final: blanca, sobre la misma línea que las demás letras,
-   con un sello negro de borde dorado centrado en la mitad de la letra */
+/* La ə final: blanca dentro de un sello negro con borde dorado.
+   vertical-align: middle centra el sello en la mitad de las minúsculas;
+   el pequeño padding-bottom sube la ə para centrar su dibujo en el sello. */
 .mg-schwa {
-    position: relative;
-    z-index: 0;
-    display: inline-block;
-    margin: 0 0.32em 0 0.26em;
-    color: #FFFFFF;
-    font-size: 0.86em;
-    letter-spacing: 0;
-}
-.mg-schwa::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: var(--sello-x, 50%);
-    top: var(--sello-y, 62%);
-    width: 1.2em;
-    height: 1.2em;
-    transform: translate(-50%, -50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 0.9em;
+    height: 0.9em;
+    padding-bottom: 0.1em;
+    margin: 0 0.16em 0 0.12em;
+    vertical-align: middle;
     border-radius: 50%;
     background: #0B0B0B;
-    box-shadow: 0 0 0 1.5px var(--mg-dorado);
+    box-shadow: 0 0 0 1px var(--mg-dorado);
+    color: #FFFFFF;
+    font-size: 1em;
+    line-height: 1;
+    letter-spacing: 0;
 }
 
 /* Inicio: solo el círculo (el eslogan grande está en la portada) */

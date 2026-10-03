@@ -34,33 +34,3 @@
         init();
     }
 })();
-
-/* Centra el sello en la mitad del dibujo real de la ə (encabezado y pie),
-   midiendo la letra con la fuente que cargó el navegador. */
-(function () {
-    function centrar() {
-        var sellos = document.querySelectorAll(".mg-schwa");
-        if (!sellos.length) return;
-        var ctx = document.createElement("canvas").getContext("2d");
-        sellos.forEach(function (s) {
-            var cs = getComputedStyle(s);
-            ctx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
-            var m = ctx.measureText("ə");
-            if (!m.fontBoundingBoxAscent) return;
-            var alto = s.getBoundingClientRect().height || parseFloat(cs.fontSize);
-            var asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
-            var base = (alto - (asc + desc)) / 2 + asc;
-            var cy = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
-            var cx = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
-            s.style.setProperty("--sello-x", cx.toFixed(2) + "px");
-            s.style.setProperty("--sello-y", cy.toFixed(2) + "px");
-        });
-    }
-    function iniciar() {
-        centrar();
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(centrar);
-        window.addEventListener("resize", centrar);
-    }
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
-    else iniciar();
-})();
