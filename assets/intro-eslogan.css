@@ -20,6 +20,12 @@
     animation: heroFadeUp 1.2s ease-out 0.2s both;
 }
 
+/* El espaciado entre letras deja un aire extra después de la última "n":
+   lo quitamos para que el eslogan quede centrado por lo que se ve.
+   Además, un corrimiento óptico pequeño a la izquierda (en em: crece con la
+   letra) porque el sello negro de la derecha "pesa" más a la vista. */
+.hero-eslogan > span { position: relative; left: -0.12em; margin-right: -0.09em; }
+
 .hero-eslogan .slot {
     /* La ranura de la ə ES el sello: la letra se centra dentro con flex,
        igual que en el encabezado. Mismo aire a la "n" y a la "c". */
@@ -31,7 +37,7 @@
     width: 0.9em;
     height: 0.9em;
     padding-bottom: 0.14em;
-    margin: 0 0.16em 0 0.12em;
+    margin: 0 0.18em;
     vertical-align: middle;
     line-height: 1;
     letter-spacing: 0;
