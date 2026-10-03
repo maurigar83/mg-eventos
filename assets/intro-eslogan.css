@@ -24,16 +24,17 @@
 .hero-eslogan .hop { position: relative; z-index: 1; }
 
 /* Sello de la ə: disco negro + anillo dorado */
-.hero-eslogan .sello { position: absolute; left: 50%; top: 0.84em; width: 0.9em; height: 0.9em; margin: -0.45em 0 0 -0.45em; z-index: 0; pointer-events: none; }
+.hero-eslogan .sello { position: absolute; left: var(--sello-x, 50%); top: var(--sello-y, 0.62em); width: 0.9em; height: 0.9em; margin: -0.45em 0 0 -0.45em; z-index: 0; pointer-events: none; }
 .hero-eslogan .disco { position: absolute; inset: 0; border-radius: 50%; background: #0B0B0B; }
 .hero-eslogan .anillo { position: absolute; left: -2px; top: -2px; width: calc(100% + 4px); height: calc(100% + 4px); overflow: visible; transform: rotate(-90deg); }
 .hero-eslogan .anillo circle { fill: none; stroke: #C4924F; stroke-width: 2.2; }
 .hero-eslogan .hop,
 .hero-eslogan .corre,
 .hero-eslogan .gira { display: inline-block; }
-.hero-eslogan .gira { position: relative; }
-.hero-eslogan .le { display: inline-block; color: #D9AE6B; opacity: 0; }
+.hero-eslogan .gira { position: relative; isolation: isolate; }
+.hero-eslogan .le { position: relative; z-index: 1; display: inline-block; color: #D9AE6B; opacity: 0; }
 .hero-eslogan .lschwa {
+    z-index: 1;
     position: absolute;
     left: 0;
     top: 0;

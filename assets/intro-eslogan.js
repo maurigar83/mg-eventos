@@ -2,6 +2,37 @@
    La decisión de mostrar la intro se toma en el <head> (script en línea)
    para que no haya parpadeo; este archivo solo ajusta posiciones y el salto. */
 (function () {
+    /* Centra el sello en el dibujo real de la ə (no en su caja de texto),
+       midiendo la letra con la fuente que de verdad cargó el navegador. */
+    function centrarSello() {
+        var letra = document.querySelector(".hero-eslogan .lschwa");
+        var sello = document.querySelector(".hero-eslogan .sello");
+        if (!letra || !sello) return;
+        var cs = getComputedStyle(letra);
+        var ctx = document.createElement("canvas").getContext("2d");
+        ctx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
+        var m = ctx.measureText("ə");
+        if (!m.fontBoundingBoxAscent && !m.actualBoundingBoxAscent) return;
+        var px = parseFloat(cs.fontSize);
+        var lineH = parseFloat(cs.lineHeight) || px * 1.3;
+        var asc = m.fontBoundingBoxAscent || px * 0.95;
+        var desc = m.fontBoundingBoxDescent || px * 0.25;
+        var base = (lineH - (asc + desc)) / 2 + asc;           // línea base dentro de la caja
+        var cy = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+        var cx = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+        sello.style.setProperty("--sello-y", cy.toFixed(2) + "px");
+        sello.style.setProperty("--sello-x", cx.toFixed(2) + "px");
+    }
+    function iniciar() {
+        centrarSello();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(centrarSello);
+        window.addEventListener("resize", centrarSello);
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
+    else iniciar();
+})();
+
+(function () {
     var html = document.documentElement;
     if (!html.classList.contains("mg-intro")) return;
 
