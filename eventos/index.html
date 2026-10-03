@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eventos | MG Eventos</title>
     <meta name="description" content="Próximos eventos organizados por MG Eventos.">
-    <link rel="icon" type="image/png" href="../images/mg-eventos-logo.png">
+    <link rel="icon" type="image/png" href="../images/mg-eventos-logo-circulo.png">
     <style>
         * {
             box-sizing: border-box;
@@ -61,7 +61,7 @@
             justify-content: center;
             min-width: 100px;
             padding: 9px 18px;
-            border: 1px solid #d9ad55;
+            border: 1px solid #C4924F;
             border-radius: 25px;
             background: #ffffff;
             color: #111827;
@@ -72,17 +72,17 @@
             transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
         .nav-link:hover {
-            background: #d9ad55;
+            background: #C4924F;
             color: #111827;
             transform: translateY(-1px);
         }
         .nav-link.active {
-            background: #d9ad55;
+            background: #C4924F;
             color: #111827;
             cursor: default;
         }
         .nav-link.active:hover {
-            background: #d9ad55;
+            background: #C4924F;
             color: #111827;
             transform: none;
         }
@@ -183,7 +183,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px 5px;
-            border: 2px solid #d9ad55;
+            border: 2px solid #C4924F;
             border-radius: 25px;
             background: #111827;
             color: #ffffff;
@@ -285,21 +285,30 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="../assets/mg-header.css">
+    <script src="../assets/mg-header.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <a href="../index.html" class="brand" aria-label="MG Eventos - Inicio">
-                <img src="../images/mg-eventos-logo.png" alt="MG Eventos">
-                <span>MG Eventos</span>
-            </a>
-            <nav class="navigation">
-                <span class="nav-link active" aria-current="page">EVENTOS</span>
-                <a href="../servicios/index.html" class="nav-link">SERVICIOS</a>
-                <a href="../contacto/index.html" class="nav-link">CONTACTO</a>
-            </nav>
-        </div>
-    </header>
+    <header class="mg-header">
+    <div class="mg-header-inner">
+        <a href="https://mgeventos.co/index.html" class="mg-brand" aria-label="MG Eventos - Inicio">
+            <img class="mg-brand-circulo" src="../images/mg-eventos-logo-circulo.png" alt="">
+            <span class="mg-brand-divisor" aria-hidden="true"></span>
+            <span class="mg-brand-eslogan" aria-hidden="true">Idəas quə con<span class="mg-schwa">ə</span>ctan</span>
+        </a>
+
+        <button type="button" class="mg-menu-toggle" aria-expanded="false" aria-controls="mgNav" aria-label="Abrir menú">
+            <svg class="mg-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg class="mg-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+
+        <nav class="mg-nav" id="mgNav" aria-label="Menú principal">
+            <span class="mg-nav-link active" aria-current="page">EVENTOS</span>
+            <a href="../servicios/index.html" class="mg-nav-link">SERVICIOS</a>
+            <a href="../contacto/index.html" class="mg-nav-link">CONTACTO</a>
+        </nav>
+    </div>
+</header>
     <main>
         <section class="events-section">
             <h1>PRÓXIMOS EVENTOS</h1>
@@ -307,7 +316,7 @@
             <div class="events-grid">
                 <article class="event-card">
                     <a href="adviento/index.html" class="event-image-link" aria-label="Ver evento Adviento">
-                        <img src="../images/Flyer_adviento_v1.png" alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación" class="event-image">
+                        <img src="../images/Flyer_adviento_v2.png" alt="Adviento: cuatro sacerdotes te invitan a volver a empezar a través del perdón y la sanación" class="event-image">
                     </a>
                     <div class="event-content">
                         <h2>ADVIENTO</h2>
@@ -323,7 +332,16 @@
         </section>
     </main>
     <footer>
-        © 2026 MG Eventos
+<a href="https://mgeventos.co/index.html" class="mg-footer-brand" aria-label="MG Eventos - Ideas que conectan"><img src="../images/mg-eventos-logo-circulo.png" alt=""><span class="mg-eslogan-txt" aria-hidden="true">Idəas quə con<span class="mg-schwa">ə</span>ctan</span></a>
+
+        <div class="mg-footer-links">
+            <a href="../politica-privacidad.html">Política de Privacidad</a>
+            <span aria-hidden="true">·</span>
+            <a href="../terminos-servicio.html">Términos de Servicio</a>
+            <span aria-hidden="true">·</span>
+            <a href="../eliminacion-datos.html">Eliminación de Datos</a>
+        </div>
+        <div class="mg-copy">© 2026 MG Eventos · Todos los derechos reservados</div>
     </footer>
 </body>
 </html>

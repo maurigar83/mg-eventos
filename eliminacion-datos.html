@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eliminación de Datos - MG Eventos</title>
 <meta name="description" content="Solicitud de eliminación de datos personales de MG Eventos">
-<link rel="icon" type="image/png" href="images/mg-eventos-logo.png">
+<link rel="icon" type="image/png" href="images/mg-eventos-logo-circulo.png">
 <style>
 * {
 box-sizing: border-box;
@@ -102,7 +102,7 @@ transition: color 0.2s ease;
 white-space: nowrap;
 }
 .footer-links a:hover {
-color: #d9ad55;
+color: #C4924F;
 }
 .footer-links span {
 color: #9ca3af;
@@ -145,15 +145,29 @@ display: inline;
 }
 }
 </style>
+<link rel="stylesheet" href="assets/mg-header.css">
+<script src="assets/mg-header.js" defer></script>
 </head>
 <body>
-<header>
-<div class="header-container">
-<a href="index.html" class="brand" aria-label="MG Eventos - Inicio">
-<img src="images/mg-eventos-logo.png" alt="MG Eventos">
-<span>MG Eventos</span>
-</a>
-</div>
+<header class="mg-header">
+    <div class="mg-header-inner">
+        <a href="https://mgeventos.co/index.html" class="mg-brand" aria-label="MG Eventos - Inicio">
+            <img class="mg-brand-circulo" src="images/mg-eventos-logo-circulo.png" alt="">
+            <span class="mg-brand-divisor" aria-hidden="true"></span>
+            <span class="mg-brand-eslogan" aria-hidden="true">Idəas quə con<span class="mg-schwa">ə</span>ctan</span>
+        </a>
+
+        <button type="button" class="mg-menu-toggle" aria-expanded="false" aria-controls="mgNav" aria-label="Abrir menú">
+            <svg class="mg-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            <svg class="mg-icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141B2D" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+
+        <nav class="mg-nav" id="mgNav" aria-label="Menú principal">
+            <a href="eventos/index.html" class="mg-nav-link">EVENTOS</a>
+            <a href="servicios/index.html" class="mg-nav-link">SERVICIOS</a>
+            <a href="contacto/index.html" class="mg-nav-link">CONTACTO</a>
+        </nav>
+    </div>
 </header>
 <main class="container">
 <h1>Solicitud de Eliminación de Datos</h1>
@@ -183,6 +197,8 @@ display: inline;
 <p>También puede consultar nuestra <a href="politica-privacidad.html">Política de Privacidad</a>.</p>
 </main>
 <footer>
+<a href="https://mgeventos.co/index.html" class="mg-footer-brand" aria-label="MG Eventos - Ideas que conectan"><img src="images/mg-eventos-logo-circulo.png" alt=""><span class="mg-eslogan-txt" aria-hidden="true">Idəas quə con<span class="mg-schwa">ə</span>ctan</span></a>
+
 <div class="footer-links">
 <a href="politica-privacidad.html">Política de Privacidad</a>
 <span>·</span>
@@ -190,7 +206,7 @@ display: inline;
 <span>·</span>
 <a href="eliminacion-datos.html">Eliminación de Datos</a>
 </div>
-<div>© 2026 MG Eventos</div>
+<div class="mg-copy">© 2026 MG Eventos · Todos los derechos reservados</div>
 </footer>
 </body>
 </html>
