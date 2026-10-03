@@ -475,6 +475,12 @@
 
             .event-card { flex-direction: column; align-items: center; gap: 8px; padding: 14px 16px; text-align: center; }
 
+            /* Lugar en celular: ícono junto al teatro y la ciudad en una línea aparte, centrada */
+            .event-card-item.lugar { align-items: flex-start; }
+            .event-card-item.lugar svg { flex-shrink: 0; margin-top: 1px; }
+            .event-card-item.lugar .lugar-coma { display: none; }
+            .event-card-item.lugar .lugar-ciudad { display: block; font-size: 14px; }
+
             .info-button { width: 100%; padding: 17px 20px; }
 
             .modal { padding: 15px; }
@@ -605,9 +611,9 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                             8:00 a.m. a 3:00 p.m.
                         </span>
-                        <span class="event-card-item">
+                        <span class="event-card-item lugar">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-                            Teatro del Colegio María Auxiliadora, Medellín, Antioquia
+                            <span>Teatro del Colegio María Auxiliadora<span class="lugar-coma">,</span> <span class="lugar-ciudad">Medellín, Antioquia</span></span>
                         </span>
                     </div>
 

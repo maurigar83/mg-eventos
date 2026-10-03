@@ -35,33 +35,25 @@
     }
 })();
 
-/* Centra la ə dentro de su sello (encabezado y pie), midiendo el dibujo real
-   de la letra con la fuente que cargó el navegador. */
+/* Centra el sello en la mitad del dibujo real de la ə (encabezado y pie),
+   midiendo la letra con la fuente que cargó el navegador. */
 (function () {
     function centrar() {
         var sellos = document.querySelectorAll(".mg-schwa");
         if (!sellos.length) return;
         var ctx = document.createElement("canvas").getContext("2d");
         sellos.forEach(function (s) {
-            var g = s.querySelector(".mg-schwa-g");
-            if (!g) {
-                g = document.createElement("i");
-                g.className = "mg-schwa-g";
-                g.textContent = s.textContent;
-                s.textContent = "";
-                s.appendChild(g);
-            }
-            var cs = getComputedStyle(g);
+            var cs = getComputedStyle(s);
             ctx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
             var m = ctx.measureText("ə");
             if (!m.fontBoundingBoxAscent) return;
-            var px = parseFloat(cs.fontSize);
+            var alto = s.getBoundingClientRect().height || parseFloat(cs.fontSize);
             var asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
-            var base = (px - (asc + desc)) / 2 + asc;
-            var inkY = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
-            var inkX = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
-            var dy = px / 2 - inkY, dx = m.width / 2 - inkX;
-            g.style.transform = "translate(" + dx.toFixed(2) + "px," + dy.toFixed(2) + "px)";
+            var base = (alto - (asc + desc)) / 2 + asc;
+            var cy = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
+            var cx = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+            s.style.setProperty("--sello-x", cx.toFixed(2) + "px");
+            s.style.setProperty("--sello-y", cy.toFixed(2) + "px");
         });
     }
     function iniciar() {
