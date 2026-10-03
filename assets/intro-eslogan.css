@@ -20,11 +20,26 @@
     animation: heroFadeUp 1.2s ease-out 0.2s both;
 }
 
-.hero-eslogan .slot { position: relative; display: inline-block; width: 1.02em; margin: 0 0.11em 0 0.02em; /* mismo aire a la "n" y a la "c" */ letter-spacing: 0; text-align: center; }
+.hero-eslogan .slot {
+    /* La ranura de la ə ES el sello: la letra se centra dentro con flex,
+       igual que en el encabezado. Mismo aire a la "n" y a la "c". */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 0.9em;
+    height: 0.9em;
+    padding-bottom: 0.14em;
+    margin: 0 0.16em 0 0.12em;
+    vertical-align: middle;
+    line-height: 1;
+    letter-spacing: 0;
+}
 .hero-eslogan .hop { position: relative; z-index: 1; }
 
 /* Sello de la ə: disco negro + anillo dorado */
-.hero-eslogan .sello { position: absolute; left: 50%; top: 0.73em; /* centro de la ə en Montserrat, igual en todos los navegadores */ width: 0.9em; height: 0.9em; margin: -0.45em 0 0 -0.45em; z-index: 0; pointer-events: none; }
+.hero-eslogan .sello { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero-eslogan .disco { position: absolute; inset: 0; border-radius: 50%; background: #0B0B0B; }
 .hero-eslogan .anillo { position: absolute; left: -2px; top: -2px; width: calc(100% + 4px); height: calc(100% + 4px); overflow: visible; transform: rotate(-90deg); }
 .hero-eslogan .anillo circle { fill: none; stroke: #C4924F; stroke-width: 2.2; }
@@ -123,7 +138,7 @@ html.mg-intro-skip .events-section {
 
 /* ---------------- Animaciones ---------------- */
 @keyframes mgDesvanecer { to { opacity: 0; } }
-@keyframes mgEspacio { to { width: 1.02em; } }
+@keyframes mgEspacio { to { width: 0.9em; } }
 /* El trazo se dibuja y al final queda como un círculo continuo (sin la rendija que dejaban algunos Android) */
 @keyframes mgTraza { 99% { stroke-dashoffset: 0; stroke-dasharray: 1.05; } 100% { stroke-dashoffset: 0; stroke-dasharray: none; } }
 @keyframes mgEstampa { 0% { transform: scale(0); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
