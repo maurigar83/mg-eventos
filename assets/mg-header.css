@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap");
 
 /* =========================================================
    Encabezado compartido de MG Eventos
@@ -42,7 +42,7 @@
 }
 
 .mg-brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
-.mg-brand-divisor { width: 2px; height: 40px; background: var(--mg-dorado); align-self: center; }
+.mg-brand-divisor { width: 1px; height: 40px; background: var(--mg-dorado); align-self: center; }
 .mg-brand-eslogan,
 .mg-eslogan-txt {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
@@ -51,7 +51,7 @@
     white-space: nowrap;
     letter-spacing: 0.01em;
 }
-.mg-brand-eslogan { font-size: 13.5px; line-height: 1; padding-bottom: 7px; letter-spacing: 0.09em; }
+.mg-brand-eslogan { font-size: 13.5px; line-height: 1; padding-bottom: 7px; letter-spacing: 0.09em; font-weight: 400; }  /* letra normal: más elegante */
 /* La ə final: blanca dentro de un sello negro con borde dorado.
    vertical-align: middle centra el sello en la mitad de las minúsculas;
    el pequeño padding-bottom sube la ə para centrar su dibujo en el sello. */
