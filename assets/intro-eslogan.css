@@ -1,0 +1,177 @@
+/* =========================================================
+   Eslogan animado del Inicio: "Idəas quə conəctan"
+   - Siempre: el eslogan bajo el logo, con la ə final en blanco.
+   - Intro (solo la primera vez que se entra al sitio): el logo
+     entra rodando, la "e" llega corriendo, se pasa, se devuelve,
+     cae en su lugar y se voltea a "ə". Luego todo se acomoda.
+   ========================================================= */
+
+.hero-eslogan {
+    margin: -32px 0 22px;   /* pegado al logo, como una sola firma */
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    font-size: clamp(17px, 3.6vw, 26px);
+    line-height: 1.3;
+    letter-spacing: 0.09em;
+    color: #D9AE6B;
+    white-space: nowrap;
+    cursor: default;
+    opacity: 0;
+    animation: heroFadeUp 1.2s ease-out 0.2s both;
+}
+
+.hero-eslogan .slot { position: relative; display: inline-block; width: 1.02em; margin: 0 0.06em 0 0.02em; letter-spacing: 0; text-align: center; }
+.hero-eslogan .hop { position: relative; z-index: 1; }
+
+/* Sello de la ə: disco negro + anillo dorado */
+.hero-eslogan .sello { position: absolute; left: var(--sello-x, 50%); top: var(--sello-y, 0.62em); width: 0.9em; height: 0.9em; margin: -0.45em 0 0 -0.45em; z-index: 0; pointer-events: none; }
+.hero-eslogan .disco { position: absolute; inset: 0; border-radius: 50%; background: #0B0B0B; }
+.hero-eslogan .anillo { position: absolute; left: -2px; top: -2px; width: calc(100% + 4px); height: calc(100% + 4px); overflow: visible; transform: rotate(-90deg); }
+.hero-eslogan .anillo circle { fill: none; stroke: #C4924F; stroke-width: 2.2; }
+.hero-eslogan .hop,
+.hero-eslogan .corre,
+.hero-eslogan .gira { display: inline-block; }
+.hero-eslogan .gira { position: relative; isolation: isolate; }
+.hero-eslogan .le { position: relative; z-index: 1; display: inline-block; color: #D9AE6B; opacity: 0; }
+.hero-eslogan .lschwa {
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    color: #FFFFFF;
+    text-shadow: 0 0 12px rgba(255, 226, 168, 0.65);
+}
+
+.hero-eslogan:hover .hop { animation: mgSaltito 0.55s cubic-bezier(.3,.7,.4,1); }
+
+.hero-eslogan .polvo,
+.hero-eslogan .onda,
+.hero-eslogan .chispa { position: absolute; opacity: 0; pointer-events: none; }
+
+.hero-eslogan .polvo { left: 50%; bottom: -0.92em; width: 0.32em; height: 0.32em; margin-left: -0.16em; border-radius: 50%; background: rgba(242, 211, 155, 0.55); }
+.hero-eslogan .onda { left: 50%; bottom: 0.08em; width: 1.1em; height: 0.22em; margin-left: -0.55em; border-radius: 50%; border: 2px solid #F2D39B; }
+.hero-eslogan .chispa { left: 50%; top: 40%; width: 5px; height: 5px; margin: -2.5px; border-radius: 50%; background: #F2D39B; }
+
+/* Cortina oscura de la intro (el video aparece al final) */
+.hero-intro-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #0B1424;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-skip-hint {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------------- Modo intro ---------------- */
+html.mg-intro .hero-intro-cover { opacity: 1; animation: mgDesvanecer 1.2s ease-out 6.3s forwards; }
+html.mg-intro .intro-skip-hint { animation: mgPista 4.6s ease-out 1.2s forwards; }
+
+html.mg-intro .hero-logo {
+    opacity: 1;
+    transform: translate(-100vw, var(--mg-logo-y, 50px)) rotate(-360deg) scale(1.3);
+    animation: mgLogoEntra 0.9s cubic-bezier(.2,.8,.25,1) 0.2s forwards, mgLogoAcomoda 0.8s cubic-bezier(.6,0,.2,1) 6.1s forwards;
+}
+
+html.mg-intro .hero-eslogan {
+    opacity: 0;
+    transform: translateY(var(--mg-eslogan-y, 100px)) scale(var(--mg-eslogan-scale, 1.6));
+    animation: mgEsloganEntra 0.5s ease-out 1.1s forwards, mgEsloganAcomoda 0.8s cubic-bezier(.6,0,.2,1) 6.1s forwards;
+}
+
+html.mg-intro .hero h1 { animation: heroFadeUp 0.8s ease-out 6.6s both; }
+html.mg-intro .hero p { animation: heroFadeUp 0.8s ease-out 6.8s both; }
+html.mg-intro .events-section { animation: heroFadeUp 1s ease-out 7.1s both; }
+
+html.mg-intro .hero-eslogan .le { opacity: 1; animation: mgVolteaE 0.5s ease-in 4.6s forwards; }
+html.mg-intro .hero-eslogan .lschwa { opacity: 0; text-shadow: none; animation: mgVolteaS 0.5s cubic-bezier(.2,1.7,.5,1) 4.6s forwards, mgBrillo 0.9s ease-out 4.85s forwards; }
+html.mg-intro .hero-eslogan .corre { opacity: 0; transform-origin: 50% 100%; animation: mgCorre 2.6s linear 1.5s forwards, mgBrinca 0.5s ease-out 4.6s; }
+html.mg-intro .hero-eslogan .d1 { animation: mgPolvo1 0.6s ease-out 2.75s forwards; }
+html.mg-intro .hero-eslogan .d2 { animation: mgPolvo2 0.6s ease-out 2.8s forwards; }
+html.mg-intro .hero-eslogan .d3 { animation: mgPolvo3 0.6s ease-out 2.85s forwards; }
+/* El sello se gana: espacio, anillo que se dibuja y disco que se estampa */
+html.mg-intro .hero-eslogan .slot { width: 0.62em; animation: mgEspacio 0.35s ease-out 4.95s forwards; }
+html.mg-intro .hero-eslogan .anillo circle { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mgTraza 0.55s ease-in-out 5s forwards; }
+html.mg-intro .hero-eslogan .disco { transform: scale(0); animation: mgEstampa 0.45s cubic-bezier(.2,1.6,.4,1) 5.4s forwards; }
+html.mg-intro .hero-eslogan .gira { animation: mgTiembla 0.3s ease-in-out 4.3s 1, mgGolpe 0.4s ease-out 5.42s; }
+html.mg-intro .hero-eslogan .onda { transform: scale(0.2); animation: mgOnda 0.7s ease-out 5.5s forwards; }
+html.mg-intro .hero-eslogan .c1 { animation: mgChispa1 0.7s ease-out 5.5s forwards; }
+html.mg-intro .hero-eslogan .c2 { animation: mgChispa2 0.7s ease-out 5.5s forwards; }
+html.mg-intro .hero-eslogan .c3 { animation: mgChispa3 0.7s ease-out 5.5s forwards; }
+
+/* Al saltar la intro: todo directo a su estado final */
+html.mg-intro-skip .hero-logo,
+html.mg-intro-skip .hero-eslogan,
+html.mg-intro-skip .hero h1,
+html.mg-intro-skip .hero p,
+html.mg-intro-skip .events-section {
+    animation: heroFadeUp 0.4s ease-out both;
+}
+
+/* ---------------- Animaciones ---------------- */
+@keyframes mgDesvanecer { to { opacity: 0; } }
+@keyframes mgEspacio { to { width: 1.02em; } }
+@keyframes mgTraza { to { stroke-dashoffset: 0; } }
+@keyframes mgEstampa { 0% { transform: scale(0); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes mgGolpe { 0%, 100% { transform: scale(1); } 40% { transform: scale(.82); } 70% { transform: scale(1.08); } }
+@keyframes mgPista { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes mgLogoEntra { to { transform: translate(0, var(--mg-logo-y, 50px)) rotate(0) scale(1.3); } }
+@keyframes mgLogoAcomoda { from { transform: translate(0, var(--mg-logo-y, 50px)) rotate(0) scale(1.3); } to { transform: none; } }
+@keyframes mgEsloganEntra { to { opacity: 1; } }
+@keyframes mgEsloganAcomoda { from { opacity: 1; transform: translateY(var(--mg-eslogan-y, 100px)) scale(var(--mg-eslogan-scale, 1.6)); } to { opacity: 1; transform: none; } }
+
+@keyframes mgCorre {
+    0% { opacity: 0; transform: translate(-12em, .95em) skewX(-16deg); }
+    4% { opacity: 1; }
+    9% { transform: translate(-10.2em, .82em) skewX(-16deg) scale(1.05, .95); }
+    14% { transform: translate(-8.4em, .95em) skewX(-16deg); }
+    19% { transform: translate(-6.6em, .82em) skewX(-16deg) scale(1.05, .95); }
+    24% { transform: translate(-4.8em, .95em) skewX(-16deg); }
+    29% { transform: translate(-3em, .82em) skewX(-16deg) scale(1.05, .95); }
+    34% { transform: translate(-1.2em, .95em) skewX(-16deg); }
+    39% { transform: translate(.8em, .82em) skewX(-16deg) scale(1.05, .95); }
+    44% { transform: translate(2.6em, .95em) skewX(-16deg); }
+    49% { transform: translate(3.4em, .95em) skewX(20deg) scale(1.12, .88); }
+    53% { transform: translate(3.6em, .95em) skewX(-6deg) scale(.96, 1.04); }
+    57% { transform: translate(3.6em, .95em) skewX(0) scale(1, 1); }
+    63% { transform: translate(3.6em, .86em) scale(-1, 1); }
+    68% { transform: translate(3.4em, .95em) scale(-1, 1) skewX(14deg); }
+    74% { transform: translate(2.2em, .82em) scale(-1, 1) skewX(14deg); }
+    79% { transform: translate(1.2em, .95em) scale(-1.1, .9); }
+    86% { transform: translate(.4em, -.9em) scale(-.95, 1.08); }
+    92% { opacity: 1; transform: translate(0, 0) scale(1.3, .7); }
+    96% { transform: translate(0, -.18em) scale(.92, 1.1); }
+    100% { opacity: 1; transform: none; }
+}
+
+@keyframes mgTiembla { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-7deg); } 50% { transform: rotate(6deg); } 75% { transform: rotate(-4deg); } }
+@keyframes mgBrinca { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-.35em); } }
+@keyframes mgVolteaE { 0% { opacity: 1; transform: rotate(0); } 49% { opacity: 1; transform: rotate(90deg); } 50%, 100% { opacity: 0; transform: rotate(90deg); } }
+@keyframes mgVolteaS { 0%, 49% { opacity: 0; transform: rotate(-90deg); } 50% { opacity: 1; transform: rotate(-90deg); } 100% { opacity: 1; transform: rotate(0); } }
+@keyframes mgBrillo { 0% { text-shadow: 0 0 0 rgba(255,226,168,0); } 40% { text-shadow: 0 0 26px rgba(255,226,168,1); } 100% { text-shadow: 0 0 12px rgba(255,226,168,.65); } }
+@keyframes mgPolvo1 { 0% { opacity: .9; transform: translate(3.5em, 0) scale(.4); } 100% { opacity: 0; transform: translate(2.7em, -.35em) scale(1.3); } }
+@keyframes mgPolvo2 { 0% { opacity: .9; transform: translate(3.7em, 0) scale(.4); } 100% { opacity: 0; transform: translate(3.3em, -.55em) scale(1.5); } }
+@keyframes mgPolvo3 { 0% { opacity: .8; transform: translate(3.9em, 0) scale(.4); } 100% { opacity: 0; transform: translate(4.4em, -.3em) scale(1.2); } }
+@keyframes mgOnda { 0% { opacity: .9; transform: scale(.2); } 100% { opacity: 0; transform: scale(1.9); } }
+@keyframes mgChispa1 { 0% { opacity: 1; transform: translate(0, 0); } 100% { opacity: 0; transform: translate(-26px, -30px); } }
+@keyframes mgChispa2 { 0% { opacity: 1; transform: translate(0, 0); } 100% { opacity: 0; transform: translate(0, -40px); } }
+@keyframes mgChispa3 { 0% { opacity: 1; transform: translate(0, 0); } 100% { opacity: 0; transform: translate(26px, -30px); } }
+@keyframes mgSaltito { 0%, 100% { transform: translateY(0) scale(1, 1); } 20% { transform: translateY(0) scale(1.15, .85); } 50% { transform: translateY(-.45em) scale(.92, 1.1); } 80% { transform: translateY(0) scale(1.1, .9); } }
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-eslogan { animation: none; opacity: 1; }
+    .hero-eslogan:hover .hop { animation: none; }
+}

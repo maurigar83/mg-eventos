@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap");
+
 /* =========================================================
    Encabezado compartido de MG Eventos
    (logo + menú; en celular, menú de 3 rayitas)
@@ -33,15 +35,45 @@
 /* Logo: círculo + divisor + eslogan, siempre enlaza al inicio */
 .mg-brand {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    align-items: flex-end;
+    gap: 8px;
     text-decoration: none;
     flex-shrink: 0;
 }
 
 .mg-brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
-.mg-brand-divisor { width: 2px; height: 40px; background: var(--mg-dorado); }
-.mg-brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 11px; }
+.mg-brand-divisor { width: 2px; height: 40px; background: var(--mg-dorado); align-self: center; }
+.mg-brand-eslogan,
+.mg-eslogan-txt {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    color: var(--mg-dorado);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+.mg-brand-eslogan { font-size: 13.5px; line-height: 1; padding-bottom: 7px; letter-spacing: 0.09em; }
+/* La ə final: blanca dentro de un sello negro con borde dorado (repite el logo) */
+.mg-schwa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2em;
+    height: 1.2em;
+    margin: 0 0.16em 0 0.1em;
+    border-radius: 50%;
+    background: #0B0B0B;
+    box-shadow: 0 0 0 1.5px var(--mg-dorado);
+    color: #FFFFFF;
+    font-size: 0.86em;
+    line-height: 1;
+    letter-spacing: 0;
+    vertical-align: 0.14em;
+}
+.mg-schwa-g { display: block; font-style: normal; line-height: 1; }
+
+/* Inicio: solo el círculo (el eslogan grande está en la portada) */
+.mg-header--solo-logo .mg-brand-divisor,
+.mg-header--solo-logo .mg-brand-eslogan { display: none; }
 
 .mg-nav {
     display: flex;
@@ -96,10 +128,10 @@
 /* Celular: menú de 3 rayitas */
 @media (max-width: 760px) {
     .mg-header-inner { padding: 10px 16px; }
-    .mg-brand { gap: 10px; }
+    .mg-brand { gap: 7px; }
     .mg-brand-circulo { width: 44px; height: 44px; }
     .mg-brand-divisor { height: 34px; }
-    .mg-brand-eslogan { height: 11px; top: 9px; }
+    .mg-brand-eslogan { font-size: 12.5px; padding-bottom: 6px; }
 
     .mg-menu-toggle { display: flex; }
 
@@ -151,3 +183,24 @@
 
 .mg-footer-links a:hover { color: var(--mg-dorado-texto); text-decoration: underline; }
 .mg-footer-links span { color: #9ca3af; }
+
+/* Logo apilado del pie de página: círculo y eslogan debajo */
+.mg-footer-brand {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 2px auto 10px;
+    text-decoration: none;
+}
+.mg-footer-brand img { width: 48px; height: 48px; object-fit: contain; display: block; }
+.mg-footer-brand .mg-eslogan-txt { font-size: 13px; line-height: 1.2; letter-spacing: 0.09em; }
+.mg-footer-brand:hover img { transform: scale(1.04); transition: transform 0.2s ease; }
+
+/* Línea de derechos del pie de página: discreta */
+.mg-copy {
+    font-size: 11.5px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: #9CA3AF;
+}
