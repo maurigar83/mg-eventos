@@ -104,7 +104,7 @@ html.mg-intro .hero-eslogan .d2 { animation: mgPolvo2 0.6s ease-out 2.8s forward
 html.mg-intro .hero-eslogan .d3 { animation: mgPolvo3 0.6s ease-out 2.85s forwards; }
 /* El sello se gana: espacio, anillo que se dibuja y disco que se estampa */
 html.mg-intro .hero-eslogan .slot { width: 0.62em; animation: mgEspacio 0.35s ease-out 4.95s forwards; }
-html.mg-intro .hero-eslogan .anillo circle { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mgTraza 0.55s ease-in-out 5s forwards; }
+html.mg-intro .hero-eslogan .anillo circle { stroke-dasharray: 1.05; stroke-dashoffset: 1.05; animation: mgTraza 0.55s ease-in-out 5s forwards; }
 html.mg-intro .hero-eslogan .disco { transform: scale(0); animation: mgEstampa 0.45s cubic-bezier(.2,1.6,.4,1) 5.4s forwards; }
 html.mg-intro .hero-eslogan .gira { animation: mgTiembla 0.3s ease-in-out 4.3s 1, mgGolpe 0.4s ease-out 5.42s; }
 html.mg-intro .hero-eslogan .onda { transform: scale(0.2); animation: mgOnda 0.7s ease-out 5.5s forwards; }
@@ -124,7 +124,8 @@ html.mg-intro-skip .events-section {
 /* ---------------- Animaciones ---------------- */
 @keyframes mgDesvanecer { to { opacity: 0; } }
 @keyframes mgEspacio { to { width: 1.02em; } }
-@keyframes mgTraza { to { stroke-dashoffset: 0; } }
+/* El trazo se dibuja y al final queda como un círculo continuo (sin la rendija que dejaban algunos Android) */
+@keyframes mgTraza { 99% { stroke-dashoffset: 0; stroke-dasharray: 1.05; } 100% { stroke-dashoffset: 0; stroke-dasharray: none; } }
 @keyframes mgEstampa { 0% { transform: scale(0); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
 @keyframes mgGolpe { 0%, 100% { transform: scale(1); } 40% { transform: scale(.82); } 70% { transform: scale(1.08); } }
 @keyframes mgPista { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
