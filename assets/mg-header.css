@@ -63,7 +63,7 @@
     width: 0.9em;
     height: 0.9em;
     padding-bottom: 0.1em;
-    margin: 0 0.16em 0 0.12em;
+    margin: 0 0.18em;   /* mismo espacio a la "n" y a la "c" */
     vertical-align: middle;
     border-radius: 50%;
     background: #0B0B0B;
@@ -207,3 +207,6 @@
     letter-spacing: 0.02em;
     color: #9CA3AF;
 }
+
+/* La "n" antes del sello no suma espaciado extra: así el aire es igual a ambos lados en todos los navegadores */
+.sin-espacio { letter-spacing: 0; }

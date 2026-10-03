@@ -20,11 +20,32 @@
     animation: heroFadeUp 1.2s ease-out 0.2s both;
 }
 
-.hero-eslogan .slot { position: relative; display: inline-block; width: 1.02em; margin: 0 0.06em 0 0.02em; letter-spacing: 0; text-align: center; }
+/* El espaciado entre letras deja un aire extra después de la última "n":
+   lo quitamos para que el eslogan quede centrado por lo que se ve.
+   Además, un corrimiento óptico pequeño a la izquierda (en em: crece con la
+   letra) porque el sello negro de la derecha "pesa" más a la vista. */
+.hero-eslogan > span { position: relative; left: -0.12em; margin-right: -0.09em; }
+
+.hero-eslogan .slot {
+    /* La ranura de la ə ES el sello: la letra se centra dentro con flex,
+       igual que en el encabezado. Mismo aire a la "n" y a la "c". */
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 0.9em;
+    height: 0.9em;
+    padding-bottom: 0.14em;
+    margin: 0 0.18em;
+    vertical-align: middle;
+    line-height: 1;
+    letter-spacing: 0;
+}
 .hero-eslogan .hop { position: relative; z-index: 1; }
 
 /* Sello de la ə: disco negro + anillo dorado */
-.hero-eslogan .sello { position: absolute; left: var(--sello-x, 50%); top: var(--sello-y, 0.62em); width: 0.9em; height: 0.9em; margin: -0.45em 0 0 -0.45em; z-index: 0; pointer-events: none; }
+.hero-eslogan .sello { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .hero-eslogan .disco { position: absolute; inset: 0; border-radius: 50%; background: #0B0B0B; }
 .hero-eslogan .anillo { position: absolute; left: -2px; top: -2px; width: calc(100% + 4px); height: calc(100% + 4px); overflow: visible; transform: rotate(-90deg); }
 .hero-eslogan .anillo circle { fill: none; stroke: #C4924F; stroke-width: 2.2; }
@@ -104,7 +125,7 @@ html.mg-intro .hero-eslogan .d2 { animation: mgPolvo2 0.6s ease-out 2.8s forward
 html.mg-intro .hero-eslogan .d3 { animation: mgPolvo3 0.6s ease-out 2.85s forwards; }
 /* El sello se gana: espacio, anillo que se dibuja y disco que se estampa */
 html.mg-intro .hero-eslogan .slot { width: 0.62em; animation: mgEspacio 0.35s ease-out 4.95s forwards; }
-html.mg-intro .hero-eslogan .anillo circle { stroke-dasharray: 1; stroke-dashoffset: 1; animation: mgTraza 0.55s ease-in-out 5s forwards; }
+html.mg-intro .hero-eslogan .anillo circle { stroke-dasharray: 1.05; stroke-dashoffset: 1.05; animation: mgTraza 0.55s ease-in-out 5s forwards; }
 html.mg-intro .hero-eslogan .disco { transform: scale(0); animation: mgEstampa 0.45s cubic-bezier(.2,1.6,.4,1) 5.4s forwards; }
 html.mg-intro .hero-eslogan .gira { animation: mgTiembla 0.3s ease-in-out 4.3s 1, mgGolpe 0.4s ease-out 5.42s; }
 html.mg-intro .hero-eslogan .onda { transform: scale(0.2); animation: mgOnda 0.7s ease-out 5.5s forwards; }
@@ -123,8 +144,9 @@ html.mg-intro-skip .events-section {
 
 /* ---------------- Animaciones ---------------- */
 @keyframes mgDesvanecer { to { opacity: 0; } }
-@keyframes mgEspacio { to { width: 1.02em; } }
-@keyframes mgTraza { to { stroke-dashoffset: 0; } }
+@keyframes mgEspacio { to { width: 0.9em; } }
+/* El trazo se dibuja y al final queda como un círculo continuo (sin la rendija que dejaban algunos Android) */
+@keyframes mgTraza { 99% { stroke-dashoffset: 0; stroke-dasharray: 1.05; } 100% { stroke-dashoffset: 0; stroke-dasharray: none; } }
 @keyframes mgEstampa { 0% { transform: scale(0); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
 @keyframes mgGolpe { 0%, 100% { transform: scale(1); } 40% { transform: scale(.82); } 70% { transform: scale(1.08); } }
 @keyframes mgPista { 0% { opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
