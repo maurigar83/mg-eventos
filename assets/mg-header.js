@@ -35,31 +35,41 @@
     }
 })();
 
-/* Centra el sello en la mitad del dibujo real de la ə (encabezado y pie),
-   midiendo la letra con la fuente que cargó el navegador. */
+/* Centra el sello en la mitad del dibujo real de la ə (encabezado y pie).
+   La línea base se mide en la página (funciona igual en Safari, Chrome y Firefox)
+   y el dibujo de la letra con la fuente que cargó el navegador. */
 (function () {
+    var ctx = document.createElement("canvas").getContext("2d");
     function centrar() {
-        var sellos = document.querySelectorAll(".mg-schwa");
-        if (!sellos.length) return;
-        var ctx = document.createElement("canvas").getContext("2d");
-        sellos.forEach(function (s) {
+        document.querySelectorAll(".mg-schwa").forEach(function (s) {
+            var marca = s.querySelector(".mg-schwa-base");
+            if (!marca) {
+                marca = document.createElement("span");
+                marca.className = "mg-schwa-base";
+                marca.setAttribute("aria-hidden", "true");
+                s.appendChild(marca);
+            }
             var cs = getComputedStyle(s);
+            var px = parseFloat(cs.fontSize);
+            var base = marca.offsetTop;                 // línea base dentro de la letra
             ctx.font = cs.fontWeight + " " + cs.fontSize + " " + cs.fontFamily;
             var m = ctx.measureText("ə");
-            if (!m.fontBoundingBoxAscent) return;
-            var alto = s.getBoundingClientRect().height || parseFloat(cs.fontSize);
-            var asc = m.fontBoundingBoxAscent, desc = m.fontBoundingBoxDescent;
-            var base = (alto - (asc + desc)) / 2 + asc;
-            var cy = base - (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2;
-            var cx = (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2;
+            var arriba = m.actualBoundingBoxAscent, abajo = m.actualBoundingBoxDescent;
+            var medio = (arriba > 0) ? (arriba - abajo) / 2 : px * 0.27;
+            var cx = (m.actualBoundingBoxRight > 0) ? (m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2 : s.offsetWidth / 2;
             s.style.setProperty("--sello-x", cx.toFixed(2) + "px");
-            s.style.setProperty("--sello-y", cy.toFixed(2) + "px");
+            s.style.setProperty("--sello-y", (base - medio).toFixed(2) + "px");
         });
     }
     function iniciar() {
         centrar();
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(centrar);
+        if (document.fonts) {
+            if (document.fonts.ready) document.fonts.ready.then(centrar);
+            if (document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", centrar);
+        }
+        window.addEventListener("load", centrar);
         window.addEventListener("resize", centrar);
+        setTimeout(centrar, 1500);
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
     else iniciar();
