@@ -195,3 +195,11 @@
 .mg-footer-brand img { width: 48px; height: 48px; object-fit: contain; display: block; }
 .mg-footer-brand .mg-eslogan-txt { font-size: 13px; line-height: 1.2; letter-spacing: 0.09em; }
 .mg-footer-brand:hover img { transform: scale(1.04); transition: transform 0.2s ease; }
+
+/* Línea de derechos del pie de página: discreta */
+.mg-copy {
+    font-size: 11.5px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: #9CA3AF;
+}
