@@ -41,7 +41,7 @@
 
 .mg-brand-circulo { width: 50px; height: 50px; object-fit: contain; display: block; }
 .mg-brand-divisor { width: 2px; height: 40px; background: var(--mg-dorado); }
-.mg-brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 11px; }
+.mg-brand-eslogan { height: 12px; width: auto; display: block; position: relative; top: 7px; }
 
 .mg-nav {
     display: flex;
@@ -99,7 +99,7 @@
     .mg-brand { gap: 10px; }
     .mg-brand-circulo { width: 44px; height: 44px; }
     .mg-brand-divisor { height: 34px; }
-    .mg-brand-eslogan { height: 11px; top: 9px; }
+    .mg-brand-eslogan { height: 11px; top: 5px; }
 
     .mg-menu-toggle { display: flex; }
 
