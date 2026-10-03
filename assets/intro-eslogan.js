@@ -17,9 +17,10 @@
         var mitad = Math.round(oculto / 2);
 
         // Escala del eslogan: grande, pero sin salirse de la pantalla
-        var ancho = eslogan.scrollWidth || eslogan.offsetWidth;
+        var texto_eslogan = eslogan.querySelector("span");
+        var ancho = (texto_eslogan && texto_eslogan.offsetWidth) || eslogan.offsetWidth;
         var disponible = window.innerWidth - 32;
-        var escala = Math.max(1, Math.min(1.6, disponible / ancho));
+        var escala = Math.max(1, Math.min(2.7, disponible / ancho));
         var crece = (eslogan.offsetHeight * (escala - 1)) / 2;
 
         html.style.setProperty("--mg-eslogan-scale", escala.toFixed(3));
@@ -55,7 +56,7 @@
         document.addEventListener("keydown", saltar);
 
         // Al terminar ya no hay nada que saltar
-        setTimeout(cleanup, 7200);
+        setTimeout(cleanup, 7700);
     }
 
     if (document.readyState === "loading") {
