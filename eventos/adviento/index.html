@@ -147,7 +147,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #071625 url("../../images/Flyer_adviento_v2.png") center / cover;
+            background: #071625 url("../../images/flyer_adviento_v3.jpg") center / cover;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.8s ease, visibility 0.8s ease;
@@ -546,7 +546,7 @@
                         </div>
 
                         <div class="video-end" aria-hidden="true">
-                            <img src="../../images/Flyer_adviento_v2.png" alt="">
+                            <img src="../../images/flyer_adviento_v3.jpg" alt="">
                             <button type="button" class="replay-button">↻ VER DE NUEVO</button>
                         </div>
 
@@ -676,7 +676,7 @@
                 disponible: true,
                 name: "Juan Felipe Zapata",
                 chip: "Pbro. Felipe",
-                video: "../../videos/Video_Juan_Felipe.mp4",
+                video: "../../videos/Video_Juan_Felipe_v2.mp4",
                 poster: "../../images/poster-juan-felipe.jpg",
                 quote: "El tiempo del Adviento es una oportunidad para repensar, escuchar, reflexionar y mirar todo lo que Dios ha hecho en nuestra vida.",
                 author: "Pbro. Juan Felipe Zapata"
@@ -685,19 +685,19 @@
                 disponible: true,
                 name: "Wilson Lopera",
                 chip: "Pbro. Wilson",
-                video: "../../videos/Video_Wilson_Lopera.mp4",
+                video: "../../videos/Video_Wilson_Lopera_720.mp4",
                 poster: "../../images/poster-wilson-lopera.jpg",
                 quote: "Perdonar es el camino para sanar, para liberar, para buscar la perfección y la tranquilidad de nuestra vida.",
                 author: "Pbro. Wilson Lopera"
             },
             {
-                disponible: false,
-                name: "Próximamente",
-                chip: "Próximamente",
-                video: "",
-                poster: "",
-                quote: "Muy pronto conocerás su mensaje.",
-                author: ""
+                disponible: true,
+                name: "Juan José Montoya",
+                chip: "Pbro. Juan José",
+                video: "../../videos/Video_Juan_Jose_Montoya_v2.mp4",
+                poster: "../../images/poster-juan-jose-montoya.jpg",
+                quote: "Que este retiro sea una oportunidad para evaluar, para perdonar y para agradecer.",
+                author: "Pbro. Juan José Montoya"
             },
             {
                 disponible: false,
@@ -832,7 +832,7 @@
                 video.src = slide.video;
                 wrapper.appendChild(video);
                 wrapper.insertAdjacentHTML("beforeend",
-                    '<div class="video-end" aria-hidden="true"><img src="../../images/Flyer_adviento_v2.png" alt="">' +
+                    '<div class="video-end" aria-hidden="true"><img src="../../images/flyer_adviento_v3.jpg" alt="">' +
                     '<button type="button" class="replay-button">↻ VER DE NUEVO</button></div>');
                 attachEndScreen(wrapper, video);
                 video.addEventListener("play", () => {
