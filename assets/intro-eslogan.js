@@ -29,11 +29,20 @@
         html.style.setProperty("--mg-logo-y", Math.round(mitad - logo.offsetHeight * 0.15 - 6) + "px");
     }
 
+    // Avisa al Inicio que la intro terminó (o se saltó) para arrancar el video desde el QR
+    var avisado = false;
+    function avisarFin() {
+        if (avisado) return;
+        avisado = true;
+        document.dispatchEvent(new Event("mg-intro-fin"));
+    }
+
     function saltar() {
         if (!html.classList.contains("mg-intro")) return;
         html.classList.remove("mg-intro");
         html.classList.add("mg-intro-skip");
         cleanup();
+        avisarFin();
     }
 
     function cleanup() {
@@ -58,6 +67,9 @@
 
         // Al terminar ya no hay nada que saltar
         setTimeout(cleanup, 7700);
+
+        // La cortina de la intro empieza a desvanecerse a los 6,3 s
+        setTimeout(avisarFin, 6300);
     }
 
     if (document.readyState === "loading") {

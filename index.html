@@ -526,7 +526,7 @@ transition: none;
 </div>
 <main>
 <section class="hero">
-<video class="hero-video" autoplay muted playsinline preload="auto" poster="images/mg-eventos-logo.png" aria-hidden="true">
+<video class="hero-video" muted playsinline preload="auto" poster="images/hero-poster.jpg" aria-hidden="true">
 <source src="videos/hero-qr.mp4" type="video/mp4">
 </video>
 <div class="hero-overlay" aria-hidden="true"></div>
@@ -702,7 +702,7 @@ const heroVideo = document.querySelector(".hero-video");
 const heroFade = document.querySelector(".hero-fade");
 const videos = [
 "videos/hero-qr.mp4",
-"videos/hero-evento.mp4"
+"videos/hero-evento-v2.mp4"
 ];
 let currentVideo = 0;
 let changingVideo = false;
@@ -729,15 +729,23 @@ changingVideo = false;
 heroVideo.addEventListener("ended", () => {
 playNextVideo();
 });
-window.addEventListener("load", () => {
+/* El video arranca desde el QR. Si hay intro, espera a que termine
+   (o a que la salten) para que no se consuma por debajo de la cortina. */
+function startHeroVideo() {
 if (!heroVideo) {
 return;
 }
+heroVideo.currentTime = 0;
 const playPromise = heroVideo.play();
 if (playPromise !== undefined) {
 playPromise.catch(() => {});
 }
-});
+}
+if (document.documentElement.classList.contains("mg-intro")) {
+document.addEventListener("mg-intro-fin", startHeroVideo, { once: true });
+} else {
+startHeroVideo();
+}
 </script>
 </body>
 </html>
