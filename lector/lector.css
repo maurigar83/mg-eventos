@@ -73,6 +73,7 @@ button:active {
   font-weight: bold;
 }
 #conteo.oculto { display: none; }
+#btnManual.oculto { display: none; }
 #btnManual {
   background: #ffffff;
   color: #111827;
@@ -91,7 +92,8 @@ button:active {
   font-size: 16px;
   font-weight: bold;
 }
-#inputSerial {
+#inputSerial,
+#inputCedula {
   font-size: 22px;
   padding: 12px;
   border: 2px solid #6b7280;
@@ -99,7 +101,8 @@ button:active {
   text-transform: uppercase;
   width: 100%;
 }
-#inputSerial:focus {
+#inputSerial:focus,
+#inputCedula:focus {
   outline: 3px solid #0d6efd;
   outline-offset: 1px;
 }
@@ -170,16 +173,6 @@ button:active {
   font-weight: bold;
 }
 #resultadoTipo:empty { display: none; }
-#resultadoVerificar {
-  margin-top: 18px;
-  padding: 12px 18px;
-  border-radius: 10px;
-  background: #fde68a;
-  color: #111827;
-  font-size: clamp(20px, 6vw, 28px);
-  font-weight: bold;
-}
-#resultadoVerificar:empty { display: none; }
 #resultadoDetalle {
   margin-top: 16px;
   font-size: 18px;
