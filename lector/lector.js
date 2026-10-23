@@ -178,6 +178,7 @@ window.addEventListener(
     }
 
     iniciarRevalidacion();
+    document.getElementById("btnManual").classList.toggle("oculto", !esSuperadmin());
     actualizarConteo();
     setInterval(actualizarConteo, INTERVALO_CONTEO);
 
@@ -426,25 +427,45 @@ async function validarCodigo(codigo) {
 }
 
 // Entrada manual (acción "validar_serial"): para cuando el QR no se
-// deja leer. El servidor devuelve los últimos dígitos de la cédula
-// para que el portero la compare con el documento.
+// deja leer. Solo para el SUPERADMIN (Mauricio lo gestiona en persona
+// en el evento) y con la cédula
+// completa del documento: el serial y los últimos 4 dígitos de la
+// cédula salen impresos en la entrada, así que solos no prueban nada.
+// El servidor compara la cédula con la del comprador.
+// Solo esconde el botón; el servidor vuelve a exigir el rol.
+function esSuperadmin() {
+  return (sessionStorage.getItem("mg_eventos_rol") || "").toUpperCase() === "SUPERADMIN";
+}
+
 async function validarSerial(evento) {
   evento.preventDefault();
-  const input = document.getElementById("inputSerial");
-  const serial = input.value.trim();
+  const inputSerial = document.getElementById("inputSerial");
+  const inputCedula = document.getElementById("inputCedula");
+  const serial = inputSerial.value.trim();
+  const cedula = inputCedula.value.replace(/\D/g, "");
 
-  if (!serial || procesando) {
-    input.focus();
+  if (procesando) {
+    return;
+  }
+  if (!serial) {
+    inputSerial.focus();
+    return;
+  }
+  if (cedula.length < 5) {
+    inputCedula.focus();
     return;
   }
 
   procesando = true;
-  input.blur();
+  inputSerial.blur();
+  inputCedula.blur();
   document.getElementById("mensaje").innerText = "Validando serial...";
-  const valido = await enviarValidacion({ accion: "validar_serial", serial: serial });
+  const valido = await enviarValidacion({ accion: "validar_serial", serial: serial, cedula: cedula });
 
+  // La cédula se borra siempre: no se deja un dato personal en pantalla.
+  inputCedula.value = "";
   if (valido) {
-    input.value = "";
+    inputSerial.value = "";
   }
 }
 
@@ -567,7 +588,6 @@ function mostrarResultado(r) {
   document.getElementById("resultadoTitulo").textContent = r.titulo || "RESULTADO";
   document.getElementById("resultadoNombre").textContent = r.nombre || "";
   document.getElementById("resultadoTipo").textContent = r.tipo || "";
-  document.getElementById("resultadoVerificar").textContent = r.verificar || "";
   document.getElementById("resultadoDetalle").textContent = r.detalle || "";
 
   // Sonido distinto según el resultado (funciona en iPhone y Android).
@@ -585,9 +605,7 @@ function mostrarResultado(r) {
     clearTimeout(temporizadorResultado);
   }
   // Válido se cierra rápido para agilizar la fila; los errores duran más.
-  // Con serial manual hay que comparar la cédula: dura más.
-  const duracion = r.verificar ? 8000 : (valido ? 2500 : 5000);
-  temporizadorResultado = setTimeout(ocultarResultado, duracion);
+  temporizadorResultado = setTimeout(ocultarResultado, valido ? 2500 : 5000);
 }
 
 function ocultarResultado() {
