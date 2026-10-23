@@ -178,7 +178,7 @@ window.addEventListener(
     }
 
     iniciarRevalidacion();
-    document.getElementById("btnManual").classList.toggle("oculto", !esSupervisor());
+    document.getElementById("btnManual").classList.toggle("oculto", !esSuperadmin());
     actualizarConteo();
     setInterval(actualizarConteo, INTERVALO_CONTEO);
 
@@ -427,17 +427,14 @@ async function validarCodigo(codigo) {
 }
 
 // Entrada manual (acción "validar_serial"): para cuando el QR no se
-// deja leer. Solo para supervisores (permiso REPORTES) y con la cédula
+// deja leer. Solo para el SUPERADMIN (Mauricio lo gestiona en persona
+// en el evento) y con la cédula
 // completa del documento: el serial y los últimos 4 dígitos de la
 // cédula salen impresos en la entrada, así que solos no prueban nada.
 // El servidor compara la cédula con la del comprador.
-function esSupervisor() {
-  try {
-    const permisos = JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]");
-    return Array.isArray(permisos) && permisos.includes("REPORTES");
-  } catch (error) {
-    return false;
-  }
+// Solo esconde el botón; el servidor vuelve a exigir el rol.
+function esSuperadmin() {
+  return (sessionStorage.getItem("mg_eventos_rol") || "").toUpperCase() === "SUPERADMIN";
 }
 
 async function validarSerial(evento) {

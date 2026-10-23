@@ -29,7 +29,7 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   `lector/vendor/` y CSP estricta. El repo `validacion-tickets` solo redirige
   aquí. Desde el 23/10/2026 (preparación de la puerta, Plan MT8): usa el lector
   nativo del navegador (BarcodeDetector) donde existe y solo busca QR; botón
-  "Supervisor: validar por serial" (solo visible con permiso REPORTES) para
+  "Admin: validar por serial" (solo visible para el rol SUPERADMIN) para
   validar a mano por serial o número más la cédula completa del documento,
   que el servidor compara con la del comprador (acción `validar_serial`;
   el serial y los últimos 4 dígitos de la cédula salen impresos en la
