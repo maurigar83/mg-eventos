@@ -178,6 +178,8 @@ window.addEventListener(
     }
 
     iniciarRevalidacion();
+    actualizarConteo();
+    setInterval(actualizarConteo, INTERVALO_CONTEO);
 
     const parametros = new URLSearchParams(
       window.location.search
@@ -336,7 +338,17 @@ async function iniciarEscaner() {
     mensaje.innerText =
       "Inicializando cámara...";
 
-    scanner = new Html5Qrcode("reader");
+    // Solo QR (no busca los demás formatos) y, donde el navegador lo
+    // trae (Chrome en Android), el lector nativo BarcodeDetector, que
+    // es más rápido que el decodificador en JavaScript. En iPhone no
+    // existe y la librería usa el suyo como antes.
+    scanner = new Html5Qrcode("reader", {
+      formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+      experimentalFeatures: {
+        useBarCodeDetectorIfSupported: true
+      },
+      verbose: false
+    });
 
     const cameras =
       await Html5Qrcode.getCameras();
@@ -410,33 +422,65 @@ let temporizadorResultado = null;
 // Valida el QR con la sesión del lector (acción "validar_qr").
 // La cámara sigue encendida: no se recarga la página en cada persona.
 async function validarCodigo(codigo) {
+  await enviarValidacion({ accion: "validar_qr", codigo: codigo });
+}
+
+// Entrada manual (acción "validar_serial"): para cuando el QR no se
+// deja leer. El servidor devuelve los últimos dígitos de la cédula
+// para que el portero la compare con el documento.
+async function validarSerial(evento) {
+  evento.preventDefault();
+  const input = document.getElementById("inputSerial");
+  const serial = input.value.trim();
+
+  if (!serial || procesando) {
+    input.focus();
+    return;
+  }
+
+  procesando = true;
+  input.blur();
+  document.getElementById("mensaje").innerText = "Validando serial...";
+  const valido = await enviarValidacion({ accion: "validar_serial", serial: serial });
+
+  if (valido) {
+    input.value = "";
+  }
+}
+
+async function enviarValidacion(cuerpo) {
   const mensaje = document.getElementById("mensaje");
+  let valido = false;
 
   try {
+    cuerpo.token = sessionStorage.getItem("mg_eventos_token") || "";
+    cuerpo.scanId = generarScanId();
+
     const respuesta = await fetch(SEGURIDAD_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
-      body: JSON.stringify({
-        accion: "validar_qr",
-        token: sessionStorage.getItem("mg_eventos_token") || "",
-        codigo: codigo,
-        scanId: generarScanId()
-      })
+      body: JSON.stringify(cuerpo)
     });
 
     const r = await respuesta.json();
 
     if (r && r.estado === "NO_AUTORIZADO") {
       await manejarSesionInvalida();
-      return;
+      return false;
     }
 
+    valido = !!(r && r.estado === "VALIDO");
     mostrarResultado(r || {});
-    mensaje.innerText = "Cámara activa. Escanea el siguiente código QR.";
+    if (valido) {
+      sumarIngresoLocal();
+    }
+    mensaje.innerText = scanner
+      ? "Cámara activa. Escanea el siguiente código QR."
+      : "Listo. Escanea o escribe el siguiente serial.";
   } catch (error) {
-    console.error("Error validando el QR:", error);
+    console.error("Error validando:", error);
     mostrarResultado({
       estado: "ERROR",
       titulo: "SIN CONEXIÓN",
@@ -450,6 +494,67 @@ async function validarCodigo(codigo) {
       procesando = false;
     }, 1200);
   }
+
+  return valido;
+}
+
+// CONTADOR "Ingresaron X de Y": se pide al servidor cada 30 s (el
+// servidor lo guarda 15 s en caché) y se suma 1 en el acto con cada
+// ingreso válido de este celular, para que se vea moverse.
+const INTERVALO_CONTEO = 30 * 1000;
+let conteoActual = null;
+
+function pintarConteo() {
+  const caja = document.getElementById("conteo");
+  if (!conteoActual) {
+    caja.className = "oculto";
+    return;
+  }
+  caja.className = "";
+  caja.textContent = "Ingresaron " + conteoActual.ingresaron.toLocaleString("es-CO") +
+    " de " + conteoActual.vendidas.toLocaleString("es-CO") + " entradas vendidas";
+}
+
+function sumarIngresoLocal() {
+  if (conteoActual && conteoActual.ingresaron < conteoActual.vendidas) {
+    conteoActual.ingresaron++;
+    pintarConteo();
+  }
+}
+
+async function actualizarConteo() {
+  if (document.hidden) {
+    return;
+  }
+  try {
+    const respuesta = await fetch(SEGURIDAD_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        accion: "conteo_ingresos",
+        token: sessionStorage.getItem("mg_eventos_token") || ""
+      })
+    });
+    const r = await respuesta.json();
+    if (r && r.ok) {
+      conteoActual = { ingresaron: Number(r.ingresaron) || 0, vendidas: Number(r.vendidas) || 0 };
+      pintarConteo();
+    }
+  } catch (error) {
+    // Sin conexión: se deja el último número; el lector sigue igual.
+    console.log("No se pudo actualizar el contador:", error);
+  }
+}
+
+function alternarManual() {
+  const form = document.getElementById("formSerial");
+  const abrir = form.classList.contains("oculto");
+  form.classList.toggle("oculto", !abrir);
+  if (abrir) {
+    document.getElementById("inputSerial").focus();
+  }
 }
 
 function mostrarResultado(r) {
@@ -462,6 +567,7 @@ function mostrarResultado(r) {
   document.getElementById("resultadoTitulo").textContent = r.titulo || "RESULTADO";
   document.getElementById("resultadoNombre").textContent = r.nombre || "";
   document.getElementById("resultadoTipo").textContent = r.tipo || "";
+  document.getElementById("resultadoVerificar").textContent = r.verificar || "";
   document.getElementById("resultadoDetalle").textContent = r.detalle || "";
 
   // Sonido distinto según el resultado (funciona en iPhone y Android).
@@ -479,7 +585,9 @@ function mostrarResultado(r) {
     clearTimeout(temporizadorResultado);
   }
   // Válido se cierra rápido para agilizar la fila; los errores duran más.
-  temporizadorResultado = setTimeout(ocultarResultado, valido ? 2500 : 5000);
+  // Con serial manual hay que comparar la cédula: dura más.
+  const duracion = r.verificar ? 8000 : (valido ? 2500 : 5000);
+  temporizadorResultado = setTimeout(ocultarResultado, duracion);
 }
 
 function ocultarResultado() {
@@ -511,3 +619,10 @@ document.getElementById("btnStart").addEventListener("click", iniciarEscaner);
 document.getElementById("btnStop").addEventListener("click", detenerEscaner);
 document.getElementById("btnPanel").addEventListener("click", volverAlPanel);
 document.getElementById("resultado").addEventListener("click", ocultarResultado);
+document.getElementById("btnManual").addEventListener("click", alternarManual);
+document.getElementById("formSerial").addEventListener("submit", validarSerial);
+document.addEventListener("visibilitychange", function() {
+  if (!document.hidden) {
+    actualizarConteo();
+  }
+});
