@@ -62,5 +62,5 @@ id `1YnAFnOSULsJO4Ieg8fyX3opJRYzmvcshfinGDyAgmts`).
 - Todo en español: textos, comentarios y mensajes de commit (qué y por qué).
 - Pensado primero para celular; probar el ancho de un teléfono antes de subir.
 - Imágenes y videos optimizados para la web antes de subirlos.
-- Nunca poner llaves, tokens ni datos personales en el código: este repo es
+- Nunca poner llaves, tokens ni datos personales en el código:
   lo que se sube aquí se publica tal cual en la web.
