@@ -477,15 +477,25 @@ async function enviarValidacion(cuerpo) {
     cuerpo.token = sessionStorage.getItem("mg_eventos_token") || "";
     cuerpo.scanId = generarScanId();
 
-    const respuesta = await fetch(SEGURIDAD_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(cuerpo)
-    });
-
-    const r = await respuesta.json();
+    // X12: si el servidor está ocupado (varias puertas a la vez) o se
+    // cae la conexión, se reintenta una vez sola antes de mostrar el
+    // error. Va con el mismo scanId, así que si la primera alcanzó a
+    // registrar el ingreso, el reintento responde VÁLIDO y no "YA UTILIZADO".
+    let r = null;
+    for (let intento = 1; intento <= 2; intento++) {
+      try {
+        r = await pedirValidacion(cuerpo);
+        if (!(r && r.estado === "ERROR") || intento === 2) {
+          break;
+        }
+      } catch (error) {
+        if (intento === 2) {
+          throw error;
+        }
+      }
+      mensaje.innerText = "Validando de nuevo...";
+      await esperar(800);
+    }
 
     if (r && r.estado === "NO_AUTORIZADO") {
       await manejarSesionInvalida();
@@ -517,6 +527,23 @@ async function enviarValidacion(cuerpo) {
   }
 
   return valido;
+}
+
+async function pedirValidacion(cuerpo) {
+  const respuesta = await fetch(SEGURIDAD_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(cuerpo)
+  });
+  return respuesta.json();
+}
+
+function esperar(ms) {
+  return new Promise(function(resolver) {
+    setTimeout(resolver, ms);
+  });
 }
 
 // CONTADOR "Ingresaron X de Y": se pide al servidor cada 30 s (el

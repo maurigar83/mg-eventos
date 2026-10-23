@@ -34,7 +34,9 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   que el servidor compara con la del comprador (acción `validar_serial`;
   el serial y los últimos 4 dígitos de la cédula salen impresos en la
   entrada, así que solos no prueban nada), y contador "Ingresaron X de Y" (acción
-  `conteo_ingresos`, cada 30 s). El backend de esas acciones está en
+  `conteo_ingresos`, cada 30 s). Si el servidor responde "NO FUE POSIBLE
+  VALIDAR" o falla la red, el lector reintenta una vez con el mismo
+  `scanId` antes de mostrar el error (X12, 23/10/2026). El backend de esas acciones está en
   `ticketera-apps-script/Codigo.js`. Al cambiar `lector.js`/`lector.css`,
   subir el `?v=` en `lector/index.html`.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
