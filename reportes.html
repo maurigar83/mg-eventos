@@ -476,6 +476,26 @@ body {
   font-size: 12px;
 }
 
+.ingreso-lista {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  font-size: 13px;
+}
+
+.ingreso-lista li + li {
+  margin-top: 4px;
+}
+
+.ingreso-lista .ingreso-si {
+  color: #059669;
+  font-weight: 600;
+}
+
+.ingreso-lista .ingreso-no {
+  color: #6b7280;
+}
+
 .comm-button {
   padding: 9px 16px;
   border: 1px solid #d9ad55;
@@ -800,6 +820,12 @@ body {
         </div>
         <button class="comm-button" id="botonReenviarWhatsApp" type="button" onclick="reenviarWhatsApp()">Reenviar</button>
       </div>
+      <div class="comm-row">
+        <div class="comm-info">
+          <strong>Ingreso al evento</strong>
+          <ul class="ingreso-lista" id="fichaIngresos"></ul>
+        </div>
+      </div>
       <div class="ficha-feedback" id="fichaFeedback"></div>
     </div>
   </div>
@@ -1084,6 +1110,8 @@ async function abrirFicha(cedula) {
       (resultado.telefono ? resultado.telefono + " · " : "") + (resultado.estadoWhatsApp || "Sin enviar") +
       (resultado.fechaWhatsApp ? " (" + resultado.fechaWhatsApp + ")" : "");
 
+    pintarIngresos(resultado.ingresos || []);
+
     document.getElementById("fichaFeedback").textContent = "";
     document.getElementById("fichaFeedback").className = "ficha-feedback";
 
@@ -1092,6 +1120,31 @@ async function abrirFicha(cedula) {
     ocultarCargando();
     alert("Error de conexión al cargar la ficha del comprador.");
   }
+}
+
+function pintarIngresos(ingresos) {
+  const lista = document.getElementById("fichaIngresos");
+  lista.innerHTML = "";
+
+  if (!ingresos.length) {
+    const item = document.createElement("li");
+    item.className = "ingreso-no";
+    item.textContent = "Sin datos de ingreso";
+    lista.appendChild(item);
+    return;
+  }
+
+  ingresos.forEach(function(entrada) {
+    const item = document.createElement("li");
+    const estado = document.createElement("span");
+    const detalle = [entrada.fecha, entrada.hora].filter(Boolean).join(" ");
+
+    item.textContent = (entrada.serial || "Sin serial") + " · ";
+    estado.className = entrada.ingreso ? "ingreso-si" : "ingreso-no";
+    estado.textContent = entrada.ingreso ? "INGRESÓ" + (detalle ? " (" + detalle + ")" : "") : "Sin ingreso";
+    item.appendChild(estado);
+    lista.appendChild(item);
+  });
 }
 
 function cerrarFicha() {
@@ -1157,6 +1210,8 @@ async function refrescarEstadoComunicacion() {
     document.getElementById("fichaWhatsAppEstado").textContent =
       (resultado.telefono ? resultado.telefono + " · " : "") + (resultado.estadoWhatsApp || "Sin enviar") +
       (resultado.fechaWhatsApp ? " (" + resultado.fechaWhatsApp + ")" : "");
+
+    pintarIngresos(resultado.ingresos || []);
   } catch (error) {
     console.warn("No fue posible refrescar el estado de comunicación:", error);
   }
