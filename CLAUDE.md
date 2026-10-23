@@ -27,14 +27,23 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque
   la sesión se guarda por dominio. Librería html5-qrcode guardada en
   `lector/vendor/` y CSP estricta. El repo `validacion-tickets` solo redirige
-  aquí.
+  aquí. Desde el 23/10/2026 (preparación de la puerta, Plan MT8): usa el lector
+  nativo del navegador (BarcodeDetector) donde existe y solo busca QR; botón
+  "Escribir serial (QR no lee)" para validar a mano por serial o solo el
+  número (acción `validar_serial`; el resultado pide comparar los últimos 4
+  dígitos de la cédula), y contador "Ingresaron X de Y" (acción
+  `conteo_ingresos`, cada 30 s). El backend de esas acciones está en
+  `ticketera-apps-script/Codigo.js`. Al cambiar `lector.js`/`lector.css`,
+  subir el `?v=` en `lector/index.html`.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
   de Adviento es `flyer_adviento_v4.jpg` (y su versión de 600 px para
   tarjetas); los videos van en 720p con faststart para que carguen rápido.
 - Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies,
-  decisión de Mauricio del 06/10/2026: no usar Google Analytics por Ley 1581).
+  decisión de Mauricio del 06/10/2026: no usar Google Analytics por Ley 1581),
+  menos en `lector/`: su CSP estricta lo bloqueaba igual, así que se quitó el
+  23/10/2026 (es una página interna, no aporta visitas).
 
 ## Ambiente de pruebas
 
