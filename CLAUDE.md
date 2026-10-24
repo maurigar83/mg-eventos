@@ -21,7 +21,9 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   Adviento, 28/11/2026), `servicios/`, `contacto/`, `politica-privacidad.html`,
   `terminos-servicio.html`, `eliminacion-datos.html`.
 - Páginas de operación (con sesión): `panel.html` (login y panel de gestión),
-  `reportes.html` (consulta de ventas, compradores y reenvío de entradas),
+  `reportes.html` (consulta de ventas, compradores y reenvío de entradas;
+  desde el 24/10/2026 la búsqueda pide 3 caracteres y muestra máximo 20,
+  auditoría A4),
   `usuarios.html` (usuarios y roles), `activar.html` (enlace de un solo uso
   para definir la contraseña), `politica-password.js` (política de claves).
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque

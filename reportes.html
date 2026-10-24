@@ -1028,6 +1028,15 @@ async function buscarComprador() {
 
     resultados.innerHTML = "";
 
+    // Auditoría A4 (24/10/2026): el servidor devuelve máximo 20
+    // compradores y avisa cuando hay más.
+    if (resultado.mensaje) {
+      const aviso = document.createElement("div");
+      aviso.className = "empty-state";
+      aviso.textContent = resultado.mensaje;
+      resultados.appendChild(aviso);
+    }
+
     resultado.resultados.forEach(function(comprador) {
       const card = document.createElement("div");
       card.className = "result-card";
