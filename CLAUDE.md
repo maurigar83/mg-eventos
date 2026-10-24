@@ -19,7 +19,12 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
 - Páginas públicas: `index.html` (inicio con intro animada y video),
   `eventos/` (cartelera) y `eventos/adviento/` (evento actual: Retiro de
   Adviento, 28/11/2026), `servicios/`, `contacto/`, `politica-privacidad.html`,
-  `terminos-servicio.html`, `eliminacion-datos.html`.
+  `terminos-servicio.html`, `eliminacion-datos.html`. Política versión
+  2026-10-24 (auditoría B1 y norma M2): dice "entradas", nombra Cloudflare
+  Web Analytics y avisa que los enlaces de PDF por WhatsApp se cierran al
+  día siguiente del evento; Eliminación de Datos pide la cédula. Si cambia
+  un proveedor (por ejemplo Bold o Wompi al integrarse), actualizar la
+  política y su versión.
 - Páginas de operación (con sesión): `panel.html` (login y panel de gestión),
   `reportes.html` (consulta de ventas, compradores y reenvío de entradas;
   desde el 24/10/2026 la búsqueda pide 3 caracteres y muestra máximo 20,
