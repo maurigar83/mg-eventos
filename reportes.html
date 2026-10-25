@@ -752,6 +752,71 @@ body {
   text-align: left;
 }
 
+.data-table th.center,
+.data-table td.center {
+  text-align: center;
+}
+
+.toggle-seriales {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toggle-seriales:focus-visible {
+  outline: 2px solid #d9ad55;
+  outline-offset: 2px;
+}
+
+.data-table tr.abierta td {
+  background: #fdf6e7;
+}
+
+.data-table tr.abierta .toggle-seriales {
+  border-color: #111827;
+  background: #111827;
+  color: #ffffff;
+}
+
+.cantidad {
+  display: inline-block;
+  min-width: 26px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.data-table tr.fila-seriales td {
+  padding: 4px 10px 14px 50px;
+  border-top: 0;
+  background: #fffbf2;
+  text-align: left;
+  white-space: normal;
+}
+
+.serial-chip {
+  display: inline-block;
+  margin: 4px 6px 0 0;
+  padding: 5px 10px;
+  border: 1px solid #e6cf9a;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .data-table tr.total td {
   background: #fdf6e7;
   font-weight: 800;
@@ -1179,11 +1244,11 @@ body {
     </div>
 
     <div class="panel-card">
-      <h3>Detalle de entradas del rango</h3>
+      <h3>Detalle de compras del rango</h3>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
-            <tr><th class="left">Fecha</th><th class="left">Serial</th><th class="left">Tipo</th><th>Valor</th><th class="left">Referencia pago</th><th class="left">Comprador</th><th class="left">Cédula</th><th class="left">Teléfono</th></tr>
+            <tr><th></th><th class="left">Fecha</th><th class="left">Comprador</th><th class="left">Cédula</th><th class="left">Teléfono</th><th class="left">Tipo</th><th class="left">Referencia pago</th><th class="center">Entradas</th><th>Valor</th></tr>
           </thead>
           <tbody id="tablaDetalle"></tbody>
         </table>
@@ -1192,7 +1257,7 @@ body {
         <span id="detalleConteo"></span>
         <button class="chip" id="botonVerMas" type="button" onclick="verMasDetalle()" hidden>Ver más</button>
       </div>
-      <p class="fechas-nota">General cuenta por fecha de pago; Cortesía por la fecha en que se registró la venta. Toca una fila para abrir la ficha del comprador.</p>
+      <p class="fechas-nota">General cuenta por fecha de pago; Cortesía por la fecha en que se registró la venta. Una compra es el mismo día, cédula, tipo y referencia. Toca la flecha para ver los seriales; toca el resto de la fila para abrir la ficha del comprador.</p>
     </div>
   </div>
 
@@ -1594,7 +1659,7 @@ async function abrirFicha(cedula, serial) {
 // PESTAÑAS Y VENTAS POR FECHA (25/10/2026)
 // ============================================================
 // Totales por día, gráfica y detalle (20 filas por vez) de la acción
-// ventas_por_fecha; la descarga crea una hoja de Google privada en el
+// ventas_por_fecha (detalle agrupado por compra); la descarga crea una hoja de Google privada en el
 // Drive de MG Eventos (exportar_ventas_fecha). Cédula y teléfono
 // llegan enmascarados del servidor.
 
@@ -1759,28 +1824,51 @@ function pintarDias(dias, totales) {
   }).join("");
 }
 
+// Una fila por compra; la flecha despliega sus seriales en una fila
+// aparte y el resto de la fila abre la ficha (por el primer serial).
 function agregarDetalle(resultado) {
   const tabla = document.getElementById("tablaDetalle");
-  resultado.detalle.forEach(function(e) {
+  resultado.detalle.forEach(function(c) {
     const fila = document.createElement("tr");
     fila.className = "clickable";
     fila.onclick = function() {
-      abrirFicha("", e.serial);
+      abrirFicha("", c.seriales[0]);
     };
     fila.innerHTML =
-      '<td class="left">' + escaparTexto(fechaCorta(e.fecha)) + "</td>" +
-      '<td class="left">' + escaparTexto(e.serial) + "</td>" +
-      '<td class="left"><span class="pill' + (e.tipo === "Cortesía" ? " cortesia" : "") + '">' + escaparTexto(e.tipo) + "</span></td>" +
-      "<td>" + formatearMoneda(e.valor) + "</td>" +
-      '<td class="left">' + escaparTexto(e.referencia) + "</td>" +
-      '<td class="left">' + escaparTexto(e.comprador) + "</td>" +
-      '<td class="left">' + escaparTexto(e.cedula) + "</td>" +
-      '<td class="left">' + escaparTexto(e.telefono) + "</td>";
+      '<td><button class="toggle-seriales" type="button" aria-expanded="false" aria-label="Ver seriales">▸</button></td>' +
+      '<td class="left">' + escaparTexto(fechaCorta(c.fecha)) + "</td>" +
+      '<td class="left">' + escaparTexto(c.comprador) + "</td>" +
+      '<td class="left">' + escaparTexto(c.cedula) + "</td>" +
+      '<td class="left">' + escaparTexto(c.telefono) + "</td>" +
+      '<td class="left"><span class="pill' + (c.tipo === "Cortesía" ? " cortesia" : "") + '">' + escaparTexto(c.tipo) + "</span></td>" +
+      '<td class="left">' + escaparTexto(c.referencia) + "</td>" +
+      '<td class="center"><span class="cantidad">' + c.cantidad + "</span></td>" +
+      "<td>" + formatearMoneda(c.valor) + "</td>";
+
+    const filaSeriales = document.createElement("tr");
+    filaSeriales.className = "fila-seriales";
+    filaSeriales.hidden = true;
+    filaSeriales.innerHTML = '<td colspan="9">Seriales: ' + c.seriales.map(function(serial) {
+      return '<span class="serial-chip">' + escaparTexto(serial) + "</span>";
+    }).join("") + "</td>";
+
+    const boton = fila.querySelector(".toggle-seriales");
+    boton.onclick = function(evento) {
+      evento.stopPropagation();
+      const abrir = filaSeriales.hidden;
+      filaSeriales.hidden = !abrir;
+      fila.classList.toggle("abierta", abrir);
+      boton.textContent = abrir ? "▾" : "▸";
+      boton.setAttribute("aria-expanded", String(abrir));
+    };
+
     tabla.appendChild(fila);
+    tabla.appendChild(filaSeriales);
   });
   detalleMostrado += resultado.detalle.length;
   document.getElementById("detalleConteo").textContent = resultado.totalDetalle
-    ? "Mostrando " + detalleMostrado + " de " + resultado.totalDetalle
+    ? "Mostrando " + detalleMostrado + " de " + resultado.totalDetalle + " compras (" +
+      resultado.totalEntradas + (resultado.totalEntradas === 1 ? " entrada)" : " entradas)")
     : "";
   document.getElementById("botonVerMas").hidden = detalleMostrado >= resultado.totalDetalle;
 }
