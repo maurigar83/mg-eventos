@@ -56,6 +56,29 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   menos en `lector/`: su CSP estricta lo bloqueaba igual, así que se quitó el
   23/10/2026 (es una página interna, no aporta visitas).
 
+## Dominio y correo (Cloudflare)
+
+El dominio `mgeventos.co` está comprado y con DNS en Cloudflare (Cloudflare
+Registrar). Revisión de la auditoría del 25/10/2026 (SEG-V2 del Plan):
+
+- Todos los registros van en **"Solo DNS"** (nube gris). No activar el proxy
+  (nube naranja) aunque Cloudflare lo sugiera: GitHub Pages dejaría de renovar
+  el certificado HTTPS y los registros de Brevo dejarían de servir.
+- GitHub Pages: dominio propio `mgeventos.co` con "Enforce HTTPS" activo.
+- Correo: SPF `include:_spf.mx.cloudflare.net include:_spf.brevo.com ~all`,
+  DKIM de Brevo (`brevo1`/`brevo2._domainkey`) y DMARC en **`p=quarantine`**
+  (reportes a Brevo). Todo correo que salga como `@mgeventos.co` tiene que
+  pasar por Brevo; si no, se va a spam. Gmail (mgeventos.co@gmail.com) envía
+  como contacto@mgeventos.co por el SMTP de Brevo (la clave vence el
+  24/10/2027 o a los 90 días sin uso; recordatorio en el Calendar de
+  Mauricio). El correo que llega a contacto@ lo reenvía Cloudflare Email
+  Routing a mgeventos.co@gmail.com.
+- Brevo: seguimiento de correos transaccionales en modo **anónimo** (no asocia
+  aperturas ni clics a cada comprador, Ley 1581).
+- DNSSEC activado el 25/10/2026. Si algún día se cambia de registrador o de
+  DNS, **desactivar DNSSEC antes** y esperar a que se quite el registro DS;
+  apagarlo con el DS puesto tumba el sitio, el lector y el correo.
+
 ## Ambiente de pruebas
 
 El repo `mg-eventos-pruebas` es una copia de este sitio para revisar cambios de
