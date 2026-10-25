@@ -715,6 +715,25 @@ body {
   margin-bottom: 0;
 }
 
+/* Con muchos días la tabla se desplaza por dentro, de la altura de la
+   gráfica, con los títulos y el Total siempre a la vista. */
+.dias-scroll {
+  max-height: 330px;
+  overflow-y: auto;
+}
+
+.dias-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.dias-scroll tr.total td {
+  position: sticky;
+  bottom: 0;
+  box-shadow: 0 -1px 0 #e5e7eb;
+}
+
 .panel-card h3 {
   margin-bottom: 12px;
   font-size: 16px;
@@ -893,9 +912,11 @@ body {
 }
 
 .chart-labels div {
+  display: flex;
   flex: 1;
+  justify-content: center;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   color: #6b7280;
   font-size: 11px;
   text-align: center;
@@ -923,12 +944,28 @@ body {
 
 .detalle-pie {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 12px;
   color: #6b7280;
   font-size: 12px;
+}
+
+.paginacion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.paginacion .chip:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .fechas-nota {
@@ -1226,7 +1263,7 @@ body {
     <div class="fechas-grid">
       <div class="panel-card">
         <h3>Ventas por día</h3>
-        <div class="table-wrap">
+        <div class="table-wrap dias-scroll">
           <table class="data-table tabla-dias">
             <thead>
               <tr><th class="left">Día</th><th>General</th><th>Cortesía</th><th>Total</th><th>Recaudado</th></tr>
@@ -1255,9 +1292,13 @@ body {
       </div>
       <div class="detalle-pie">
         <span id="detalleConteo"></span>
-        <button class="chip" id="botonVerMas" type="button" onclick="verMasDetalle()" hidden>Ver más</button>
+        <div class="paginacion" id="paginacion" hidden>
+          <button class="chip" id="botonAnterior" type="button" onclick="cambiarPagina(-1)">‹ Anterior</button>
+          <span id="paginaTexto"></span>
+          <button class="chip" id="botonSiguiente" type="button" onclick="cambiarPagina(1)">Siguiente ›</button>
+        </div>
       </div>
-      <p class="fechas-nota">General cuenta por fecha de pago; Cortesía por la fecha en que se registró la venta. Una compra es el mismo día, cédula, tipo y referencia. Toca la flecha para ver los seriales; toca el resto de la fila para abrir la ficha del comprador.</p>
+      <p class="fechas-nota">General cuenta por fecha de pago; Cortesía por la fecha en que se registró la venta. Una compra es el mismo día, cédula, tipo y referencia; 20 compras por página. Toca la flecha para ver los seriales; toca el resto de la fila para abrir la ficha del comprador.</p>
     </div>
   </div>
 
@@ -1669,7 +1710,9 @@ const NUEVO_HASTA = "2026-11-08";
 
 let ventasCargadas = false;
 let consultaFechas = { desde: "", hasta: "" };
-let detalleMostrado = 0;
+const COMPRAS_POR_PAGINA = 20;
+let paginaActual = 1;
+let totalPaginas = 1;
 
 function mostrarPestana(nombre) {
   const ventas = nombre === "ventas";
@@ -1771,9 +1814,8 @@ async function consultarVentasFecha() {
     mensajeFechas(resultado.totalDetalle ? "" : "No hay ventas en ese rango.");
     pintarTotalesRango(resultado.totales);
     pintarDias(resultado.dias, resultado.totales);
-    document.getElementById("tablaDetalle").innerHTML = "";
-    detalleMostrado = 0;
-    agregarDetalle(resultado);
+    paginaActual = 1;
+    pintarDetalle(resultado);
   } catch (error) {
     mensajeFechas("Error de conexión. Intenta nuevamente.", true);
   } finally {
@@ -1805,29 +1847,44 @@ function pintarDias(dias, totales) {
       "</td><td>" + (totales.general + totales.cortesia) + "</td><td>" + formatearMoneda(totales.recaudado) + "</td></tr>";
   }
 
-  // Gráfica: de la fecha más antigua a la más reciente, máximo 31 días
-  // (con rangos más largos se muestran los últimos 31).
-  const conFecha = dias.filter(function(d) { return /^\d{4}-/.test(d.fecha); }).slice(0, 31).reverse();
+  // Gráfica: de la fecha más antigua a la más reciente, máximo 62 días
+  // (con rangos más largos se muestran los últimos 62).
+  const conFecha = dias.filter(function(d) { return /^\d{4}-/.test(d.fecha); }).slice(0, 62).reverse();
+  // Con muchas barras no caben los números encima: se ven al pasar el
+  // mouse (title de cada barra).
+  const conNumeros = conFecha.length <= 31;
+  const espacio = conFecha.length > 31 ? "2px" : conFecha.length > 14 ? "4px" : "";
+  document.getElementById("graficaDias").style.gap = espacio;
+  document.getElementById("graficaEtiquetas").style.gap = espacio;
   const maximo = Math.max.apply(null, conFecha.map(function(d) { return d.general + d.cortesia; }).concat([1]));
   document.getElementById("graficaDias").innerHTML = conFecha.map(function(d) {
     const total = d.general + d.cortesia;
     const alto = Math.round((total / maximo) * 100);
     const altoCortesia = total ? Math.round((d.cortesia / total) * 100) : 0;
     return '<div class="chart-col" title="' + escaparTexto(etiquetaDia(d.fecha)) + ": " + d.general +
-      " General, " + d.cortesia + ' Cortesía"><span class="chart-num">' + total + "</span>" +
+      " General, " + d.cortesia + ' Cortesía"><span class="chart-num">' + (conNumeros ? total : "") + "</span>" +
       '<div class="chart-bar" style="height:' + alto + '%">' +
       '<div class="cortesia" style="height:' + altoCortesia + '%"></div>' +
       '<div class="general" style="flex:1"></div></div></div>';
   }).join("");
-  document.getElementById("graficaEtiquetas").innerHTML = conFecha.map(function(d) {
-    return "<div>" + escaparTexto(etiquetaDia(d.fecha, true)) + "</div>";
+  // Con más de 14 días no caben "Lun 19": solo día/mes, y uno de cada
+  // pocos para que no se monten (la fecha completa sigue en el title).
+  const soloNumero = conFecha.length > 14;
+  const cada = Math.ceil(conFecha.length / 14);
+  document.getElementById("graficaEtiquetas").innerHTML = conFecha.map(function(d, i) {
+    const fecha = fechaDesdeISO(d.fecha);
+    const visible = (conFecha.length - 1 - i) % cada === 0;
+    const etiqueta = !visible ? "" : soloNumero ? fecha.getDate() + "/" + (fecha.getMonth() + 1) : etiquetaDia(d.fecha, true);
+    return "<div>" + escaparTexto(etiqueta) + "</div>";
   }).join("");
 }
 
-// Una fila por compra; la flecha despliega sus seriales en una fila
-// aparte y el resto de la fila abre la ficha (por el primer serial).
-function agregarDetalle(resultado) {
+// Una página de compras (reemplaza la anterior). Una fila por compra;
+// la flecha despliega sus seriales en una fila aparte y el resto de la
+// fila abre la ficha (por el primer serial).
+function pintarDetalle(resultado) {
   const tabla = document.getElementById("tablaDetalle");
+  tabla.innerHTML = "";
   resultado.detalle.forEach(function(c) {
     const fila = document.createElement("tr");
     fila.className = "clickable";
@@ -1865,34 +1922,45 @@ function agregarDetalle(resultado) {
     tabla.appendChild(fila);
     tabla.appendChild(filaSeriales);
   });
-  detalleMostrado += resultado.detalle.length;
-  document.getElementById("detalleConteo").textContent = resultado.totalDetalle
-    ? "Mostrando " + detalleMostrado + " de " + resultado.totalDetalle + " compras (" +
+  const total = resultado.totalDetalle;
+  const paginas = Math.max(1, Math.ceil(total / COMPRAS_POR_PAGINA));
+  totalPaginas = paginas;
+  const desde = (paginaActual - 1) * COMPRAS_POR_PAGINA;
+  document.getElementById("detalleConteo").textContent = total
+    ? "Compras " + (desde + 1) + "-" + (desde + resultado.detalle.length) + " de " + total + " (" +
       resultado.totalEntradas + (resultado.totalEntradas === 1 ? " entrada)" : " entradas)")
     : "";
-  document.getElementById("botonVerMas").hidden = detalleMostrado >= resultado.totalDetalle;
+  document.getElementById("paginacion").hidden = paginas <= 1;
+  document.getElementById("paginaTexto").textContent = "Página " + paginaActual + " de " + paginas;
+  document.getElementById("botonAnterior").disabled = paginaActual <= 1;
+  document.getElementById("botonSiguiente").disabled = paginaActual >= paginas;
 }
 
-async function verMasDetalle() {
-  const boton = document.getElementById("botonVerMas");
-  boton.disabled = true;
+async function cambiarPagina(paso) {
+  const anterior = document.getElementById("botonAnterior");
+  const siguiente = document.getElementById("botonSiguiente");
+  anterior.disabled = true;
+  siguiente.disabled = true;
+  const pagina = paginaActual + paso;
   try {
     const resultado = await llamarAPI({
       accion: "ventas_por_fecha",
       token: obtenerToken(),
       desde: consultaFechas.desde,
       hasta: consultaFechas.hasta,
-      inicio: detalleMostrado
+      inicio: (pagina - 1) * COMPRAS_POR_PAGINA
     });
     if (!resultado || !resultado.ok) {
-      mensajeFechas((resultado && resultado.mensaje) || "No se pudo cargar más filas.", true);
+      mensajeFechas((resultado && resultado.mensaje) || "No se pudo cargar la página.", true);
       return;
     }
-    agregarDetalle(resultado);
+    paginaActual = pagina;
+    pintarDetalle(resultado);
   } catch (error) {
     mensajeFechas("Error de conexión. Intenta nuevamente.", true);
   } finally {
-    boton.disabled = false;
+    anterior.disabled = paginaActual <= 1;
+    siguiente.disabled = paginaActual >= totalPaginas;
   }
 }
 
