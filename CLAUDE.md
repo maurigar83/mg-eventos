@@ -28,7 +28,11 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
 - Páginas de operación (con sesión): `panel.html` (login y panel de gestión),
   `reportes.html` (consulta de ventas, compradores y reenvío de entradas;
   desde el 24/10/2026 la búsqueda pide 3 caracteres y muestra máximo 20,
-  auditoría A4),
+  auditoría A4; desde el 25/10/2026 tiene dos pestañas: "Resumen y
+  compradores" (lo de siempre) y "Ventas por fecha": rango de fechas, ventas
+  por día con gráfica, detalle enmascarado de a 20 filas y botón "Descargar
+  en Google Sheets"; `reportes.html#ventas` abre directo en esa pestaña;
+  backend en `ticketera-apps-script/ReportesFechas.js`),
   `usuarios.html` (usuarios y roles), `activar.html` (enlace de un solo uso
   para definir la contraseña), `politica-password.js` (política de claves).
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque

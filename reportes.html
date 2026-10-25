@@ -562,6 +562,316 @@ body {
   font-weight: 600;
 }
 
+/* PESTAÑAS Y VENTAS POR FECHA (25/10/2026) */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 22px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab {
+  margin-bottom: -2px;
+  padding: 12px 20px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #6b7280;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tab.active {
+  color: #111827;
+  border-bottom-color: #d9ad55;
+}
+
+.tab:focus-visible {
+  outline: 2px solid #d9ad55;
+  outline-offset: 2px;
+}
+
+.tab-new {
+  margin-left: 6px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #d9ad55;
+  color: #111827;
+  font-size: 10px;
+  vertical-align: 2px;
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+.filters-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 9px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chip.active {
+  border-color: #111827;
+  background: #111827;
+  color: #ffffff;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.date-field input {
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  color: #111827;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.date-field input:focus {
+  outline: none;
+  border-color: #d9ad55;
+}
+
+.export-button {
+  margin-left: auto;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #0f9d58;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.export-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.stats-rango {
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 18px;
+}
+
+.stat-card.gold {
+  border-color: #d9ad55;
+  background: #fdf6e7;
+}
+
+.fechas-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.panel-card {
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  min-width: 0;
+}
+
+.fechas-grid .panel-card {
+  margin-bottom: 0;
+}
+
+.panel-card h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.data-table th {
+  padding: 9px 10px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 11px;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 9px 10px;
+  border-top: 1px solid #f3f4f6;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.data-table th.left,
+.data-table td.left {
+  text-align: left;
+}
+
+.data-table tr.total td {
+  background: #fdf6e7;
+  font-weight: 800;
+}
+
+.data-table tr.clickable {
+  cursor: pointer;
+}
+
+.data-table tr.clickable:hover td {
+  background: #fdf6e7;
+}
+
+.pill {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pill.cortesia {
+  background: #fdf6e7;
+  color: #92400e;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 220px;
+  padding-top: 18px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.chart-col {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+}
+
+.chart-num {
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chart-bar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 48px;
+  overflow: hidden;
+  border-radius: 6px 6px 0 0;
+}
+
+.chart-bar .general {
+  background: #111827;
+}
+
+.chart-bar .cortesia {
+  background: #d9ad55;
+}
+
+.chart-labels {
+  display: flex;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.chart-labels div {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 11px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.chart-legend {
+  margin-top: 10px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.chart-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px 0 10px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.chart-legend i:first-child {
+  margin-left: 0;
+}
+
+.detalle-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.fechas-nota {
+  margin-top: 6px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
 @keyframes girar {
   to {
     transform: rotate(360deg);
@@ -572,6 +882,10 @@ body {
   .stats {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+  }
+
+  .fechas-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -653,6 +967,64 @@ body {
     flex-direction: column;
   }
 
+  .tab {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 13.5px;
+  }
+
+  .filters-card {
+    padding: 14px;
+  }
+
+  .date-field {
+    flex: 1;
+  }
+
+  .date-field input {
+    width: 100%;
+  }
+
+  .export-button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .stats-rango {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panel-card {
+    padding: 14px;
+  }
+
+  .data-table {
+    font-size: 12.5px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px 6px;
+  }
+
+  /* En el celular la columna Total sobra: es General + Cortesía. */
+  .tabla-dias th:nth-child(4),
+  .tabla-dias td:nth-child(4) {
+    display: none;
+  }
+
+  .chart {
+    gap: 4px;
+  }
+
+  .chart-labels {
+    gap: 4px;
+  }
+
+  .chart-labels div {
+    font-size: 9.5px;
+  }
+
   .result-card {
     flex-direction: column;
     align-items: flex-start;
@@ -700,6 +1072,12 @@ body {
     <p>Resumen general del evento y búsqueda de compradores por nombre, cédula, teléfono o serial de boleta.</p>
   </section>
 
+  <nav class="tabs" role="tablist">
+    <button class="tab active" id="tabResumen" type="button" role="tab" aria-selected="true" aria-controls="panelResumen" onclick="mostrarPestana('resumen')">Resumen y compradores</button>
+    <button class="tab" id="tabVentas" type="button" role="tab" aria-selected="false" aria-controls="panelVentas" onclick="mostrarPestana('ventas')">Ventas por fecha<span class="tab-new" id="tabNuevo">NUEVO</span></button>
+  </nav>
+
+  <div class="tab-panel" id="panelResumen" role="tabpanel" aria-labelledby="tabResumen">
   <section class="stats" id="stats">
     <div class="stat-card">
       <div class="stat-label">Inventario</div>
@@ -738,6 +1116,85 @@ body {
     </div>
     <div class="results" id="results"></div>
   </section>
+  </div>
+
+  <div class="tab-panel" id="panelVentas" role="tabpanel" aria-labelledby="tabVentas" hidden>
+    <div class="filters-card">
+      <div class="chips" id="chipsRango">
+        <button class="chip" type="button" data-rango="hoy">Hoy</button>
+        <button class="chip" type="button" data-rango="ayer">Ayer</button>
+        <button class="chip active" type="button" data-rango="7">Últimos 7 días</button>
+        <button class="chip" type="button" data-rango="mes">Este mes</button>
+        <button class="chip" type="button" data-rango="todo">Todo</button>
+      </div>
+      <label class="date-field">Desde<input id="fechaDesde" type="date"></label>
+      <label class="date-field">Hasta<input id="fechaHasta" type="date"></label>
+      <button class="search-button" id="botonConsultarFechas" type="button" onclick="consultarVentasFecha()">Consultar</button>
+      <button class="export-button" id="botonExportar" type="button" onclick="exportarVentasFecha()">⬇ Descargar en Google Sheets</button>
+    </div>
+
+    <div id="fechasMensaje"></div>
+
+    <section class="stats stats-rango">
+      <div class="stat-card">
+        <div class="stat-label">Entradas General</div>
+        <div class="stat-value" id="rangoGeneral">-</div>
+        <div class="stat-breakdown">en el rango</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Cortesías</div>
+        <div class="stat-value" id="rangoCortesia">-</div>
+        <div class="stat-breakdown">en el rango</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Compradores</div>
+        <div class="stat-value" id="rangoCompradores">-</div>
+        <div class="stat-breakdown">cédulas distintas</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-label">Recaudado</div>
+        <div class="stat-value" id="rangoRecaudado">-</div>
+        <div class="stat-breakdown" id="rangoPromedio"></div>
+      </div>
+    </section>
+
+    <div class="fechas-grid">
+      <div class="panel-card">
+        <h3>Ventas por día</h3>
+        <div class="table-wrap">
+          <table class="data-table tabla-dias">
+            <thead>
+              <tr><th class="left">Día</th><th>General</th><th>Cortesía</th><th>Total</th><th>Recaudado</th></tr>
+            </thead>
+            <tbody id="tablaDias"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-card">
+        <h3>Entradas por día</h3>
+        <div class="chart" id="graficaDias"></div>
+        <div class="chart-labels" id="graficaEtiquetas"></div>
+        <div class="chart-legend"><i style="background:#111827"></i>General <i style="background:#d9ad55"></i>Cortesía</div>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <h3>Detalle de entradas del rango</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th class="left">Fecha</th><th class="left">Serial</th><th class="left">Tipo</th><th>Valor</th><th class="left">Referencia pago</th><th class="left">Comprador</th><th class="left">Cédula</th><th class="left">Teléfono</th></tr>
+          </thead>
+          <tbody id="tablaDetalle"></tbody>
+        </table>
+      </div>
+      <div class="detalle-pie">
+        <span id="detalleConteo"></span>
+        <button class="chip" id="botonVerMas" type="button" onclick="verMasDetalle()" hidden>Ver más</button>
+      </div>
+      <p class="fechas-nota">General cuenta por fecha de pago; Cortesía por la fecha en que se registró la venta. Toca una fila para abrir la ficha del comprador.</p>
+    </div>
+  </div>
 
   <footer class="footer">MG Eventos · Plataforma de gestión de eventos</footer>
 </main>
@@ -1067,14 +1524,16 @@ function escaparTexto(texto) {
   return div.innerHTML;
 }
 
-async function abrirFicha(cedula) {
+// serial: desde "Ventas por fecha", donde la cédula llega enmascarada.
+async function abrirFicha(cedula, serial) {
   mostrarCargando("Cargando ficha del comprador...");
 
   try {
     const resultado = await llamarAPI({
       accion: "ficha_comprador",
       token: obtenerToken(),
-      cedula: cedula
+      cedula: cedula || "",
+      serial: serial || ""
     });
 
     ocultarCargando();
@@ -1129,6 +1588,278 @@ async function abrirFicha(cedula) {
     ocultarCargando();
     alert("Error de conexión al cargar la ficha del comprador.");
   }
+}
+
+// ============================================================
+// PESTAÑAS Y VENTAS POR FECHA (25/10/2026)
+// ============================================================
+// Totales por día, gráfica y detalle (20 filas por vez) de la acción
+// ventas_por_fecha; la descarga crea una hoja de Google privada en el
+// Drive de MG Eventos (exportar_ventas_fecha). Cédula y teléfono
+// llegan enmascarados del servidor.
+
+const NOMBRES_DIA = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+const NOMBRES_DIA_LARGO = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const NUEVO_HASTA = "2026-11-08";
+
+let ventasCargadas = false;
+let consultaFechas = { desde: "", hasta: "" };
+let detalleMostrado = 0;
+
+function mostrarPestana(nombre) {
+  const ventas = nombre === "ventas";
+  document.getElementById("panelResumen").hidden = ventas;
+  document.getElementById("panelVentas").hidden = !ventas;
+  document.getElementById("tabResumen").classList.toggle("active", !ventas);
+  document.getElementById("tabVentas").classList.toggle("active", ventas);
+  document.getElementById("tabResumen").setAttribute("aria-selected", String(!ventas));
+  document.getElementById("tabVentas").setAttribute("aria-selected", String(ventas));
+  history.replaceState(null, "", ventas ? "#ventas" : window.location.pathname + window.location.search);
+  if (ventas && !ventasCargadas) {
+    ventasCargadas = true;
+    elegirRango("7");
+  }
+}
+
+function fechaISO(fecha) {
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  return fecha.getFullYear() + "-" + mes + "-" + dia;
+}
+
+function fechaDesdeISO(texto) {
+  const partes = String(texto).split("-");
+  return new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
+}
+
+// "2026-10-25" → "Domingo 25/10" (o "Dom 25" para la gráfica).
+function etiquetaDia(texto, corta) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(texto)) return texto;
+  const fecha = fechaDesdeISO(texto);
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  return corta
+    ? NOMBRES_DIA[fecha.getDay()] + " " + fecha.getDate()
+    : NOMBRES_DIA_LARGO[fecha.getDay()] + " " + dia + "/" + mes;
+}
+
+function fechaCorta(texto) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(texto)) return texto;
+  const partes = texto.split("-");
+  return partes[2] + "/" + partes[1] + "/" + partes[0];
+}
+
+function elegirRango(rango) {
+  const hoy = new Date();
+  let desde = new Date(hoy);
+  let hasta = new Date(hoy);
+  if (rango === "ayer") {
+    desde.setDate(hoy.getDate() - 1);
+    hasta = new Date(desde);
+  } else if (rango === "7") {
+    desde.setDate(hoy.getDate() - 6);
+  } else if (rango === "mes") {
+    desde = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  }
+  document.getElementById("fechaDesde").value = rango === "todo" ? "" : fechaISO(desde);
+  document.getElementById("fechaHasta").value = rango === "todo" ? "" : fechaISO(hasta);
+  marcarChip(rango);
+  consultarVentasFecha();
+}
+
+function marcarChip(rango) {
+  document.querySelectorAll("#chipsRango .chip").forEach(function(chip) {
+    chip.classList.toggle("active", chip.dataset.rango === rango);
+  });
+}
+
+function mensajeFechas(texto, esError) {
+  const caja = document.getElementById("fechasMensaje");
+  caja.innerHTML = texto
+    ? '<div class="' + (esError ? "error-state" : "empty-state") + '" style="margin-bottom:16px;">' + escaparTexto(texto) + "</div>"
+    : "";
+}
+
+async function consultarVentasFecha() {
+  const desde = document.getElementById("fechaDesde").value;
+  const hasta = document.getElementById("fechaHasta").value;
+  if (desde && hasta && desde > hasta) {
+    mensajeFechas("La fecha Desde no puede ser posterior a Hasta.", true);
+    return;
+  }
+  const boton = document.getElementById("botonConsultarFechas");
+  boton.disabled = true;
+  mensajeFechas("Consultando ventas...");
+  try {
+    const resultado = await llamarAPI({
+      accion: "ventas_por_fecha",
+      token: obtenerToken(),
+      desde: desde,
+      hasta: hasta,
+      inicio: 0
+    });
+    if (!resultado || !resultado.ok) {
+      mensajeFechas((resultado && resultado.mensaje) || "No se pudo consultar las ventas.", true);
+      return;
+    }
+    consultaFechas = { desde: desde, hasta: hasta };
+    mensajeFechas(resultado.totalDetalle ? "" : "No hay ventas en ese rango.");
+    pintarTotalesRango(resultado.totales);
+    pintarDias(resultado.dias, resultado.totales);
+    document.getElementById("tablaDetalle").innerHTML = "";
+    detalleMostrado = 0;
+    agregarDetalle(resultado);
+  } catch (error) {
+    mensajeFechas("Error de conexión. Intenta nuevamente.", true);
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+function pintarTotalesRango(totales) {
+  document.getElementById("rangoGeneral").textContent = totales.general;
+  document.getElementById("rangoCortesia").textContent = totales.cortesia;
+  document.getElementById("rangoCompradores").textContent = totales.compradores;
+  document.getElementById("rangoRecaudado").textContent = formatearMoneda(totales.recaudado);
+  document.getElementById("rangoPromedio").textContent = totales.dias
+    ? "promedio " + formatearMoneda(Math.round(totales.recaudado / totales.dias)) + " por día con ventas"
+    : "";
+}
+
+function pintarDias(dias, totales) {
+  const tabla = document.getElementById("tablaDias");
+  if (!dias.length) {
+    tabla.innerHTML = '<tr><td class="left" colspan="5">Sin ventas en el rango.</td></tr>';
+  } else {
+    tabla.innerHTML = dias.map(function(d) {
+      return "<tr><td class=\"left\">" + escaparTexto(etiquetaDia(d.fecha)) + "</td><td>" + d.general +
+        "</td><td>" + d.cortesia + "</td><td>" + (d.general + d.cortesia) + "</td><td>" +
+        formatearMoneda(d.recaudado) + "</td></tr>";
+    }).join("") +
+      '<tr class="total"><td class="left">Total</td><td>' + totales.general + "</td><td>" + totales.cortesia +
+      "</td><td>" + (totales.general + totales.cortesia) + "</td><td>" + formatearMoneda(totales.recaudado) + "</td></tr>";
+  }
+
+  // Gráfica: de la fecha más antigua a la más reciente, máximo 31 días
+  // (con rangos más largos se muestran los últimos 31).
+  const conFecha = dias.filter(function(d) { return /^\d{4}-/.test(d.fecha); }).slice(0, 31).reverse();
+  const maximo = Math.max.apply(null, conFecha.map(function(d) { return d.general + d.cortesia; }).concat([1]));
+  document.getElementById("graficaDias").innerHTML = conFecha.map(function(d) {
+    const total = d.general + d.cortesia;
+    const alto = Math.round((total / maximo) * 100);
+    const altoCortesia = total ? Math.round((d.cortesia / total) * 100) : 0;
+    return '<div class="chart-col" title="' + escaparTexto(etiquetaDia(d.fecha)) + ": " + d.general +
+      " General, " + d.cortesia + ' Cortesía"><span class="chart-num">' + total + "</span>" +
+      '<div class="chart-bar" style="height:' + alto + '%">' +
+      '<div class="cortesia" style="height:' + altoCortesia + '%"></div>' +
+      '<div class="general" style="flex:1"></div></div></div>';
+  }).join("");
+  document.getElementById("graficaEtiquetas").innerHTML = conFecha.map(function(d) {
+    return "<div>" + escaparTexto(etiquetaDia(d.fecha, true)) + "</div>";
+  }).join("");
+}
+
+function agregarDetalle(resultado) {
+  const tabla = document.getElementById("tablaDetalle");
+  resultado.detalle.forEach(function(e) {
+    const fila = document.createElement("tr");
+    fila.className = "clickable";
+    fila.onclick = function() {
+      abrirFicha("", e.serial);
+    };
+    fila.innerHTML =
+      '<td class="left">' + escaparTexto(fechaCorta(e.fecha)) + "</td>" +
+      '<td class="left">' + escaparTexto(e.serial) + "</td>" +
+      '<td class="left"><span class="pill' + (e.tipo === "Cortesía" ? " cortesia" : "") + '">' + escaparTexto(e.tipo) + "</span></td>" +
+      "<td>" + formatearMoneda(e.valor) + "</td>" +
+      '<td class="left">' + escaparTexto(e.referencia) + "</td>" +
+      '<td class="left">' + escaparTexto(e.comprador) + "</td>" +
+      '<td class="left">' + escaparTexto(e.cedula) + "</td>" +
+      '<td class="left">' + escaparTexto(e.telefono) + "</td>";
+    tabla.appendChild(fila);
+  });
+  detalleMostrado += resultado.detalle.length;
+  document.getElementById("detalleConteo").textContent = resultado.totalDetalle
+    ? "Mostrando " + detalleMostrado + " de " + resultado.totalDetalle
+    : "";
+  document.getElementById("botonVerMas").hidden = detalleMostrado >= resultado.totalDetalle;
+}
+
+async function verMasDetalle() {
+  const boton = document.getElementById("botonVerMas");
+  boton.disabled = true;
+  try {
+    const resultado = await llamarAPI({
+      accion: "ventas_por_fecha",
+      token: obtenerToken(),
+      desde: consultaFechas.desde,
+      hasta: consultaFechas.hasta,
+      inicio: detalleMostrado
+    });
+    if (!resultado || !resultado.ok) {
+      mensajeFechas((resultado && resultado.mensaje) || "No se pudo cargar más filas.", true);
+      return;
+    }
+    agregarDetalle(resultado);
+  } catch (error) {
+    mensajeFechas("Error de conexión. Intenta nuevamente.", true);
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+async function exportarVentasFecha() {
+  const boton = document.getElementById("botonExportar");
+  // La pestaña se abre ya (dentro del clic) para que el navegador no la
+  // bloquee, y se le pone la dirección cuando la hoja está lista.
+  const ventana = window.open("", "_blank");
+  if (ventana) {
+    ventana.document.write("<p style=\"font-family:Arial;padding:30px\">Creando la hoja de Google...</p>");
+  }
+  boton.disabled = true;
+  mostrarCargando("Creando la hoja de Google...");
+  try {
+    const resultado = await llamarAPI({
+      accion: "exportar_ventas_fecha",
+      token: obtenerToken(),
+      desde: document.getElementById("fechaDesde").value,
+      hasta: document.getElementById("fechaHasta").value
+    });
+    if (!resultado || !resultado.ok) {
+      if (ventana) ventana.close();
+      mensajeFechas((resultado && resultado.mensaje) || "No se pudo crear la hoja.", true);
+      return;
+    }
+    if (ventana) {
+      ventana.location.href = resultado.url;
+    }
+    const caja = document.getElementById("fechasMensaje");
+    caja.innerHTML = '<div class="empty-state" style="margin-bottom:16px;">Hoja creada: <a href="' +
+      escaparTexto(resultado.url) + '" target="_blank" rel="noopener" style="color:#b58b3b;font-weight:700;">' +
+      escaparTexto(resultado.nombre) + "</a> (en la carpeta privada \"Reportes Ticketera MG Eventos\" de Drive).</div>";
+  } catch (error) {
+    if (ventana) ventana.close();
+    mensajeFechas("Error de conexión al crear la hoja.", true);
+  } finally {
+    ocultarCargando();
+    boton.disabled = false;
+  }
+}
+
+document.querySelectorAll("#chipsRango .chip").forEach(function(chip) {
+  chip.addEventListener("click", function() {
+    elegirRango(chip.dataset.rango);
+  });
+});
+
+["fechaDesde", "fechaHasta"].forEach(function(id) {
+  document.getElementById(id).addEventListener("change", function() {
+    marcarChip("");
+  });
+});
+
+if (fechaISO(new Date()) > NUEVO_HASTA) {
+  document.getElementById("tabNuevo").hidden = true;
 }
 
 function pintarIngresos(ingresos) {
@@ -1303,6 +2034,9 @@ if (!tieneSesionLocal) {
   setTimeout(() => {
     validarSesion();
   }, 0);
+  if (window.location.hash === "#ventas") {
+    mostrarPestana("ventas");
+  }
 }
 </script>
 </body>
