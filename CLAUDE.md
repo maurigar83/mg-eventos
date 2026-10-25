@@ -86,6 +86,11 @@ diseño antes de publicarlos: sin `CNAME`, oculto a buscadores y con la API
 desactivada (`config.js` vacío), así que login, Ventas y lector no funcionan
 allí a propósito. Flujo habitual: probar el cambio en `mg-eventos-pruebas`,
 y cuando Mauricio lo aprueba, llevar el mismo cambio a este repo.
+Se publica con Cloudflare Pages en `mg-eventos-pruebas.pages.dev` y desde el
+25/10/2026 (auditoría M7) está detrás de Cloudflare Access (Zero Trust Free):
+solo entran maurigar@gmail.com y mgeventos.co@gmail.com con un código que llega
+al correo. Para dar acceso a alguien más, se agrega su correo a la política
+"Solo Mauricio" (Zero Trust → Controles de Access → Aplicaciones).
 
 ## Lenguaje de cara al cliente
 
