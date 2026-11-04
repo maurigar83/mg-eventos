@@ -53,6 +53,12 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   `scanId` antes de mostrar el error (X12, 23/10/2026). El backend de esas acciones está en
   `ticketera-apps-script/Codigo.js`. Al cambiar `lector.js`/`lector.css`,
   subir el `?v=` en `lector/index.html`.
+- `adviento/almuerzo/` (04/11/2026): destino del botón "Pedir mi almuerzo" de la
+  plantilla de WhatsApp del almuerzo. Meta no acepta enlaces directos a
+  WhatsApp (wa.me) en los botones, así que el botón abre
+  `https://mgeventos.co/adviento/almuerzo/` y la página redirige al chat de quien toma
+  los pedidos (573225276778) con un mensaje listo. No cambiar la URL mientras
+  la plantilla esté en uso; el número sí se puede cambiar aquí.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
