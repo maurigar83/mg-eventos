@@ -1145,6 +1145,48 @@ body {
     width: 100%;
   }
 }
+
+/* ALM-2 (04/11/2026): almuerzos en la ficha y conteo por plato. */
+.alm-caja{border:1px solid #e5e7eb;border-radius:12px;background:#f9fafb;padding:6px 16px}
+.alm-fila{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
+.alm-fila+.alm-fila,.alm-fila+.alm-pie,.alm-fila+.alm-form{border-top:1px solid #e5e7eb}
+.alm-fila strong{font-size:14px}
+.alm-si{color:#059669;font-size:12px;font-weight:600;margin-top:2px;overflow-wrap:anywhere}
+.alm-no{color:#6b7280;font-size:12px;margin-top:2px}
+.alm-lado{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.alm-chip{background:#d1fae5;color:#065f46;font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px}
+.alm-anular{border:0;background:none;color:#b91c1c;font-size:12px;font-weight:700;cursor:pointer;padding:6px 4px;text-decoration:underline}
+.alm-pie{display:flex;justify-content:flex-end;align-items:center;gap:10px;padding:10px 0 6px;font-size:13px;color:#6b7280}
+.alm-boton{border:0;background:#111827;color:#fff;border-radius:10px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer}
+.alm-boton:disabled{opacity:.5;cursor:not-allowed}
+.alm-form{padding:12px 0}
+.alm-form-tit{font-weight:700;font-size:14px;margin-bottom:4px}
+.alm-sub{font-size:12px;color:#6b7280;margin-bottom:4px}
+.alm-sel{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #e5e7eb}
+.alm-sel strong{font-size:14px}
+.alm-form select,.alm-form input[type=text],.alm-form input[type=number],.alm-form input[type=file]{border:1px solid #d1d5db;border-radius:10px;background:#fff;padding:10px 12px;font-size:15px;color:#111827;font-family:inherit;width:100%;box-sizing:border-box}
+.alm-sel select{width:auto;min-width:200px}
+.alm-total{text-align:right;font-size:15px;margin:12px 0}
+.alm-campo{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
+.alm-campo>*{margin-top:4px}
+.alm-ref{display:flex;flex-wrap:wrap;gap:8px}
+.alm-ref input{flex:1 1 180px;min-width:0}
+.alm-form .alm-ref button{flex:0 0 auto;width:auto;font-size:12px}
+.alm-aviso{font-size:13px;margin:-4px 0 10px;text-transform:none;letter-spacing:0;font-weight:600}
+.alm-aviso.error{color:#b91c1c}
+.alm-aviso.alerta{color:#92400e}
+.alm-aviso.ok{color:#059669}
+.alm-acciones{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
+.alm-resumen{margin-top:0}
+.alm-platos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.alm-plato{border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#fff}
+.alm-plato span{display:block;font-size:12px;color:#6b7280}
+.alm-plato strong{font-size:22px}
+@media (max-width: 600px){
+  .alm-sel{flex-direction:column;align-items:stretch;gap:6px}
+  .alm-sel select{width:100%;min-width:0}
+  .alm-fila{align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -1205,6 +1247,12 @@ body {
       <div class="stat-label">Compradores</div>
       <div class="stat-value loading" id="statCompradores">Cargando...</div>
     </div>
+  </section>
+
+  <section class="panel-card alm-resumen" id="almResumen" hidden>
+    <h3>Almuerzos pagados</h3>
+    <div id="almResumenTexto" class="alm-sub"></div>
+    <div class="alm-platos" id="almResumenPlatos"></div>
   </section>
 
   <section>
@@ -1391,6 +1439,12 @@ body {
       </div>
       <div class="ficha-feedback" id="fichaFeedback"></div>
     </div>
+
+    <div class="ficha-block" id="fichaAlmuerzo" hidden>
+      <div class="ficha-block-title">Almuerzo</div>
+      <div class="alm-caja" id="almCaja"></div>
+      <div class="ficha-feedback" id="almFeedback"></div>
+    </div>
   </div>
 </div>
 
@@ -1552,6 +1606,7 @@ async function cargarResumen() {
 
     document.getElementById("statIngresos").textContent = formatearMoneda(resultado.ingresos);
     document.getElementById("statCompradores").textContent = resultado.compradores;
+    pintarResumenAlmuerzos(resultado.almuerzos);
   } catch (error) {
     console.warn("No fue posible cargar el resumen:", error);
   }
@@ -1685,6 +1740,10 @@ async function abrirFicha(cedula, serial) {
       (resultado.fechaWhatsApp ? " (" + resultado.fechaWhatsApp + ")" : "");
 
     pintarIngresos(resultado.ingresos || []);
+    almEstado = resultado.almuerzo || null;
+    almFormAbierto = false;
+    document.getElementById("almFeedback").textContent = "";
+    pintarAlmuerzo();
 
     document.getElementById("fichaFeedback").textContent = "";
     document.getElementById("fichaFeedback").className = "ficha-feedback";
@@ -2041,6 +2100,323 @@ function pintarIngresos(ingresos) {
     item.appendChild(estado);
     lista.appendChild(item);
   });
+}
+
+// ============================================================
+// ALMUERZOS (ALM-2, 04/11/2026)
+// ============================================================
+// Una línea por entrada con su almuerzo. "Registrar almuerzos" abre
+// un formulario con el plato de cada entrada pendiente y un solo
+// comprobante (el OCR llena medio, referencia y valor). Las entradas
+// ya pagadas no se pueden volver a escoger; solo SUPERADMIN anula.
+// Backend: ticketera-apps-script/Almuerzos.js.
+
+let almEstado = null;
+let almFormAbierto = false;
+let almComprobante = null;
+let almIdOperacion = "";
+let almValorLeido = "";
+const ALM_TIPOS = ["image/jpeg", "image/png", "application/pdf"];
+const ALM_MAXIMO = 8 * 1024 * 1024;
+
+function almFechaCorta(iso) {
+  const p = String(iso || "").split("-");
+  return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso;
+}
+
+function almPendientes() {
+  return almEstado ? almEstado.entradas.filter(function(e) { return !e.almuerzo; }) : [];
+}
+
+function pintarAlmuerzo() {
+  const bloque = document.getElementById("fichaAlmuerzo");
+  const caja = document.getElementById("almCaja");
+  if (!almEstado || !almEstado.entradas) {
+    bloque.hidden = true;
+    return;
+  }
+  bloque.hidden = false;
+  let html = "";
+  almEstado.entradas.forEach(function(e) {
+    if (e.almuerzo) {
+      const a = e.almuerzo;
+      html += '<div class="alm-fila"><div><strong>' + escaparTexto(e.serial) + '</strong>' +
+        '<div class="alm-si">✓ ' + escaparTexto(a.plato) + " · " + formatearMoneda(a.valor) + " · " +
+        escaparTexto(a.pago) + " · " + escaparTexto(a.medio) + " " + escaparTexto(a.referencia) +
+        (a.fecha ? " · " + escaparTexto(a.fecha) : "") + (a.usuario ? " · " + escaparTexto(a.usuario) : "") +
+        '</div></div><div class="alm-lado"><span class="alm-chip">Pagado</span>' +
+        (almEstado.puedeAnular ? '<button class="alm-anular" type="button" data-serial="' + escaparTexto(e.serial) + '">Anular</button>' : "") +
+        "</div></div>";
+    } else if (!almFormAbierto) {
+      html += '<div class="alm-fila"><div><strong>' + escaparTexto(e.serial) + '</strong><div class="alm-no">Sin almuerzo</div></div></div>';
+    }
+  });
+  const pendientes = almPendientes();
+  if (almFormAbierto) {
+    html += almHtmlFormulario(pendientes);
+  } else if (!pendientes.length) {
+    html += '<div class="alm-pie">Todas las entradas tienen almuerzo.</div>';
+  } else if (!almEstado.abierto) {
+    html += '<div class="alm-pie">Los pedidos se cerraron el ' + escaparTexto(almFechaCorta(almEstado.fechaLimite)) + ".</div>";
+  } else {
+    html += '<div class="alm-pie"><span>Pedidos hasta el ' + escaparTexto(almFechaCorta(almEstado.fechaLimite)) +
+      '</span><button class="alm-boton" type="button" id="almAbrir">Registrar almuerzos</button></div>';
+  }
+  caja.innerHTML = html;
+
+  caja.querySelectorAll(".alm-anular").forEach(function(boton) {
+    boton.onclick = function() { anularAlmuerzo(boton.getAttribute("data-serial")); };
+  });
+  const abrir = document.getElementById("almAbrir");
+  if (abrir) {
+    abrir.onclick = function() {
+      almFormAbierto = true;
+      almComprobante = null;
+      almValorLeido = "";
+      almIdOperacion = "alm-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
+      document.getElementById("almFeedback").textContent = "";
+      pintarAlmuerzo();
+    };
+  }
+  if (almFormAbierto) {
+    almConectarFormulario();
+  }
+}
+
+function almHtmlFormulario(pendientes) {
+  const opciones = '<option value="">Sin almuerzo</option>' + almEstado.menu.map(function(m) {
+    return '<option value="' + escaparTexto(m.plato) + '">' + escaparTexto(m.plato) + " · " + formatearMoneda(m.precio) + "</option>";
+  }).join("");
+  const medios = '<option value="">Escoge...</option>' + almEstado.medios.map(function(m) {
+    return '<option value="' + escaparTexto(m) + '">' + escaparTexto(m) + "</option>";
+  }).join("");
+  let html = '<div class="alm-form"><div class="alm-form-tit">Registrar almuerzos · un solo comprobante</div>' +
+    '<div class="alm-sub">Elige el plato de cada entrada (todos en combo con gaseosa).</div>';
+  pendientes.forEach(function(e) {
+    html += '<div class="alm-sel"><strong>' + escaparTexto(e.serial) + '</strong>' +
+      '<select class="alm-plato-sel" data-serial="' + escaparTexto(e.serial) + '">' + opciones + "</select></div>";
+  });
+  html += '<div class="alm-total" id="almTotal">0 almuerzos · <b>$0</b></div>' +
+    '<label class="alm-campo">Medio de pago<select id="almMedio">' + medios + "</select></label>" +
+    '<div id="almPagoBanco">' +
+    '<label class="alm-campo">Comprobante<input type="file" id="almArchivo" accept="image/jpeg,image/png,application/pdf"></label>' +
+    '<div class="alm-aviso" id="almOcrAviso"></div>' +
+    '<label class="alm-campo">Referencia<div class="alm-ref"><input type="text" id="almReferencia" maxlength="60" autocomplete="off">' +
+    '<button class="comm-button" type="button" id="almSinRef">No trae número</button></div></label>' +
+    '<div class="alm-aviso" id="almRefAviso"></div>' +
+    "</div>" +
+    '<div class="alm-acciones"><button class="comm-button" type="button" id="almCancelar">Cancelar</button>' +
+    '<button class="alm-boton" type="button" id="almGuardar" disabled>Guardar</button></div></div>';
+  return html;
+}
+
+function almSeleccion() {
+  const items = [];
+  let total = 0;
+  document.querySelectorAll(".alm-plato-sel").forEach(function(sel) {
+    if (!sel.value) return;
+    const item = almEstado.menu.find(function(m) { return m.plato === sel.value; });
+    items.push({ serial: sel.getAttribute("data-serial"), plato: sel.value });
+    total += item ? item.precio : 0;
+  });
+  return { items: items, total: total };
+}
+
+function almActualizar() {
+  const sel = almSeleccion();
+  const n = sel.items.length;
+  document.getElementById("almTotal").innerHTML =
+    n + (n === 1 ? " almuerzo" : " almuerzos") + " · <b>" + formatearMoneda(sel.total) + "</b>";
+  const efectivo = document.getElementById("almMedio").value === "Efectivo";
+  document.getElementById("almPagoBanco").hidden = efectivo;
+  const guardar = document.getElementById("almGuardar");
+  guardar.textContent = n ? "Guardar " + n + (n === 1 ? " almuerzo" : " almuerzos") : "Guardar";
+  const referencia = document.getElementById("almReferencia").value.trim();
+  guardar.disabled = !n || !document.getElementById("almMedio").value ||
+    (!efectivo && (!almComprobante || !referencia));
+  const aviso = document.getElementById("almOcrAviso");
+  if (almValorLeido && n && Number(almValorLeido) !== sel.total) {
+    aviso.className = "alm-aviso alerta";
+    aviso.textContent = "El comprobante dice " + formatearMoneda(almValorLeido) + " y el total es " +
+      formatearMoneda(sel.total) + ". Revisa antes de guardar.";
+  } else if (almValorLeido && n) {
+    aviso.className = "alm-aviso ok";
+    aviso.textContent = "El valor del comprobante cuadra con el total.";
+  }
+}
+
+function almConectarFormulario() {
+  document.querySelectorAll(".alm-plato-sel").forEach(function(sel) {
+    sel.onchange = almActualizar;
+  });
+  document.getElementById("almMedio").onchange = almActualizar;
+  document.getElementById("almReferencia").oninput = function() {
+    document.getElementById("almRefAviso").textContent = "";
+    almActualizar();
+  };
+  document.getElementById("almSinRef").onclick = function() {
+    const d = new Date();
+    const dos = function(x) { return ("0" + x).slice(-2); };
+    document.getElementById("almReferencia").value = "SINREF-" + d.getFullYear() + dos(d.getMonth() + 1) + dos(d.getDate()) +
+      "-" + dos(d.getHours()) + dos(d.getMinutes()) + dos(d.getSeconds());
+    document.getElementById("almRefAviso").textContent = "";
+    almActualizar();
+  };
+  document.getElementById("almCancelar").onclick = function() {
+    almFormAbierto = false;
+    pintarAlmuerzo();
+  };
+  document.getElementById("almArchivo").onchange = leerComprobanteAlmuerzo;
+  document.getElementById("almGuardar").onclick = guardarAlmuerzos;
+  almActualizar();
+}
+
+function almLeerArchivo(archivo) {
+  return new Promise(function(resolver, rechazar) {
+    const lector = new FileReader();
+    lector.onload = function() {
+      resolver(String(lector.result).split(",")[1] || "");
+    };
+    lector.onerror = rechazar;
+    lector.readAsDataURL(archivo);
+  });
+}
+
+async function leerComprobanteAlmuerzo() {
+  const input = document.getElementById("almArchivo");
+  const aviso = document.getElementById("almOcrAviso");
+  const refAviso = document.getElementById("almRefAviso");
+  const archivo = input.files && input.files[0];
+  almComprobante = null;
+  almValorLeido = "";
+  refAviso.textContent = "";
+  if (!archivo) {
+    almActualizar();
+    return;
+  }
+  if (ALM_TIPOS.indexOf(archivo.type) === -1 || archivo.size > ALM_MAXIMO) {
+    aviso.className = "alm-aviso error";
+    aviso.textContent = "El comprobante debe ser JPG, PNG o PDF de máximo 8 MB.";
+    input.value = "";
+    almActualizar();
+    return;
+  }
+  aviso.className = "alm-aviso";
+  aviso.textContent = "Leyendo el comprobante...";
+  try {
+    almComprobante = { base64: await almLeerArchivo(archivo), mimeType: archivo.type, nombre: archivo.name };
+    const r = await llamarAPI({ accion: "almuerzo_ocr", token: obtenerToken(), comprobante: almComprobante });
+    if (!r || !r.ok) {
+      aviso.className = "alm-aviso alerta";
+      aviso.textContent = ((r && r.mensaje) || "No se pudo leer el comprobante.") + " Llena los datos a mano.";
+    } else if (!r.activo) {
+      aviso.className = "alm-aviso";
+      aviso.textContent = "Lectura automática apagada: llena medio y referencia a mano.";
+    } else {
+      if (r.medio) document.getElementById("almMedio").value = r.medio;
+      if (r.referencia) document.getElementById("almReferencia").value = r.referencia;
+      almValorLeido = r.valor || "";
+      aviso.className = "alm-aviso ok";
+      aviso.textContent = r.referencia
+        ? "Comprobante leído (" + r.formato + "). Revisa que los datos coincidan."
+        : "No se encontró la referencia: escríbela o usa \"No trae número\".";
+      if (r.referenciaUsada) {
+        refAviso.className = "alm-aviso error";
+        refAviso.textContent = r.referenciaUsada;
+      }
+    }
+  } catch (error) {
+    aviso.className = "alm-aviso alerta";
+    aviso.textContent = "No se pudo leer el comprobante. Llena los datos a mano.";
+  }
+  almActualizar();
+}
+
+async function guardarAlmuerzos() {
+  const sel = almSeleccion();
+  const medio = document.getElementById("almMedio").value;
+  const efectivo = medio === "Efectivo";
+  const feedback = document.getElementById("almFeedback");
+  const boton = document.getElementById("almGuardar");
+  boton.disabled = true;
+  feedback.className = "ficha-feedback";
+  feedback.textContent = "Guardando...";
+  try {
+    const r = await llamarAPI({
+      accion: "almuerzo_registrar",
+      token: obtenerToken(),
+      cedula: cedulaActual,
+      items: sel.items,
+      medio: medio,
+      referencia: efectivo ? "" : document.getElementById("almReferencia").value.trim(),
+      comprobante: efectivo ? null : almComprobante,
+      idOperacion: almIdOperacion
+    });
+    if (r && r.ok) {
+      almEstado = r.almuerzo;
+      almFormAbierto = false;
+      pintarAlmuerzo();
+      feedback.className = "ficha-feedback ok";
+      feedback.textContent = "Pago " + r.pago + " guardado: " + r.cantidad +
+        (r.cantidad === 1 ? " almuerzo" : " almuerzos") + " por " + formatearMoneda(r.total) + ".";
+      cargarResumen();
+    } else {
+      feedback.className = "ficha-feedback error";
+      feedback.textContent = (r && r.mensaje) || "No se pudo guardar.";
+      boton.disabled = false;
+    }
+  } catch (error) {
+    // Si la respuesta se perdió, volver a tocar Guardar no duplica:
+    // el servidor reconoce el mismo idOperacion.
+    feedback.className = "ficha-feedback error";
+    feedback.textContent = "Error de conexión. Vuelve a tocar Guardar: no se registra dos veces.";
+    boton.disabled = false;
+  }
+}
+
+async function anularAlmuerzo(serial) {
+  const motivo = prompt("Motivo para anular el almuerzo de la entrada " + serial + ":");
+  if (motivo === null) return;
+  if (motivo.trim().length < 3) {
+    alert("Escribe el motivo de la anulación.");
+    return;
+  }
+  const feedback = document.getElementById("almFeedback");
+  feedback.className = "ficha-feedback";
+  feedback.textContent = "Anulando...";
+  try {
+    const r = await llamarAPI({ accion: "almuerzo_anular", token: obtenerToken(), serial: serial, motivo: motivo.trim() });
+    if (r && r.ok) {
+      almEstado = r.almuerzo;
+      almFormAbierto = false;
+      pintarAlmuerzo();
+      feedback.className = "ficha-feedback ok";
+      feedback.textContent = "Almuerzo de " + serial + " anulado. La entrada quedó sin almuerzo.";
+      cargarResumen();
+    } else {
+      feedback.className = "ficha-feedback error";
+      feedback.textContent = (r && r.mensaje) || "No se pudo anular.";
+    }
+  } catch (error) {
+    feedback.className = "ficha-feedback error";
+    feedback.textContent = "Error de conexión al anular.";
+  }
+}
+
+function pintarResumenAlmuerzos(datos) {
+  const seccion = document.getElementById("almResumen");
+  if (!datos) {
+    seccion.hidden = true;
+    return;
+  }
+  seccion.hidden = false;
+  document.getElementById("almResumenTexto").textContent =
+    datos.total + (datos.total === 1 ? " almuerzo" : " almuerzos") + " en " + datos.pagos +
+    (datos.pagos === 1 ? " pago" : " pagos") + " · " + formatearMoneda(datos.valorTotal) +
+    " · pedidos hasta el " + almFechaCorta(datos.fechaLimite);
+  document.getElementById("almResumenPlatos").innerHTML = datos.porPlato.map(function(p) {
+    return '<div class="alm-plato"><span>' + escaparTexto(p.plato) + "</span><strong>" + p.cantidad + "</strong></div>";
+  }).join("");
 }
 
 function cerrarFicha() {

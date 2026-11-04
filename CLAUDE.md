@@ -35,7 +35,12 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   "‹ Anterior · Página X de Y · Siguiente ›"), tabla por día con scroll
   propio (títulos y Total fijos), gráfica de hasta 62 días y botón "Descargar
   en Google Sheets"; `reportes.html#ventas` abre directo en esa pestaña;
-  backend en `ticketera-apps-script/ReportesFechas.js`),
+  backend en `ticketera-apps-script/ReportesFechas.js`; desde el 04/11/2026
+  (ALM-2) la ficha tiene la sección "Almuerzo": una línea por entrada,
+  "Registrar almuerzos" con el plato de cada entrada pendiente y un solo
+  comprobante que lee el OCR, total automático y "Anular" solo para
+  SUPERADMIN; el Resumen muestra "Almuerzos pagados" por plato; backend en
+  `ticketera-apps-script/Almuerzos.js`),
   `usuarios.html` (usuarios y roles), `activar.html` (enlace de un solo uso
   para definir la contraseña), `politica-password.js` (política de claves).
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque
