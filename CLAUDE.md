@@ -57,7 +57,7 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
   de Adviento es `flyer_adviento_v4.jpg` (y su versión de 600 px para
-  tarjetas); los videos van en 720p con faststart para que carguen rápido.
+  tarjetas). `flyer-almuerzo-adviento.jpg` (1080×1080) es el encabezado de la plantilla de WhatsApp del almuerzo: Meta lo descarga de esta URL en cada envío (`ticketera-apps-script/CampanaAlmuerzo.js`), no renombrarlo ni borrarlo antes del 24/11/2026; los videos van en 720p con faststart para que carguen rápido.
 - Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies,
   decisión de Mauricio del 06/10/2026: no usar Google Analytics por Ley 1581),
   menos en `lector/`: su CSP estricta lo bloqueaba igual, así que se quitó el
