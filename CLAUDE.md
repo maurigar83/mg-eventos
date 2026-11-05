@@ -68,6 +68,15 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   `https://mgeventos.co/adviento/almuerzo/` y la página redirige al chat de quien toma
   los pedidos (573225276778) con un mensaje listo. No cambiar la URL mientras
   la plantilla esté en uso; el número sí se puede cambiar aquí.
+- Recomendaciones para asistentes de Adviento (05/11/2026, pedido de
+  Mauricio, Plan WEB-R1): dos piezas que **no viven en este repo** sino en
+  la carpeta del proyecto `recomendaciones/` (JPG, PDF para importar a Canva
+  y `fuente/` con el HTML que se renderiza con Playwright). Vertical
+  1080×1920 para el envío masivo por WhatsApp del 23/11/2026 y horizontal
+  1920×1080 para proyectar en el teatro. Datos de Mauricio: puertas a las
+  **6:45 a. m.**, metro estación **Prado**, parqueaderos a 2 y 3 cuadras,
+  puestos por orden de llegada y prohibido guardar puestos. Si cambia uno de
+  esos datos, cambiarlo en las dos piezas.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
