@@ -18,7 +18,11 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   apuntan a la misma URL; no crear otra implementación.
 - Páginas públicas: `index.html` (inicio con intro animada y video),
   `eventos/` (cartelera) y `eventos/adviento/` (evento actual: Retiro de
-  Adviento, 28/11/2026), `servicios/`, `contacto/`, `politica-privacidad.html`,
+  Adviento, 28/11/2026), con los videos de los cuatro sacerdotes (lista `SLIDES`
+  al final del HTML; desde el 05/11/2026 el cuarto es el Pbro. Freddy
+  Bustamante, `Video_Freddy_Bustamante_v2.mp4`, con el tropiezo antes de
+  "Teatro" cortado en Canva por Mauricio; se probó antes en
+  `mg-eventos-pruebas`, PR #4 y #5), `servicios/`, `contacto/`, `politica-privacidad.html`,
   `terminos-servicio.html`, `eliminacion-datos.html`. Política versión
   2026-10-24 (auditoría B1 y norma M2): dice "entradas", nombra Cloudflare
   Web Analytics y avisa que los enlaces de PDF por WhatsApp se cierran al
