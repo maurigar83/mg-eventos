@@ -82,9 +82,14 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   vendiendo entradas falsas. Dos piezas verticales 1080×1920 iguales en la
   carpeta del proyecto `estafas/` (JPG, PDF para Canva y `anuncio.html`; con
   `#soldout` sale la versión agotada): "Compra solo por nuestro WhatsApp" y,
-  con sello SOLD OUT, "Si te ofrecen entradas, es estafa". Único canal de
-  venta: el WhatsApp de MG Eventos +57 322 527 6778, en grande. Si cambia
-  ese número, cambiarlo en las dos piezas.
+  con sello SOLD OUT, "Si te ofrecen entradas, es estafa". Aclaración de
+  Mauricio: MG Eventos es solo la boletería (pasarela), no vende. La venta
+  es únicamente por el WhatsApp de la organización del retiro
+  +57 322 527 6778 (en grande); la entrada la envía solo MG Eventos desde
+  "MG Eventos Oficial" (cuenta verificada) +57 300 101 4450, que solo envía
+  entradas y no vende ni recibe pagos, o por correo desde
+  boletas@mgeventos.co. Si cambia uno de esos datos, cambiarlo en las dos
+  piezas.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
