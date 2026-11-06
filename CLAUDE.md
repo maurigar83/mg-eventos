@@ -77,6 +77,14 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   **6:45 a. m.**, metro estación **Prado**, parqueaderos a 2 y 3 cuadras,
   puestos por orden de llegada y prohibido guardar puestos. Si cambia uno de
   esos datos, cambiarlo en las dos piezas.
+- Anuncios contra estafas del Retiro de Adviento (06/11/2026, pedido de
+  Mauricio, Plan WEB-R2): con el padre Freddy siempre aparecen estafadores
+  vendiendo entradas falsas. Dos piezas verticales 1080×1920 iguales en la
+  carpeta del proyecto `estafas/` (JPG, PDF para Canva y `anuncio.html`; con
+  `#soldout` sale la versión agotada): "Compra solo por nuestro WhatsApp" y,
+  con sello SOLD OUT, "Si te ofrecen entradas, es estafa". Único canal de
+  venta: el WhatsApp de MG Eventos +57 322 527 6778, en grande. Si cambia
+  ese número, cambiarlo en las dos piezas.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
