@@ -26,7 +26,9 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   `terminos-servicio.html`, `eliminacion-datos.html`. Política versión
   2026-10-24 (auditoría B1 y norma M2): dice "entradas", nombra Cloudflare
   Web Analytics y avisa que los enlaces de PDF por WhatsApp se cierran al
-  día siguiente del evento; Eliminación de Datos pide la cédula. Si cambia
+  día siguiente del evento; Eliminación de Datos pide la cédula. Versión
+  2026-11-13 (PUE-CF1): agrega que Cloudflare valida las entradas en la
+  puerta y qué guarda (sin teléfono, correo ni pago). Si cambia
   un proveedor (por ejemplo Bold o Wompi al integrarse), actualizar la
   política y su versión.
 - Páginas de operación (con sesión): `panel.html` (login y panel de gestión),
@@ -62,6 +64,17 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   `scanId` antes de mostrar el error (X12, 23/10/2026). El backend de esas acciones está en
   `ticketera-apps-script/Codigo.js`. Al cambiar `lector.js`/`lector.css`,
   subir el `?v=` en `lector/index.html`.
+  Desde PUE-CF1 (13/11/2026, probado primero en `mg-eventos-pruebas`) el
+  lector valida en el Worker de Cloudflare `mg-eventos-puerta`
+  (`https://mg-eventos-puerta.maurigar.workers.dev`, código en
+  `ticketera-apps-script/puerta-cloudflare/`) con `lector/puerta.js`:
+  Cloudflare (3 s) → Apps Script de respaldo (6 s) → lista guardada en el
+  celular (sin nombres) con cola de ingresos que sube sola. El login sigue
+  en Apps Script, que da un pase firmado (acción `puerta_firma`). La franja
+  `#estadoPuerta` dice qué capa está activa. La CSP solo deja conectar a
+  Google y a esa dirección exacta del Worker: si cambia, cambiarla en
+  `lector/index.html`. Los archivos `config-pruebas.js` y `entrar.*` de
+  pruebas no se copian aquí.
 - `adviento/almuerzo/` (04/11/2026): destino del botón "Pedir mi almuerzo" de la
   plantilla de WhatsApp del almuerzo. Meta no acepta enlaces directos a
   WhatsApp (wa.me) en los botones, así que el botón abre
