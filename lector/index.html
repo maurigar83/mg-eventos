@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; connect-src https://script.google.com https://script.googleusercontent.com https://mg-eventos-puerta.maurigar.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>Validación de Tickets</title>
-  <link rel="stylesheet" href="lector.css?v=14">
+  <link rel="stylesheet" href="lector.css?v=15">
   <script src="vendor/html5-qrcode-2.3.8.min.js"></script>
 </head>
 <body>
@@ -20,6 +20,7 @@
     </button>
   </div>
   <div id="conteo" class="oculto" aria-live="polite"></div>
+  <div id="estadoPuerta" class="oculto" aria-live="polite"></div>
   <div id="reader"></div>
   <button id="btnManual" type="button" class="oculto">
     ADMIN: VALIDAR POR SERIAL
@@ -48,6 +49,7 @@
     ← VOLVER AL PANEL
   </button>
   <script src="../config.js?v=14"></script>
-  <script src="lector.js?v=15"></script>
+  <script src="puerta.js?v=1"></script>
+  <script src="lector.js?v=17"></script>
 </body>
 </html>

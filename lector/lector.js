@@ -4,7 +4,8 @@
 
 const API_URL = CONFIG.BOLETAS_API_URL;
 const SEGURIDAD_API_URL = CONFIG.SEGURIDAD_API_URL;
-const LOGIN_URL = "https://mgeventos.co/";
+// En pruebas, config-pruebas.js trae su propia página de entrada.
+const LOGIN_URL = CONFIG.LECTOR_LOGIN_URL || "https://mgeventos.co/";
 const PANEL_URL = "https://mgeventos.co/panel.html";
 const INTERVALO_REVALIDACION = 60 * 60 * 1000;
 let scanner = null;
@@ -178,6 +179,13 @@ window.addEventListener(
     }
 
     iniciarRevalidacion();
+    // PUE-CF1: servidor rápido de la puerta (Cloudflare) con lista local
+    // de respaldo. Si no está configurado, el lector sigue como antes.
+    await Puerta.iniciar(
+      SEGURIDAD_API_URL,
+      sessionStorage.getItem("mg_eventos_token") || "",
+      pintarEstadoPuerta
+    );
     document.getElementById("btnManual").classList.toggle("oculto", !esSuperadmin());
     actualizarConteo();
     setInterval(actualizarConteo, INTERVALO_CONTEO);
@@ -482,7 +490,14 @@ async function enviarValidacion(cuerpo) {
     // error. Va con el mismo scanId, así que si la primera alcanzó a
     // registrar el ingreso, el reintento responde VÁLIDO y no "YA UTILIZADO".
     let r = null;
-    for (let intento = 1; intento <= 2; intento++) {
+    if (Puerta.activa()) {
+      // Cloudflare → Apps Script → lista del celular (puerta.js).
+      r = await Puerta.validar(cuerpo, pedirValidacion);
+      if (!r) {
+        throw new Error("Sin respuesta de ningún servidor y sin lista guardada.");
+      }
+    }
+    for (let intento = 1; !r && intento <= 2; intento++) {
       try {
         r = await pedirValidacion(cuerpo);
         if (!(r && r.estado === "ERROR") || intento === 2) {
@@ -575,6 +590,12 @@ async function actualizarConteo() {
     return;
   }
   try {
+    const rapido = await Puerta.conteo();
+    if (rapido) {
+      conteoActual = { ingresaron: Number(rapido.ingresaron) || 0, vendidas: Number(rapido.vendidas) || 0 };
+      pintarConteo();
+      return;
+    }
     const respuesta = await fetch(SEGURIDAD_API_URL, {
       method: "POST",
       headers: {
@@ -594,6 +615,12 @@ async function actualizarConteo() {
     // Sin conexión: se deja el último número; el lector sigue igual.
     console.log("No se pudo actualizar el contador:", error);
   }
+}
+
+function pintarEstadoPuerta(texto) {
+  const caja = document.getElementById("estadoPuerta");
+  caja.textContent = texto || "";
+  caja.className = texto ? (/SIN CONEXIÓN/.test(texto) ? "sin-conexion" : "") : "oculto";
 }
 
 function alternarManual() {
