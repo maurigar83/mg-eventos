@@ -8,6 +8,10 @@
 //     Los ingresos quedan en cola y se suben solos cuando vuelve la
 //     señal; si otro celular ya había dejado entrar esa entrada,
 //     Cloudflare lo marca como doble ingreso para revisarlo.
+//     Desde la auditoría del 14/11/2026 (F-03 y F-04) la cola guarda el
+//     token del QR leído (Cloudflare calcula la huella), sube de a 15 y
+//     bota las lecturas de otro día o de más de 12 h, para que una cola
+//     olvidada de un ensayo no marque entradas el día del evento.
 //
 // El login sigue siendo el de Apps Script: con la sesión del lector se
 // pide un pase firmado (acción "puerta_firma") que Cloudflare verifica.
@@ -21,6 +25,9 @@ const Puerta = (function() {
   const INTERVALO_REVISAR_SENAL_MS = 10 * 1000;
   const INTERVALO_LISTA_MS = 5 * 60 * 1000;
   const INTERVALO_COLA_MS = 15 * 1000;
+  const LOTE_COLA = 15;
+  const VIGENCIA_COLA_MS = 12 * 60 * 60 * 1000;
+  const LISTA_VIEJA_MS = 30 * 60 * 1000;
   const CLAVE_LISTA = "mg_puerta_lista_v1";
   const CLAVE_COLA = "mg_puerta_cola_v1";
   const CLAVE_PASE = "mg_puerta_pase_v1";
@@ -53,6 +60,18 @@ const Puerta = (function() {
 
   function cola() {
     return leerJson(localStorage, CLAVE_COLA, []);
+  }
+
+  // Fecha de Colombia (UTC-5 todo el año), para comparar días.
+  function diaColombia(ms) {
+    return new Date(ms - 5 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  }
+
+  // Lectura de la cola que todavía se puede subir: de hoy y de menos de
+  // 12 h. Las demás (por ejemplo, de un ensayo) se botan sin subirlas.
+  function vigente(c) {
+    const ms = Date.parse(c && c.en);
+    return !isNaN(ms) && Date.now() - ms < VIGENCIA_COLA_MS && diaColombia(ms) === diaColombia(Date.now());
   }
 
   function activa() {
@@ -91,8 +110,12 @@ const Puerta = (function() {
       partes.push("Servidor rápido activo");
     }
     if (lista && lista.generada) {
-      const hora = new Date(lista.generada).toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit" });
-      partes.push("lista de " + Object.keys(lista.entradas).length.toLocaleString("es-CO") + " entradas (" + hora + ")");
+      const generada = new Date(lista.generada);
+      const cuando = generada.toLocaleDateString("es-CO", { day: "2-digit", month: "2-digit" }) + " " +
+        generada.toLocaleTimeString("es-CO", { hour: "numeric", minute: "2-digit" });
+      const vieja = Date.now() - generada.getTime() > LISTA_VIEJA_MS;
+      partes.push("lista de " + Object.keys(lista.entradas).length.toLocaleString("es-CO") + " entradas (" + cuando + ")" +
+        (vieja ? " ⚠ LISTA DESACTUALIZADA: avisar a la mesa" : ""));
     }
     if (pendientes) {
       partes.push(pendientes + " ingreso(s) por subir");
@@ -212,7 +235,9 @@ const Puerta = (function() {
     }
     marcarEnLista(huella);
     const pendientes = cola();
-    pendientes.push({ h: huella, en: new Date().toISOString(), scanId: scanId });
+    // t = token leído (lo que sube a Cloudflare); h = huella, solo para
+    // marcarla en la lista de este celular.
+    pendientes.push({ t: token, h: huella, en: new Date().toISOString(), scanId: scanId });
     guardarJson(localStorage, CLAVE_COLA, pendientes);
     pintarEstado();
     return { ok: true, estado: "VALIDO", titulo: "TICKET VÁLIDO", nombre: "Serial " + serial,
@@ -220,18 +245,28 @@ const Puerta = (function() {
   }
 
   async function subirCola() {
-    const pendientes = cola();
+    const todas = cola();
+    const pendientes = todas.filter(vigente);
+    if (pendientes.length !== todas.length) {
+      console.log("Se descartaron " + (todas.length - pendientes.length) + " lectura(s) sin conexión de otro día o de más de 12 h.");
+      guardarJson(localStorage, CLAVE_COLA, pendientes);
+      pintarEstado();
+    }
     if (!pendientes.length || !activa() || !navigator.onLine) {
       return;
     }
     try {
-      const r = await llamar("/api/sin-conexion", { lecturas: pendientes.slice(0, 200) });
+      const lote = pendientes.slice(0, LOTE_COLA).map(function(c) {
+        // Las lecturas guardadas por la versión anterior solo traen h.
+        return c.t ? { t: c.t, en: c.en, scanId: c.scanId } : { h: c.h, en: c.en, scanId: c.scanId };
+      });
+      const r = await llamar("/api/sin-conexion", { lecturas: lote });
       if (r && r.ok && Array.isArray(r.resultados)) {
+        // Toda lectura con respuesta ya quedó decidida en Cloudflare
+        // (subida, doble, vencida o inválida): se saca de la cola.
         const subidos = {};
         r.resultados.forEach(function(x) {
-          if (x.resultado !== "INVALIDO") {
-            subidos[x.scanId] = true;
-          }
+          subidos[x.scanId] = true;
         });
         guardarJson(localStorage, CLAVE_COLA, cola().filter(function(c) { return !subidos[c.scanId]; }));
         pintarEstado();
