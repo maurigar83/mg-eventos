@@ -19,6 +19,13 @@
 // COMPRADOR el lector le pregunta a Google antes de rechazar: la entrada
 // pudo venderse o corregirse después de la última sincronización.
 //
+// Auditoría F-05 (14/11/2026): si el pase falla al abrir, se reintenta
+// solo cada 20 s (y al volver el internet) en vez de dejar el celular
+// todo el día por Google; la franja lo dice en rojo. El pase se renueva
+// solo cuando le queda menos de 1 h. F-06: en los celulares de la puerta
+// (rol LECTOR) el pase se guarda en localStorage con su vencimiento, para
+// que sobreviva a cerrar la pestaña.
+//
 // El login sigue siendo el de Apps Script: con la sesión del lector se
 // pide un pase firmado (acción "puerta_firma") que Cloudflare verifica.
 // Si Apps Script responde SIN_PUERTA (no configurado), el lector
@@ -34,6 +41,9 @@ const Puerta = (function() {
   const LOTE_COLA = 15;
   const VIGENCIA_COLA_MS = 12 * 60 * 60 * 1000;
   const LISTA_VIEJA_MS = 30 * 60 * 1000;
+  const REINTENTO_PASE_MS = 20 * 1000;
+  const RENOVAR_PASE_ANTES_MS = 60 * 60 * 1000;
+  const INTERVALO_REVISAR_PASE_MS = 5 * 60 * 1000;
   const CLAVE_LISTA = "mg_puerta_lista_v1";
   const CLAVE_COLA = "mg_puerta_cola_v1";
   const CLAVE_PASE = "mg_puerta_pase_v1";
@@ -46,6 +56,12 @@ const Puerta = (function() {
   let sinConexion = false;
   let estadoTexto = "";
   let alCambiarEstado = function() {};
+  // F-06: almacén del pase. sessionStorage por defecto; localStorage solo
+  // para el rol LECTOR (celulares de la puerta), lo decide lector.js.
+  let almacenPase = sessionStorage;
+  let usuarioPase = "";
+  let arrancada = false;
+  let reintentoPase = null;
 
   function leerJson(almacen, clave, porDefecto) {
     try {
@@ -114,6 +130,8 @@ const Puerta = (function() {
       partes.push("SIN CONEXIÓN · validando con la lista del celular");
     } else if (activa()) {
       partes.push("Servidor rápido activo");
+    } else if (reintentoPase) {
+      partes.push("SIN PUERTA RÁPIDA · reintentando (valida por Google)");
     }
     if (lista && lista.generada) {
       const generada = new Date(lista.generada);
@@ -139,8 +157,8 @@ const Puerta = (function() {
       }, TIEMPO_GOOGLE_MS * 2);
       const r = await respuesta.json();
       if (r && r.ok && r.url && r.firma) {
-        pase = { url: String(r.url).replace(/\/+$/, ""), firma: r.firma, expira: Number(r.expira) || 0 };
-        guardarJson(sessionStorage, CLAVE_PASE, pase);
+        pase = { url: String(r.url).replace(/\/+$/, ""), firma: r.firma, expira: Number(r.expira) || 0, usuario: usuarioPase };
+        guardarJson(almacenPase, CLAVE_PASE, pase);
         return true;
       }
     } catch (error) {
@@ -292,34 +310,109 @@ const Puerta = (function() {
     return pedirPase(apiGoogleGuardada, tokenSesionGuardado);
   }
 
-  // --- API pública ---------------------------------------------------
-  async function iniciar(apiGoogle, tokenSesion, callbackEstado) {
-    apiGoogleGuardada = apiGoogle;
-    tokenSesionGuardado = tokenSesion;
-    alCambiarEstado = callbackEstado || alCambiarEstado;
-    lista = leerJson(localStorage, CLAVE_LISTA, null);
-    const guardado = leerJson(sessionStorage, CLAVE_PASE, null);
-    if (guardado && guardado.expira > Date.now() + 60 * 60 * 1000) {
-      pase = guardado;
-    } else {
-      await pedirPase(apiGoogle, tokenSesion);
+  // F-05: sin pase, reintentar cada 20 s hasta tenerlo; con pase, se
+  // arranca la parte rápida (lista, cola y revisión de señal).
+  async function intentarPase() {
+    if (activa()) {
+      return true;
+    }
+    const ok = await renovarPase();
+    if (ok) {
+      if (reintentoPase) {
+        clearInterval(reintentoPase);
+        reintentoPase = null;
+      }
+      arrancar();
+    } else if (!reintentoPase) {
+      reintentoPase = setInterval(intentarPase, REINTENTO_PASE_MS);
     }
     pintarEstado();
-    if (!activa()) {
-      return false;
+    return ok;
+  }
+
+  // Renueva el pase cuando le queda menos de 1 h (dura 16 h).
+  async function revisarPase() {
+    if (activa() && pase.expira - Date.now() < RENOVAR_PASE_ANTES_MS && navigator.onLine) {
+      await renovarPase();
+      pintarEstado();
     }
+  }
+
+  function arrancar() {
+    if (arrancada) {
+      return;
+    }
+    arrancada = true;
     descargarLista();
     setInterval(descargarLista, INTERVALO_LISTA_MS);
     setInterval(subirCola, INTERVALO_COLA_MS);
     setInterval(revisarSenal, INTERVALO_REVISAR_SENAL_MS);
+    setInterval(revisarPase, INTERVALO_REVISAR_PASE_MS);
+    subirCola();
+  }
+
+  // --- API pública ---------------------------------------------------
+  // opciones.persistir (F-06): guardar el pase en localStorage (rol LECTOR).
+  // opciones.usuario: el pase guardado solo sirve para ese usuario.
+  async function iniciar(apiGoogle, tokenSesion, callbackEstado, opciones) {
+    opciones = opciones || {};
+    apiGoogleGuardada = apiGoogle;
+    tokenSesionGuardado = tokenSesion;
+    alCambiarEstado = callbackEstado || alCambiarEstado;
+    usuarioPase = String(opciones.usuario || "");
+    almacenPase = opciones.persistir ? localStorage : sessionStorage;
+    if (!opciones.persistir) {
+      try { localStorage.removeItem(CLAVE_PASE); } catch (error) { /* nada */ }
+    }
+    lista = leerJson(localStorage, CLAVE_LISTA, null);
+    const guardado = leerJson(almacenPase, CLAVE_PASE, null) || leerJson(sessionStorage, CLAVE_PASE, null);
+    if (guardado && guardado.expira > Date.now() && (!guardado.usuario || guardado.usuario === usuarioPase)) {
+      pase = guardado;
+    }
+    // Sin internet al abrir: la franja lo dice de una vez (antes solo
+    // cambiaba con el primer escaneo).
+    if (!navigator.onLine && lista) {
+      sinConexion = true;
+    }
+    window.addEventListener("offline", function() {
+      if (lista) {
+        sinConexion = true;
+        pintarEstado();
+      }
+    });
     window.addEventListener("online", function() {
+      if (!activa()) {
+        // Sin pase no hay revisión de señal: se vuelve a Google de una vez.
+        sinConexion = false;
+        intentarPase();
+        return;
+      }
       revisarSenal();
       subirCola();
       descargarLista();
+      revisarPase();
       pintarEstado();
     });
-    subirCola();
-    return true;
+    if (activa()) {
+      arrancar();
+      // Si le queda menos de 1 h, se renueva sin esperar.
+      revisarPase();
+    } else if (navigator.onLine) {
+      await intentarPase();
+    } else {
+      // Sin internet y sin pase: se reintenta solo cuando vuelva la señal
+      // (evento "online") y cada 20 s.
+      reintentoPase = setInterval(intentarPase, REINTENTO_PASE_MS);
+    }
+    pintarEstado();
+    return activa();
+  }
+
+  // Al cerrar sesión: el pase guardado no debe quedar en el celular.
+  function olvidar() {
+    pase = null;
+    try { localStorage.removeItem(CLAVE_PASE); } catch (error) { /* nada */ }
+    try { sessionStorage.removeItem(CLAVE_PASE); } catch (error) { /* nada */ }
   }
 
   async function revisarSenal() {
@@ -430,6 +523,7 @@ const Puerta = (function() {
     validar: validar,
     conteo: conteo,
     activa: activa,
+    olvidar: olvidar,
     estado: function() { return estadoTexto; }
   };
 })();

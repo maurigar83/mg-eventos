@@ -13,7 +13,91 @@ let procesando = false;
 let audioContext = null;
 let intervaloRevalidacion = null;
 
+// Auditoría F-06 (14/11/2026): en los celulares de la puerta (rol LECTOR)
+// la sesión se guarda también en localStorage hasta que vence (24 h), para
+// que el lector vuelva a abrir si el portero cierra la pestaña o recarga,
+// aun sin internet (con el service worker sw.js). Solo el rol LECTOR: su
+// sesión solo sirve para leer QR; ADMIN y SUPERADMIN siguen solo en
+// sessionStorage.
+const CLAVE_SESION_LECTOR = "mg_lector_sesion_v1";
+const CAMPOS_SESION = ["token", "usuario", "nombre", "rol", "permisos", "expira", "qr_token", "qr_validado"];
+
+function sesionVencida(expira) {
+  const ms = new Date(expira || "").getTime();
+  return Number.isFinite(ms) && ms <= Date.now();
+}
+
+function esRolLector() {
+  return (sessionStorage.getItem("mg_eventos_rol") || "").toUpperCase() === "LECTOR";
+}
+
+function guardarSesionLector() {
+  try {
+    if (!esRolLector()) {
+      localStorage.removeItem(CLAVE_SESION_LECTOR);
+      return;
+    }
+    const copia = {};
+    CAMPOS_SESION.forEach(function(campo) {
+      copia[campo] = sessionStorage.getItem("mg_eventos_" + campo) || "";
+    });
+    localStorage.setItem(CLAVE_SESION_LECTOR, JSON.stringify(copia));
+  } catch (error) {
+    console.log("No se pudo guardar la sesión del lector:", error);
+  }
+}
+
+// Si la pestaña se cerró, trae la sesión guardada (si no ha vencido).
+function recuperarSesionLector() {
+  if (sessionStorage.getItem("mg_eventos_token")) {
+    return;
+  }
+  try {
+    const copia = JSON.parse(localStorage.getItem(CLAVE_SESION_LECTOR) || "null");
+    if (!copia || !copia.token || String(copia.rol || "").toUpperCase() !== "LECTOR" || !copia.expira || sesionVencida(copia.expira)) {
+      localStorage.removeItem(CLAVE_SESION_LECTOR);
+      return;
+    }
+    CAMPOS_SESION.forEach(function(campo) {
+      if (copia[campo]) {
+        sessionStorage.setItem("mg_eventos_" + campo, copia[campo]);
+      }
+    });
+  } catch (error) {
+    console.log("No se pudo recuperar la sesión del lector:", error);
+  }
+}
+
+// La sesión solo se da por perdida cuando el servidor lo dice (vencida,
+// cerrada o revocada: todos esos mensajes hablan de la "sesión"). Un
+// error pasajero de Google no saca al portero.
+function respuestaSesionInvalida(datos) {
+  if (!datos) {
+    return false;
+  }
+  if (datos.ok) {
+    return !datos.permisos || !datos.permisos.includes("LEER_QR");
+  }
+  return /sesi[oó]n/i.test(String(datos.mensaje || ""));
+}
+
+function permisosGuardadosIncluyenQR() {
+  try {
+    return JSON.parse(sessionStorage.getItem("mg_eventos_permisos") || "[]").includes("LEER_QR");
+  } catch (error) {
+    return false;
+  }
+}
+
 function limpiarSesion() {
+  try {
+    localStorage.removeItem(CLAVE_SESION_LECTOR);
+  } catch (error) {
+    console.log(error);
+  }
+  if (typeof Puerta !== "undefined" && Puerta.olvidar) {
+    Puerta.olvidar();
+  }
   sessionStorage.removeItem("mg_eventos_token");
   sessionStorage.removeItem("mg_eventos_usuario");
   sessionStorage.removeItem("mg_eventos_nombre");
@@ -27,6 +111,7 @@ function limpiarSesion() {
 function guardarAccesoQR(token) {
   sessionStorage.setItem("mg_eventos_qr_token", token);
   sessionStorage.setItem("mg_eventos_qr_validado", Date.now().toString());
+  guardarSesionLector();
 }
 
 function accesoQRCacheValido(token) {
@@ -51,7 +136,16 @@ function accesoQRCacheValido(token) {
 
 async function validarAcceso(revalidacion = false) {
   const mensaje = document.getElementById("mensaje");
+  if (!revalidacion) {
+    recuperarSesionLector();
+  }
   const token = sessionStorage.getItem("mg_eventos_token") || "";
+
+  if (token && sesionVencida(sessionStorage.getItem("mg_eventos_expira"))) {
+    limpiarSesion();
+    window.location.replace(LOGIN_URL);
+    return false;
+  }
 
   if (!token) {
     limpiarSesion();
@@ -85,13 +179,15 @@ async function validarAcceso(revalidacion = false) {
 
     const datos = await respuesta.json();
 
-    if (
-      !datos.ok ||
-      !datos.permisos ||
-      !datos.permisos.includes("LEER_QR")
-    ) {
+    if (respuestaSesionInvalida(datos)) {
       await manejarSesionInvalida();
       return false;
+    }
+
+    if (!datos.ok) {
+      // Error pasajero de Google (no dijo que la sesión no sirve): se sigue
+      // con lo que trajo el login y se revisa otra vez en la próxima hora.
+      throw new Error(datos.mensaje || "Google no respondió bien");
     }
 
     sessionStorage.setItem("mg_eventos_usuario", datos.usuario || "");
@@ -116,14 +212,15 @@ async function validarAcceso(revalidacion = false) {
   } catch (error) {
     console.error("Error validando sesión:", error);
 
+    // F-06: sin internet (o con Google fallando) no se borra la sesión.
+    // Si el login dio permiso de leer QR, se sigue y se revisa más tarde;
+    // el servidor igual rechaza cada lectura si la sesión no sirve.
     if (!revalidacion) {
-      mensaje.innerText = "No fue posible verificar la sesión.";
-
-      setTimeout(function() {
-        limpiarSesion();
-        window.location.replace(LOGIN_URL);
-      }, 1500);
-
+      if (permisosGuardadosIncluyenQR()) {
+        mensaje.innerText = "Sin internet para verificar la sesión. El lector sigue funcionando.";
+        return true;
+      }
+      mensaje.innerText = "No fue posible verificar la sesión. Revisa el internet e intenta de nuevo.";
       return false;
     }
 
@@ -184,7 +281,8 @@ window.addEventListener(
     await Puerta.iniciar(
       SEGURIDAD_API_URL,
       sessionStorage.getItem("mg_eventos_token") || "",
-      pintarEstadoPuerta
+      pintarEstadoPuerta,
+      { persistir: esRolLector(), usuario: sessionStorage.getItem("mg_eventos_usuario") || "" }
     );
     document.getElementById("btnManual").classList.toggle("oculto", !esSuperadmin());
     actualizarConteo();
@@ -620,7 +718,7 @@ async function actualizarConteo() {
 function pintarEstadoPuerta(texto) {
   const caja = document.getElementById("estadoPuerta");
   caja.textContent = texto || "";
-  caja.className = texto ? (/SIN CONEXIÓN/.test(texto) ? "sin-conexion" : "") : "oculto";
+  caja.className = texto ? (/SIN PUERTA RÁPIDA/.test(texto) ? "sin-puerta" : /SIN CONEXIÓN/.test(texto) ? "sin-conexion" : "") : "oculto";
 }
 
 function alternarManual() {
@@ -698,3 +796,14 @@ document.addEventListener("visibilitychange", function() {
     actualizarConteo();
   }
 });
+
+// Auditoría F-06 (14/11/2026): service worker solo para /lector/. Con
+// internet siempre trae la página fresca; sin internet abre la última
+// copia guardada. Ver sw.js (y su interruptor de apagado).
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker.register("sw.js", { scope: "./" }).catch(function(error) {
+      console.log("No se pudo registrar el service worker:", error);
+    });
+  });
+}
