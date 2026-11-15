@@ -43,9 +43,11 @@ y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos
   en Google Sheets"; `reportes.html#ventas` abre directo en esa pestaña;
   backend en `ticketera-apps-script/ReportesFechas.js`; desde el 04/11/2026
   (ALM-2) la ficha tiene la sección "Almuerzo": una línea por entrada,
-  "Registrar almuerzos" con el plato de cada entrada pendiente y un solo
-  comprobante que lee el OCR, total automático y "Anular" solo para
-  SUPERADMIN; el Resumen muestra "Almuerzos pagados" por plato; backend en
+  "Registrar pedido" con el plato de cada entrada pendiente, total
+  automático y "Anular" solo para SUPERADMIN; desde el 15/11/2026 (ALM-3,
+  decisión de Mauricio: los organizadores solo toman el pedido) no pide
+  comprobante, medio ni referencia; el Resumen muestra "Almuerzos pedidos"
+  por plato; backend en
   `ticketera-apps-script/Almuerzos.js`),
   `usuarios.html` (usuarios y roles), `activar.html` (enlace de un solo uso
   para definir la contraseña), `politica-password.js` (política de claves).
