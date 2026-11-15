@@ -13,6 +13,12 @@
 //     bota las lecturas de otro día o de más de 12 h, para que una cola
 //     olvidada de un ensayo no marque entradas el día del evento.
 //
+// Desde la auditoría del 14/11/2026 (F-02 y F-07) el respaldo de Google
+// le pregunta a Cloudflare antes de mirar la hoja (no hay doble ingreso
+// entre las dos capas), y si Cloudflare dice NO ENCONTRADO o SIN
+// COMPRADOR el lector le pregunta a Google antes de rechazar: la entrada
+// pudo venderse o corregirse después de la última sincronización.
+//
 // El login sigue siendo el de Apps Script: con la sesión del lector se
 // pide un pase firmado (acción "puerta_firma") que Cloudflare verifica.
 // Si Apps Script responde SIN_PUERTA (no configurado), el lector
@@ -334,6 +340,22 @@ const Puerta = (function() {
 
   // Devuelve la respuesta en el mismo formato de Apps Script.
   // pedirGoogle(cuerpo) es la función de siempre (lector.js).
+  // Google con tiempo máximo; null si no responde o responde ERROR.
+  async function preguntarGoogle(pedirGoogle, cuerpo) {
+    try {
+      const r = await Promise.race([
+        pedirGoogle(cuerpo),
+        new Promise(function(_, rechazar) { setTimeout(function() { rechazar(new Error("Google tardó demasiado")); }, TIEMPO_GOOGLE_MS); })
+      ]);
+      if (r && r.estado && r.estado !== "ERROR") {
+        return r;
+      }
+    } catch (error) {
+      console.log("Google no respondió:", error);
+    }
+    return null;
+  }
+
   async function validar(cuerpo, pedirGoogle) {
     const esQr = cuerpo.accion === "validar_qr";
 
@@ -348,8 +370,13 @@ const Puerta = (function() {
         : { serial: cuerpo.serial, cedula: cuerpo.cedula, scanId: cuerpo.scanId };
       for (let intento = 1; intento <= 2; intento++) {
         try {
-          const r = await llamar(ruta, datos);
+          let r = await llamar(ruta, datos);
           if (r && r.estado && r.estado !== "ERROR") {
+            // F-07: Cloudflare solo sabe lo que trajo la última
+            // sincronización; antes de rechazar, la hoja decide.
+            if (esQr && (r.estado === "NO_ENCONTRADO" || r.estado === "NO_VENDIDO")) {
+              r = (await preguntarGoogle(pedirGoogle, cuerpo)) || r;
+            }
             if (esQr && (r.estado === "VALIDO" || r.estado === "USADO") && lista) {
               sha256(String(cuerpo.codigo).trim().toLowerCase()).then(marcarEnLista);
             }
@@ -366,16 +393,9 @@ const Puerta = (function() {
 
     // Respaldo: Apps Script, como antes.
     if (!sinConexion) {
-      try {
-        const r = await Promise.race([
-          pedirGoogle(cuerpo),
-          new Promise(function(_, rechazar) { setTimeout(function() { rechazar(new Error("Google tardó demasiado")); }, TIEMPO_GOOGLE_MS); })
-        ]);
-        if (r && r.estado && r.estado !== "ERROR") {
-          return r;
-        }
-      } catch (error) {
-        console.log("Google tampoco respondió:", error);
+      const r = await preguntarGoogle(pedirGoogle, cuerpo);
+      if (r) {
+        return r;
       }
     }
 
