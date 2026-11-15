@@ -231,3 +231,13 @@ button:active {
   color: #7a4b00;
   font-weight: bold;
 }
+/* Auditoría F-05: sin pase de Cloudflare (valida por Google) en rojo. */
+#estadoPuerta.sin-puerta {
+  background: #fde2e1;
+  color: #8a1c14;
+  font-weight: bold;
+}
+/* Auditoría F-06: sin "jalar para recargar" (evita recargas por accidente). */
+html, body {
+  overscroll-behavior-y: contain;
+}
