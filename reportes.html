@@ -319,8 +319,21 @@ body {
   color: #111827;
 }
 
-.result-badge.cortesia {
-  background: #f6e7c4;
+.cortesia-seriales {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.cortesia-serial {
+  padding: 5px 10px;
+  border: 1px solid #e6cf9a;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .result-side {
@@ -339,6 +352,10 @@ body {
 @media (max-width: 640px) {
   .result-side {
     align-items: flex-start;
+  }
+
+  .cortesia-seriales {
+    justify-content: flex-start;
   }
 }
 
@@ -1753,8 +1770,10 @@ async function verSoloCortesias() {
         escaparTexto(persona.telefono || "Sin teléfono") +
         "</div>" +
         "</div>" +
-        '<div class="result-side"><div class="result-badge cortesia">' +
-        escaparTexto(seriesCortas(persona.seriales)) + "</div>" + ingreso + "</div>";
+        '<div class="result-side"><div class="cortesia-seriales">' +
+        persona.seriales.map(function(serial) {
+          return '<span class="cortesia-serial">' + escaparTexto(serial) + "</span>";
+        }).join("") + "</div>" + ingreso + "</div>";
       resultados.appendChild(card);
     });
   } catch (error) {
@@ -1762,30 +1781,6 @@ async function verSoloCortesias() {
   } finally {
     boton.disabled = false;
   }
-}
-
-// "MED-2026-001806", "...807", "...808" → "1806-1808"; sueltos con coma.
-function seriesCortas(seriales) {
-  const numeros = seriales.map(function(s) {
-    const m = String(s).match(/(\d+)\s*$/);
-    return m ? Number(m[1]) : null;
-  });
-  if (numeros.some(function(n) { return n === null; })) {
-    return seriales.join(", ");
-  }
-  numeros.sort(function(a, b) { return a - b; });
-  const tramos = [];
-  numeros.forEach(function(n) {
-    const ultimo = tramos[tramos.length - 1];
-    if (ultimo && n === ultimo[1] + 1) {
-      ultimo[1] = n;
-    } else {
-      tramos.push([n, n]);
-    }
-  });
-  return tramos.map(function(t) {
-    return t[0] === t[1] ? String(t[0]) : t[0] + "-" + t[1];
-  }).join(", ");
 }
 
 function escaparTexto(texto) {
