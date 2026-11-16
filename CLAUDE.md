@@ -30,7 +30,7 @@ a `main`, GitHub Pages publica solo (no hay más pasos).
   la política y su versión.
 - Páginas de operación (con sesión): `panel.html` (login y panel),
   `reportes.html` (ventas, compradores, reenvío de entradas, "Ventas por
-  fecha" y almuerzos; `reportes.html#ventas` abre esa pestaña), `usuarios.html`
+  fecha", almuerzos; escribir «cortesías» en Buscar comprador las lista todas; `reportes.html#ventas` abre esa pestaña), `usuarios.html`
   (usuarios y roles), `activar.html` (enlace de un solo uso para definir la
   contraseña), `politica-password.js` (política de claves).
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque

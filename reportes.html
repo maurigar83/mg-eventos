@@ -309,6 +309,39 @@ body {
   white-space: nowrap;
 }
 
+/* REP-C1: lista de cortesías (escribir «cortesías» en Buscar comprador). */
+.cortesias-resumen {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.cortesias-resumen b {
+  color: #111827;
+}
+
+.result-badge.cortesia {
+  background: #f6e7c4;
+}
+
+.result-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.result-ingreso {
+  color: #059669;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .result-side {
+    align-items: flex-start;
+  }
+}
+
 .empty-state,
 .error-state {
   padding: 16px 18px;
@@ -1253,7 +1286,7 @@ body {
         <input id="searchInput" type="text" placeholder="Nombre, cédula, teléfono o serial de boleta">
         <button class="search-button" id="searchButton" type="button" onclick="buscarComprador()">Buscar</button>
       </div>
-      <div class="search-hint">Escribe al menos parte del dato y presiona Buscar o Enter.</div>
+      <div class="search-hint">Escribe al menos parte del dato y presiona Buscar o Enter. Escribe «cortesías» para verlas todas.</div>
     </div>
     <div class="results" id="results"></div>
   </section>
@@ -1614,6 +1647,12 @@ async function buscarComprador() {
     return;
   }
 
+  // REP-C1: «cortesía(s)», con o sin tilde, lista todas las cortesías.
+  if (/^cortes[ií]as?$/i.test(query)) {
+    verSoloCortesias();
+    return;
+  }
+
   boton.disabled = true;
   resultados.innerHTML = '<div class="empty-state">Buscando...</div>';
 
@@ -1668,6 +1707,85 @@ async function buscarComprador() {
   } finally {
     boton.disabled = false;
   }
+}
+
+// REP-C1 (15/11/2026, pedido de Mauricio): escribir «cortesías» en el
+// buscador lista de una vez a todos los que tienen cortesía (cupo de 20),
+// con sus seriales y si ya ingresaron.
+// Tocar una persona abre la ficha, igual que en la búsqueda.
+async function verSoloCortesias() {
+  const boton = document.getElementById("searchButton");
+  const resultados = document.getElementById("results");
+  boton.disabled = true;
+  resultados.innerHTML = '<div class="empty-state">Cargando cortesías...</div>';
+  try {
+    const resultado = await llamarAPI({
+      accion: "listar_cortesias",
+      token: obtenerToken()
+    });
+    if (!resultado || !resultado.ok) {
+      resultados.innerHTML =
+        '<div class="error-state">' + escaparTexto((resultado && resultado.mensaje) || "No se pudieron cargar las cortesías.") + "</div>";
+      return;
+    }
+    resultados.innerHTML =
+      '<div class="cortesias-resumen">Cortesías entregadas: <b>' + resultado.entregadas + " de " + resultado.cupo +
+      "</b> · " + resultado.disponibles + (resultado.disponibles === 1 ? " disponible" : " disponibles") + "</div>";
+    if (!resultado.resultados.length) {
+      resultados.insertAdjacentHTML("beforeend", '<div class="empty-state">Todavía no se ha entregado ninguna cortesía.</div>');
+      return;
+    }
+    resultado.resultados.forEach(function(persona) {
+      const card = document.createElement("div");
+      card.className = "result-card";
+      card.onclick = function() {
+        abrirFicha(persona.cedula, persona.cedula ? "" : persona.seriales[0]);
+      };
+      const ingreso = persona.ingresados
+        ? '<span class="result-ingreso">' +
+          (persona.boletas === 1 ? "Ingresó" : "Ingresaron " + persona.ingresados + " de " + persona.boletas) + "</span>"
+        : "";
+      card.innerHTML =
+        '<div class="result-main">' +
+        "<strong>" + escaparTexto(persona.nombre) + "</strong>" +
+        "<div>" +
+        (persona.cedula ? "C.C. " + escaparTexto(persona.cedula) + " · " : "") +
+        escaparTexto(persona.telefono || "Sin teléfono") +
+        "</div>" +
+        "</div>" +
+        '<div class="result-side"><div class="result-badge cortesia">' +
+        escaparTexto(seriesCortas(persona.seriales)) + "</div>" + ingreso + "</div>";
+      resultados.appendChild(card);
+    });
+  } catch (error) {
+    resultados.innerHTML = '<div class="error-state">Error de conexión. Intenta nuevamente.</div>';
+  } finally {
+    boton.disabled = false;
+  }
+}
+
+// "MED-2026-001806", "...807", "...808" → "1806-1808"; sueltos con coma.
+function seriesCortas(seriales) {
+  const numeros = seriales.map(function(s) {
+    const m = String(s).match(/(\d+)\s*$/);
+    return m ? Number(m[1]) : null;
+  });
+  if (numeros.some(function(n) { return n === null; })) {
+    return seriales.join(", ");
+  }
+  numeros.sort(function(a, b) { return a - b; });
+  const tramos = [];
+  numeros.forEach(function(n) {
+    const ultimo = tramos[tramos.length - 1];
+    if (ultimo && n === ultimo[1] + 1) {
+      ultimo[1] = n;
+    } else {
+      tramos.push([n, n]);
+    }
+  });
+  return tramos.map(function(t) {
+    return t[0] === t[1] ? String(t[0]) : t[0] + "-" + t[1];
+  }).join(", ");
 }
 
 function escaparTexto(texto) {
