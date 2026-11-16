@@ -309,8 +309,10 @@ body {
   white-space: nowrap;
 }
 
-/* REP-C1: lista de cortesías (escribir «cortesías» en Buscar comprador). */
+/* REP-C1: lista de cortesías (escribir «cortesías» en Buscar comprador),
+   con la misma tabla del detalle de Ventas por fecha. */
 .cortesias-resumen {
+  margin-bottom: 10px;
   color: #6b7280;
   font-size: 13px;
 }
@@ -319,44 +321,9 @@ body {
   color: #111827;
 }
 
-.cortesia-seriales {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.cortesia-serial {
-  padding: 5px 10px;
-  border: 1px solid #e6cf9a;
-  border-radius: 8px;
-  background: #ffffff;
-  font-size: 13px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.result-side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.result-ingreso {
+.ingreso-si {
   color: #059669;
-  font-size: 12px;
   font-weight: 700;
-}
-
-@media (max-width: 640px) {
-  .result-side {
-    align-items: flex-start;
-  }
-
-  .cortesia-seriales {
-    justify-content: flex-start;
-  }
 }
 
 .empty-state,
@@ -1727,8 +1694,9 @@ async function buscarComprador() {
 }
 
 // REP-C1 (15/11/2026, pedido de Mauricio): escribir «cortesías» en el
-// buscador lista de una vez a todos los que tienen cortesía (cupo de 20),
-// con sus seriales y si ya ingresaron.
+// buscador lista de una vez todas las cortesías (cupo de 20) con la misma
+// tabla del detalle de Ventas por fecha. La ficha se abre por serial
+// porque la cédula llega enmascarada.
 // Tocar una persona abre la ficha, igual que en la búsqueda.
 async function verSoloCortesias() {
   const boton = document.getElementById("searchButton");
@@ -1745,36 +1713,61 @@ async function verSoloCortesias() {
         '<div class="error-state">' + escaparTexto((resultado && resultado.mensaje) || "No se pudieron cargar las cortesías.") + "</div>";
       return;
     }
-    resultados.innerHTML =
+    resultados.innerHTML = "";
+    const tarjeta = document.createElement("div");
+    tarjeta.className = "panel-card";
+    tarjeta.innerHTML =
       '<div class="cortesias-resumen">Cortesías entregadas: <b>' + resultado.entregadas + " de " + resultado.cupo +
       "</b> · " + resultado.disponibles + (resultado.disponibles === 1 ? " disponible" : " disponibles") + "</div>";
+    resultados.appendChild(tarjeta);
     if (!resultado.resultados.length) {
-      resultados.insertAdjacentHTML("beforeend", '<div class="empty-state">Todavía no se ha entregado ninguna cortesía.</div>');
+      tarjeta.insertAdjacentHTML("beforeend", '<div class="empty-state">Todavía no se ha entregado ninguna cortesía.</div>');
       return;
     }
-    resultado.resultados.forEach(function(persona) {
-      const card = document.createElement("div");
-      card.className = "result-card";
-      card.onclick = function() {
-        abrirFicha(persona.cedula, persona.cedula ? "" : persona.seriales[0]);
+    tarjeta.insertAdjacentHTML("beforeend",
+      '<div class="table-wrap"><table class="data-table"><thead><tr><th></th>' +
+      '<th class="left">Fecha</th><th class="left">Comprador</th><th class="left">Cédula</th>' +
+      '<th class="left">Teléfono</th><th class="left">Tipo</th><th class="center">Entradas</th>' +
+      '<th class="left">Ingreso</th></tr></thead><tbody></tbody></table></div>' +
+      '<p class="fechas-nota">Fecha en que se registró la cortesía. Toca la flecha para ver los seriales; toca el resto de la fila para abrir la ficha.</p>');
+    const tabla = tarjeta.querySelector("tbody");
+    resultado.resultados.forEach(function(c) {
+      const fila = document.createElement("tr");
+      fila.className = "clickable";
+      fila.onclick = function() {
+        abrirFicha("", c.seriales[0]);
       };
-      const ingreso = persona.ingresados
-        ? '<span class="result-ingreso">' +
-          (persona.boletas === 1 ? "Ingresó" : "Ingresaron " + persona.ingresados + " de " + persona.boletas) + "</span>"
-        : "";
-      card.innerHTML =
-        '<div class="result-main">' +
-        "<strong>" + escaparTexto(persona.nombre) + "</strong>" +
-        "<div>" +
-        (persona.cedula ? "C.C. " + escaparTexto(persona.cedula) + " · " : "") +
-        escaparTexto(persona.telefono || "Sin teléfono") +
-        "</div>" +
-        "</div>" +
-        '<div class="result-side"><div class="cortesia-seriales">' +
-        persona.seriales.map(function(serial) {
-          return '<span class="cortesia-serial">' + escaparTexto(serial) + "</span>";
-        }).join("") + "</div>" + ingreso + "</div>";
-      resultados.appendChild(card);
+      const ingreso = !c.ingresados ? "—"
+        : '<span class="ingreso-si">' + (c.cantidad === 1 ? "Sí" : c.ingresados + " de " + c.cantidad) + "</span>";
+      fila.innerHTML =
+        '<td><button class="toggle-seriales" type="button" aria-expanded="false" aria-label="Ver seriales">▸</button></td>' +
+        '<td class="left">' + escaparTexto(fechaCorta(c.fecha)) + "</td>" +
+        '<td class="left">' + escaparTexto(c.comprador) + "</td>" +
+        '<td class="left">' + escaparTexto(c.cedula) + "</td>" +
+        '<td class="left">' + escaparTexto(c.telefono) + "</td>" +
+        '<td class="left"><span class="pill cortesia">Cortesía</span></td>' +
+        '<td class="center"><span class="cantidad">' + c.cantidad + "</span></td>" +
+        '<td class="left">' + ingreso + "</td>";
+
+      const filaSeriales = document.createElement("tr");
+      filaSeriales.className = "fila-seriales";
+      filaSeriales.hidden = true;
+      filaSeriales.innerHTML = '<td colspan="8">Seriales: ' + c.seriales.map(function(serial) {
+        return '<span class="serial-chip">' + escaparTexto(serial) + "</span>";
+      }).join("") + "</td>";
+
+      const botonFila = fila.querySelector(".toggle-seriales");
+      botonFila.onclick = function(evento) {
+        evento.stopPropagation();
+        const abrir = filaSeriales.hidden;
+        filaSeriales.hidden = !abrir;
+        fila.classList.toggle("abierta", abrir);
+        botonFila.textContent = abrir ? "▾" : "▸";
+        botonFila.setAttribute("aria-expanded", String(abrir));
+      };
+
+      tabla.appendChild(fila);
+      tabla.appendChild(filaSeriales);
     });
   } catch (error) {
     resultados.innerHTML = '<div class="error-state">Error de conexión. Intenta nuevamente.</div>';
