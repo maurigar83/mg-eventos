@@ -309,24 +309,7 @@ body {
   white-space: nowrap;
 }
 
-/* REP-C1: botón "Ver solo cortesías" bajo Buscar comprador. */
-.cortesias-boton {
-  margin-top: 14px;
-  padding: 12px 16px;
-  border: 1px solid #d9ad55;
-  border-radius: 999px;
-  background: #fbf3df;
-  color: #7a5a17;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.cortesias-boton:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
+/* REP-C1: lista de cortesías (escribir «cortesías» en Buscar comprador). */
 .cortesias-resumen {
   color: #6b7280;
   font-size: 13px;
@@ -356,10 +339,6 @@ body {
 @media (max-width: 640px) {
   .result-side {
     align-items: flex-start;
-  }
-
-  .cortesias-boton {
-    width: 100%;
   }
 }
 
@@ -1307,8 +1286,7 @@ body {
         <input id="searchInput" type="text" placeholder="Nombre, cédula, teléfono o serial de boleta">
         <button class="search-button" id="searchButton" type="button" onclick="buscarComprador()">Buscar</button>
       </div>
-      <div class="search-hint">Escribe al menos parte del dato y presiona Buscar o Enter.</div>
-      <button class="cortesias-boton" id="botonCortesias" type="button" onclick="verSoloCortesias()">🎟 Ver solo cortesías</button>
+      <div class="search-hint">Escribe al menos parte del dato y presiona Buscar o Enter. Escribe «cortesías» para verlas todas.</div>
     </div>
     <div class="results" id="results"></div>
   </section>
@@ -1669,6 +1647,12 @@ async function buscarComprador() {
     return;
   }
 
+  // REP-C1: «cortesía(s)», con o sin tilde, lista todas las cortesías.
+  if (/^cortes[ií]as?$/i.test(query)) {
+    verSoloCortesias();
+    return;
+  }
+
   boton.disabled = true;
   resultados.innerHTML = '<div class="empty-state">Buscando...</div>';
 
@@ -1725,11 +1709,12 @@ async function buscarComprador() {
   }
 }
 
-// REP-C1 (15/11/2026, pedido de Mauricio): lista de una vez a todos los
-// que tienen cortesía (cupo de 20), con sus seriales y si ya ingresaron.
+// REP-C1 (15/11/2026, pedido de Mauricio): escribir «cortesías» en el
+// buscador lista de una vez a todos los que tienen cortesía (cupo de 20),
+// con sus seriales y si ya ingresaron.
 // Tocar una persona abre la ficha, igual que en la búsqueda.
 async function verSoloCortesias() {
-  const boton = document.getElementById("botonCortesias");
+  const boton = document.getElementById("searchButton");
   const resultados = document.getElementById("results");
   boton.disabled = true;
   resultados.innerHTML = '<div class="empty-state">Cargando cortesías...</div>';
