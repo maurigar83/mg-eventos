@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll): no publicar el contexto para Claude en mgeventos.co.
+# Es un archivo para el repo, no para los visitantes.
+# CNAME va en la lista porque GitHub Pages lo excluye por defecto y, al
+# definir esta lista, esa regla se pierde si no se repite aquí.
+exclude:
+  - CNAME
+  - CLAUDE.md

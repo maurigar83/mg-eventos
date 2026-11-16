@@ -2,167 +2,72 @@
 
 Frontend estático (HTML, CSS y JS puros, sin build) publicado con GitHub Pages
 en **https://mgeventos.co** (archivo `CNAME`). El backend es el repo hermano
-`ticketera-apps-script` (Google Apps Script + Google Sheets); su `CLAUDE.md`
-tiene el contexto completo del negocio, la protección de datos (Ley 1581) y el
-flujo de deploy del backend. Dueño: Mauricio García Rivera, MG Eventos.
+`ticketera-apps-script` (Google Apps Script + Google Sheets).
+
+**Este repo es público:** todo lo que se escribe aquí, incluido este archivo y
+su historial, lo puede leer cualquiera. El contexto interno (negocio,
+protección de datos, dominio y correo, ambiente de pruebas, historial de
+decisiones, Plan de auditoría) está en el `CLAUDE.md` de
+`ticketera-apps-script`, que es privado: leerlo antes de cambiar algo aquí.
+No volver a poner en este archivo correos personales, ids de hojas o
+carpetas, configuración de cuentas ni detalles de la operación.
 
 **⚠️ Importante:** varias conversaciones de Claude editan estos repos en
 paralelo. En las sesiones en la nube no se commitea directo a `main`: se trabaja
-en la rama `claude/...` de la sesión y se abre un PR para que Mauricio lo revise
-y lo fusione. Al fusionar a `main`, GitHub Pages publica solo (no hay más pasos).
+en la rama `claude/...` de la sesión y se abre un PR para revisión. Al fusionar
+a `main`, GitHub Pages publica solo (no hay más pasos).
 
 ## Qué es cada cosa
 
-- `config.js`: URL única de la API (la implementación de Apps Script que
-  atiende login, panel, Ventas, Reportes, lector y webhook). Las tres claves
-  apuntan a la misma URL; no crear otra implementación.
+- `config.js`: URL única de la API (la implementación de Apps Script). Las tres
+  claves apuntan a la misma URL; no crear otra implementación.
+- `_config.yml`: le dice a GitHub Pages que no publique este `CLAUDE.md`.
 - Páginas públicas: `index.html` (inicio con intro animada y video),
-  `eventos/` (cartelera) y `eventos/adviento/` (evento actual: Retiro de
-  Adviento, 28/11/2026), con los videos de los cuatro sacerdotes (lista `SLIDES`
-  al final del HTML; desde el 05/11/2026 el cuarto es el Pbro. Freddy
-  Bustamante, `Video_Freddy_Bustamante_v2.mp4`, con el tropiezo antes de
-  "Teatro" cortado en Canva por Mauricio; se probó antes en
-  `mg-eventos-pruebas`, PR #4 y #5), `servicios/`, `contacto/`, `politica-privacidad.html`,
-  `terminos-servicio.html`, `eliminacion-datos.html`. Política versión
-  2026-10-24 (auditoría B1 y norma M2): dice "entradas", nombra Cloudflare
-  Web Analytics y avisa que los enlaces de PDF por WhatsApp se cierran al
-  día siguiente del evento; Eliminación de Datos pide la cédula. Versión
-  2026-11-13 (PUE-CF1): agrega que Cloudflare valida las entradas en la
-  puerta y qué guarda (sin teléfono, correo ni pago). Si cambia
-  un proveedor (por ejemplo Bold o Wompi al integrarse), actualizar la
-  política y su versión.
-- Páginas de operación (con sesión): `panel.html` (login y panel de gestión),
-  `reportes.html` (consulta de ventas, compradores y reenvío de entradas;
-  desde el 24/10/2026 la búsqueda pide 3 caracteres y muestra máximo 20,
-  auditoría A4; desde el 25/10/2026 tiene dos pestañas: "Resumen y
-  compradores" (lo de siempre) y "Ventas por fecha": rango de fechas, ventas
-  por día con gráfica, detalle enmascarado agrupado por compra (una fila por
-  pago, flecha que despliega los seriales; 20 compras por página con
-  "‹ Anterior · Página X de Y · Siguiente ›"), tabla por día con scroll
-  propio (títulos y Total fijos), gráfica de hasta 62 días y botón "Descargar
-  en Google Sheets"; `reportes.html#ventas` abre directo en esa pestaña;
-  backend en `ticketera-apps-script/ReportesFechas.js`; desde el 04/11/2026
-  (ALM-2) la ficha tiene la sección "Almuerzo": una línea por entrada,
-  "Registrar pedido" con el plato de cada entrada pendiente, total
-  automático y "Anular" solo para SUPERADMIN; desde el 15/11/2026 (ALM-3,
-  decisión de Mauricio: los organizadores solo toman el pedido) no pide
-  comprobante, medio ni referencia; el Resumen muestra "Almuerzos pedidos"
-  por plato; backend en
-  `ticketera-apps-script/Almuerzos.js`),
-  `usuarios.html` (usuarios y roles), `activar.html` (enlace de un solo uso
-  para definir la contraseña), `politica-password.js` (política de claves).
+  `eventos/` (cartelera), `eventos/adviento/` (evento actual; los videos de los
+  sacerdotes están en la lista `SLIDES` al final del HTML), `servicios/`,
+  `contacto/`, `politica-privacidad.html`, `terminos-servicio.html`,
+  `eliminacion-datos.html`. Si cambia un proveedor que trata datos, actualizar
+  la política y su versión.
+- Páginas de operación (con sesión): `panel.html` (login y panel),
+  `reportes.html` (ventas, compradores, reenvío de entradas, "Ventas por
+  fecha" y almuerzos; `reportes.html#ventas` abre esa pestaña), `usuarios.html`
+  (usuarios y roles), `activar.html` (enlace de un solo uso para definir la
+  contraseña), `politica-password.js` (política de claves).
 - `lector/`: lector de QR de la puerta (`mgeventos.co/lector`). Vive aquí porque
   la sesión se guarda por dominio. Librería html5-qrcode guardada en
-  `lector/vendor/` y CSP estricta. El repo `validacion-tickets` solo redirige
-  aquí. Desde el 23/10/2026 (preparación de la puerta, Plan MT8): usa el lector
-  nativo del navegador (BarcodeDetector) donde existe y solo busca QR; botón
-  "Admin: validar por serial" (solo visible para el rol SUPERADMIN) para
-  validar a mano por serial o número más la cédula completa del documento,
-  que el servidor compara con la del comprador (acción `validar_serial`;
-  el serial y los últimos 4 dígitos de la cédula salen impresos en la
-  entrada, así que solos no prueban nada), y contador "Ingresaron X de Y" (acción
-  `conteo_ingresos`, cada 30 s). Si el servidor responde "NO FUE POSIBLE
-  VALIDAR" o falla la red, el lector reintenta una vez con el mismo
-  `scanId` antes de mostrar el error (X12, 23/10/2026). El backend de esas acciones está en
-  `ticketera-apps-script/Codigo.js`. Al cambiar `lector.js`/`lector.css`,
-  subir el `?v=` en `lector/index.html`.
-  Desde PUE-CF1 (13/11/2026, probado primero en `mg-eventos-pruebas`) el
-  lector valida en el Worker de Cloudflare `mg-eventos-puerta`
-  (`https://mg-eventos-puerta.maurigar.workers.dev`, código en
-  `ticketera-apps-script/puerta-cloudflare/`) con `lector/puerta.js`:
-  Cloudflare (3 s) → Apps Script de respaldo (6 s) → lista guardada en el
-  celular (sin nombres) con cola de ingresos que sube sola. El login sigue
-  en Apps Script, que da un pase firmado (acción `puerta_firma`). La franja
-  `#estadoPuerta` dice qué capa está activa. La CSP solo deja conectar a
-  Google y a esa dirección exacta del Worker: si cambia, cambiarla en
-  `lector/index.html`. Los archivos `config-pruebas.js` y `entrar.*` de
-  pruebas no se copian aquí.
-- `adviento/almuerzo/` (04/11/2026): destino del botón "Pedir mi almuerzo" de la
-  plantilla de WhatsApp del almuerzo. Meta no acepta enlaces directos a
-  WhatsApp (wa.me) en los botones, así que el botón abre
-  `https://mgeventos.co/adviento/almuerzo/` y la página redirige al chat de quien toma
-  los pedidos (573225276778) con un mensaje listo. No cambiar la URL mientras
-  la plantilla esté en uso; el número sí se puede cambiar aquí.
-- Recomendaciones para asistentes de Adviento (05/11/2026, pedido de
-  Mauricio, Plan WEB-R1): dos piezas que **no viven en este repo** sino en
-  la carpeta del proyecto `recomendaciones/` (JPG, PDF para importar a Canva
-  y `fuente/` con el HTML que se renderiza con Playwright). Vertical
-  1080×1920 para el envío masivo por WhatsApp del 23/11/2026 y horizontal
-  1920×1080 para proyectar en el teatro. Datos de Mauricio: puertas a las
-  **6:45 a. m.**, metro estación **Prado**, parqueaderos a 2 y 3 cuadras,
-  puestos por orden de llegada y prohibido guardar puestos. Si cambia uno de
-  esos datos, cambiarlo en las dos piezas.
-- Anuncios contra estafas del Retiro de Adviento (06/11/2026, pedido de
-  Mauricio, Plan WEB-R2): con el padre Freddy siempre aparecen estafadores
-  vendiendo entradas falsas. Dos piezas verticales 1080×1920 iguales en la
-  carpeta del proyecto `estafas/` (JPG, PDF para Canva y `anuncio.html`; con
-  `#soldout` sale la versión agotada): "Compra solo por nuestro WhatsApp" y,
-  con sello SOLD OUT, "Si te ofrecen entradas, es estafa". Aclaración de
-  Mauricio: MG Eventos es solo la boletería (pasarela), no vende. La venta
-  es únicamente por el WhatsApp de la organización del retiro
-  +57 322 527 6778 (en grande); la entrada la envía solo MG Eventos desde
-  "MG Eventos Oficial" (cuenta verificada) +57 300 101 4450, que solo envía
-  entradas y no vende ni recibe pagos, o por correo desde
-  boletas@mgeventos.co. Si cambia uno de esos datos, cambiarlo en las dos
-  piezas.
+  `lector/vendor/` y CSP estricta. `lector/puerta.js` valida en el Worker de
+  Cloudflare con respaldo en Apps Script y en una lista guardada en el
+  celular; la franja `#estadoPuerta` dice qué capa está activa. Reglas:
+  - Al cambiar `lector.js`, `puerta.js` o `lector.css`, subir su `?v=` en
+    `lector/index.html`.
+  - La CSP solo deja conectar a Google y a la dirección exacta del Worker: si
+    cambia, cambiarla en `lector/index.html`.
+  - Los archivos `config-pruebas.js` y `entrar.*` del repo de pruebas no se
+    copian aquí.
+- `adviento/almuerzo/`: destino del botón "Pedir mi almuerzo" de la plantilla
+  de WhatsApp (Meta no acepta enlaces wa.me en los botones). La página
+  redirige al chat de quien toma los pedidos. No cambiar la URL mientras la
+  plantilla esté en uso; el número sí se puede cambiar aquí.
 - `assets/`: encabezado y pie compartidos (`mg-header.*`) e intro del eslogan
   (`intro-eslogan.*`).
 - `images/` y `videos/`: flyers, pósters y videos del evento. El flyer vigente
-  de Adviento es `flyer_adviento_v4.jpg` (y su versión de 600 px para
-  tarjetas). `flyer-almuerzo-adviento.jpg` (1080×1080) es el encabezado de la plantilla de WhatsApp del almuerzo: Meta lo descarga de esta URL en cada envío (`ticketera-apps-script/CampanaAlmuerzo.js`), no renombrarlo ni borrarlo antes del 24/11/2026; los videos van en 720p con faststart para que carguen rápido.
-- Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies,
-  decisión de Mauricio del 06/10/2026: no usar Google Analytics por Ley 1581),
-  menos en `lector/`: su CSP estricta lo bloqueaba igual, así que se quitó el
-  23/10/2026 (es una página interna, no aporta visitas).
-
-## Dominio y correo (Cloudflare)
-
-El dominio `mgeventos.co` está comprado y con DNS en Cloudflare (Cloudflare
-Registrar). Revisión de la auditoría del 25/10/2026 (SEG-V2 del Plan):
-
-- Todos los registros van en **"Solo DNS"** (nube gris). No activar el proxy
-  (nube naranja) aunque Cloudflare lo sugiera: GitHub Pages dejaría de renovar
-  el certificado HTTPS y los registros de Brevo dejarían de servir.
-- GitHub Pages: dominio propio `mgeventos.co` con "Enforce HTTPS" activo.
-- Correo: SPF `include:_spf.mx.cloudflare.net include:_spf.brevo.com ~all`,
-  DKIM de Brevo (`brevo1`/`brevo2._domainkey`) y DMARC en **`p=quarantine`**
-  (reportes a Brevo). Todo correo que salga como `@mgeventos.co` tiene que
-  pasar por Brevo; si no, se va a spam. Gmail (mgeventos.co@gmail.com) envía
-  como contacto@mgeventos.co por el SMTP de Brevo (la clave vence el
-  24/10/2027 o a los 90 días sin uso; recordatorio en el Calendar de
-  Mauricio). El correo que llega a contacto@ lo reenvía Cloudflare Email
-  Routing a mgeventos.co@gmail.com.
-- Brevo: seguimiento de correos transaccionales en modo **anónimo** (no asocia
-  aperturas ni clics a cada comprador, Ley 1581).
-- DNSSEC activado el 25/10/2026. Si algún día se cambia de registrador o de
-  DNS, **desactivar DNSSEC antes** y esperar a que se quite el registro DS;
-  apagarlo con el DS puesto tumba el sitio, el lector y el correo.
-
-## Ambiente de pruebas
-
-El repo `mg-eventos-pruebas` es una copia de este sitio para revisar cambios de
-diseño antes de publicarlos: sin `CNAME`, oculto a buscadores y con la API
-desactivada (`config.js` vacío), así que login, Ventas y lector no funcionan
-allí a propósito. Flujo habitual: probar el cambio en `mg-eventos-pruebas`,
-y cuando Mauricio lo aprueba, llevar el mismo cambio a este repo.
-Se publica con Cloudflare Pages en `mg-eventos-pruebas.pages.dev` y desde el
-25/10/2026 (auditoría M7) está detrás de Cloudflare Access (Zero Trust Free):
-solo entran maurigar@gmail.com y mgeventos.co@gmail.com con un código que llega
-al correo. Para dar acceso a alguien más, se agrega su correo a la política
-"Solo Mauricio" (Zero Trust → Controles de Access → Aplicaciones).
+  de Adviento es `flyer_adviento_v4.jpg` (y su versión de 600 px).
+  `flyer-almuerzo-adviento.jpg` es el encabezado de la plantilla de WhatsApp
+  del almuerzo: Meta lo descarga de esta URL en cada envío, no renombrarlo ni
+  borrarlo mientras la campaña esté activa. Videos en 720p con faststart.
+- Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies; no
+  usar Google Analytics), menos en `lector/`, cuya CSP lo bloquea.
 
 ## Lenguaje de cara al cliente
 
-Todo texto que lee el comprador dice **"entrada(s)"**, no "boleta(s)"
-(decisión de Mauricio del 05/10/2026). El contacto público es
-contacto@mgeventos.co.
+Todo texto que lee el comprador dice **"entrada(s)"**, no "boleta(s)". El
+contacto público es contacto@mgeventos.co.
 
 ## Trazabilidad
 
-Regla de Mauricio (23/10/2026): todo cambio queda documentado en este archivo
-(si cambia la estructura o una decisión) **y** en el Plan de auditoría
-(Google Sheet "Plan_Auditoria_Ticketera_MG_Eventos", pestaña "Plan de trabajo",
-id `1YnAFnOSULsJO4Ieg8fyX3opJRYzmvcshfinGDyAgmts`).
+Todo cambio queda documentado en el `CLAUDE.md` de `ticketera-apps-script` (si
+cambia la estructura o una decisión) y en el Plan de auditoría (el enlace está
+en ese archivo). Aquí solo se actualiza lo técnico de la lista de arriba.
 
 ## Convenciones
 
