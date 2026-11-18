@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/mg-header.css">
-  <link rel="stylesheet" href="envivo.css?v=11">
+  <link rel="stylesheet" href="envivo.css?v=13">
 </head>
 <body>
   <header class="mg-header">
@@ -64,10 +64,29 @@
           <button id="btnSonido" type="button" class="sonido oculto">🔊 Toca para activar el sonido</button>
         </div>
         <p id="conexion" class="conexion"><i></i><span>Conectado</span></p>
+        <!-- VIR-6: «¿Cómo te llega?» (solo en vivo). Lo ve Mauricio en su panel. -->
+        <div id="comoLlega" class="comollega oculto">
+          <span class="etiqueta">¿Cómo te llega?</span>
+          <button type="button" class="chipbtn" data-valor="OK">👍 Todo bien</button>
+          <button type="button" class="chipbtn" data-valor="CONGELA">🧊 Se congela</button>
+          <button type="button" class="chipbtn" data-valor="SONIDO">🔇 Sin sonido</button>
+        </div>
+        <p id="graciasSenal" class="gracias oculto" role="status"></p>
       </div>
       <aside class="lado">
         <img class="letras-lado" src="img/letras-adviento.jpg" width="1080" height="330"
           alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación">
+        <!-- VIR-6: pregunta del momento (la publica Mauricio desde su panel) -->
+        <div id="pregunta" class="tarjeta pregunta oculto" aria-live="polite">
+          <p class="eyebrow">Pregunta del momento</p>
+          <p id="preguntaTexto" class="ptexto"></p>
+          <form id="preguntaForm" class="pform oculto" autocomplete="off" novalidate>
+            <input id="preguntaInput" type="text" maxlength="25" placeholder="Tu ciudad o país" aria-label="Tu respuesta">
+            <button type="submit" class="btn mini">Enviar</button>
+          </form>
+          <div id="preguntaOpciones" class="popc oculto"></div>
+          <p id="preguntaNota" class="pnota"></p>
+        </div>
         <div id="escenario" class="tarjeta escenario oculto">
           <div class="escenario-fila">
             <img id="fotoAhora" class="foto oculto" src="" alt="" width="160" height="160">
@@ -129,8 +148,8 @@
 
   <footer class="pie">MG Eventos · boletería oficial del retiro · <a href="../politica-privacidad.html">Política de privacidad</a></footer>
 
-  <script src="config-envivo.js?v=9"></script>
+  <script src="config-envivo.js?v=10"></script>
   <script src="vendor/hls-1.5.17.min.js"></script>
-  <script src="envivo.js?v=9"></script>
+  <script src="envivo.js?v=11"></script>
 </body>
 </html>

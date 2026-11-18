@@ -148,6 +148,27 @@ label { display: block; font: 500 14px 'Oswald', Arial, sans-serif; letter-spaci
 .conexion i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
 .conexion.alerta { color: #f0b54a; }
 
+/* VIR-6: «¿Cómo te llega?» y pregunta del momento */
+.comollega { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.comollega .etiqueta { font: 500 13px 'Oswald', Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--oro); margin-right: 4px; }
+.chipbtn { background: rgba(8, 18, 39, .6); color: var(--crema); border: 1px solid var(--linea); border-radius: 999px; padding: 9px 14px; font: 600 14px 'DM Sans', Arial, sans-serif; cursor: pointer; min-height: 40px; }
+.chipbtn:hover { border-color: var(--oro); }
+.chipbtn.activo { background: var(--oro); color: #1a1530; border-color: var(--oro); }
+.chipbtn:disabled { opacity: .7; cursor: wait; }
+.chipbtn:focus-visible { outline: 3px solid var(--oro2); outline-offset: 2px; }
+.gracias { font-size: 13px; color: var(--texto-suave); margin-top: 8px; line-height: 1.4; }
+.pregunta { margin-bottom: 14px; border-left: 4px solid var(--oro); padding: 16px; }
+.ptexto { font: 600 20px/1.2 'Fraunces', Georgia, serif; color: #fff; margin: 6px 0 12px; }
+.pform { display: flex; gap: 8px; }
+.pform input { flex: 1; min-width: 0; height: 46px; border-radius: 12px; border: 2px solid rgba(226, 180, 95, .6); background: rgba(8, 18, 39, .6); color: #fff; padding: 0 12px; font: 500 16px 'DM Sans', Arial, sans-serif; }
+.pform input:focus { outline: none; border-color: var(--oro2); }
+.btn.mini { width: auto; margin: 0; min-height: 46px; padding: 0 16px; font-size: 15px; }
+.pnota { font-size: 12px; color: var(--texto-suave); margin-top: 8px; line-height: 1.4; }
+.pnota.error { color: #f3a0a0; }
+.pnota.listo { font: 600 17px 'DM Sans', Arial, sans-serif; color: var(--oro2); margin-top: 10px; }
+.popc { display: flex; flex-wrap: wrap; gap: 8px; }
+.popc .chipbtn { flex: 1 1 auto; padding: 12px 10px; }
+
 /* En celular las letras ya salen en la imagen del video: no se repiten */
 .letras-lado { display: none; }
 .escenario { border-left: 4px solid var(--oro); padding: 14px 16px; }
@@ -208,6 +229,8 @@ label { display: block; font: 500 14px 'Oswald', Arial, sans-serif; letter-spaci
   .viendo { grid-template-columns: minmax(0, 1fr) 330px; gap: 30px; align-items: start; }
   .marco { margin: 0; border-radius: 16px; border: 1px solid var(--linea); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
   .letras-lado { display: block; }
+  /* Con pregunta activa no caben los consejos al lado del video (siguen en el póster) */
+  .lado.con-pregunta .tips { display: none; }
   .escenario { margin-top: 14px; }
   .aviso { max-width: 760px; margin-top: 20px; }
   .aviso .centro { padding: 48px 60px; }

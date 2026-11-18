@@ -117,6 +117,8 @@
     estado.latido = r.latido || 15;
     pintarModo(r.modo);
     pintarEscenario(r.escenario);
+    (r.respondidas || []).forEach(function (id) { respondidas[id] = true; });
+    pintarPregunta(r.pregunta);
     pintarConexion(true);
     mostrar(pVideo);
     cargarVideo(r.video.hls);
@@ -199,6 +201,8 @@
 
   function pintarModo(modo) {
     var grabacion = modo === "GRABACION";
+    oculto($("comoLlega"), grabacion);
+    if (grabacion) oculto($("graciasSenal"), true);
     pintarChip("", grabacion ? "Grabación" : "● En vivo");
     chip.classList.toggle("vivo", !grabacion);
   }
@@ -257,6 +261,131 @@
     chip.appendChild(document.createTextNode(corto));
   }
 
+  /* ---------- VIR-6: «¿Cómo te llega?» ----------
+     Sin chat abierto (decisión de Mauricio): un toque de botón. El Worker
+     guarda el último botón de cada código y Mauricio ve los conteos de
+     los últimos 2 minutos en su panel. */
+  var GRACIAS_SENAL = {
+    OK: "¡Gracias! Que lo disfrutes.",
+    CONGELA: "Gracias, ya lo sabemos. Si sigue congelado, recarga la página: no tienes que volver a escribir el código.",
+    SONIDO: "Gracias, ya lo sabemos. Revisa también que el volumen esté arriba y que el video no esté en silencio."
+  };
+  var botonesSenal = Array.prototype.slice.call(document.querySelectorAll("#comoLlega .chipbtn"));
+  botonesSenal.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var valor = b.getAttribute("data-valor");
+      botonesSenal.forEach(function (o) { o.disabled = true; });
+      llamar("/api/senal", { codigo: estado.codigo, sesion: estado.sesion, valor: valor }).then(function (r) {
+        if (r.ok) {
+          botonesSenal.forEach(function (o) { o.classList.toggle("activo", o === b); });
+          $("graciasSenal").textContent = GRACIAS_SENAL[valor] || "";
+        } else {
+          $("graciasSenal").textContent = r.mensaje || "No se pudo enviar. Intenta de nuevo.";
+        }
+        oculto($("graciasSenal"), false);
+      }).catch(function () {
+        $("graciasSenal").textContent = "No se pudo enviar. Revisa tu internet.";
+        oculto($("graciasSenal"), false);
+      }).finally(function () {
+        setTimeout(function () { botonesSenal.forEach(function (o) { o.disabled = false; }); }, 3000);
+      });
+    });
+  });
+
+  /* ---------- VIR-6: pregunta del momento ----------
+     Llega en cada latido (o null). Solo se vuelve a pintar si cambia, para
+     no borrar lo que la persona está escribiendo. */
+  var preguntaActual = 0;
+  // Preguntas ya respondidas con este código: la tarjeta se cierra y no
+  // vuelve a salir (VIR-6b, pedido de Mauricio: «para no confundir»).
+  var respondidas = {};
+  var cerrarPregunta = 0;
+  function pintarPregunta(p) {
+    var caja = $("pregunta");
+    var lado = caja.parentNode;
+    if (p && p.id && respondidas[p.id]) p = null;
+    if (!p || !p.id) {
+      clearTimeout(cerrarPregunta);
+      preguntaActual = 0;
+      oculto(caja, true);
+      lado.classList.remove("con-pregunta");
+      return;
+    }
+    if (p.id === preguntaActual) return;
+    preguntaActual = p.id;
+    clearTimeout(cerrarPregunta);
+    $("preguntaTexto").textContent = p.texto;
+    var nota = $("preguntaNota");
+    nota.classList.remove("error", "listo");
+    var opciones = $("preguntaOpciones");
+    opciones.textContent = "";
+    if (p.tipo === "BOTONES") {
+      (p.opciones || []).forEach(function (texto, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "chipbtn";
+        b.textContent = texto;
+        b.addEventListener("click", function () { responder(p.id, i, b); });
+        opciones.appendChild(b);
+      });
+      nota.textContent = "";
+    } else {
+      $("preguntaInput").value = "";
+      nota.textContent = "Solo lo ve el equipo de la transmisión.";
+    }
+    oculto(opciones, p.tipo !== "BOTONES");
+    oculto($("preguntaForm"), p.tipo === "BOTONES");
+    oculto(caja, false);
+    lado.classList.add("con-pregunta");
+  }
+
+  function responder(id, respuesta, boton) {
+    var nota = $("preguntaNota");
+    var botones = Array.prototype.slice.call(document.querySelectorAll("#preguntaOpciones .chipbtn"));
+    var enviar = $("preguntaForm").querySelector("button");
+    botones.forEach(function (b) { b.disabled = true; });
+    enviar.disabled = true;
+    llamar("/api/responder", { codigo: estado.codigo, sesion: estado.sesion, pregunta: id, respuesta: respuesta }).then(function (r) {
+      nota.classList.toggle("error", !r.ok);
+      if (r.ok || r.estado === "CERRADA") {
+        // Respondida (o ya cerrada): gracias 3 s y la tarjeta se cierra sola.
+        respondidas[id] = true;
+        oculto($("preguntaOpciones"), true);
+        oculto($("preguntaForm"), true);
+        nota.classList.remove("error");
+        nota.classList.toggle("listo", !!r.ok);
+        nota.textContent = r.ok ? "✓ ¡Gracias por responder!" : "Esa pregunta ya se cerró.";
+        clearTimeout(cerrarPregunta);
+        cerrarPregunta = setTimeout(function () { pintarPregunta(null); }, 3000);
+      } else {
+        nota.textContent = r.mensaje || "No se pudo enviar. Intenta de nuevo.";
+      }
+    }).catch(function () {
+      nota.classList.add("error");
+      nota.textContent = "No se pudo enviar. Revisa tu internet.";
+    }).finally(function () {
+      botones.forEach(function (b) { b.disabled = false; });
+      enviar.disabled = false;
+    });
+  }
+
+  $("preguntaForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var texto = $("preguntaInput").value.trim();
+    var nota = $("preguntaNota");
+    if (texto.length < 2) {
+      nota.classList.add("error");
+      nota.textContent = "Escribe el nombre de tu ciudad o país.";
+      return;
+    }
+    if (/\d/.test(texto)) {
+      nota.classList.add("error");
+      nota.textContent = "Escribe solo letras, sin números.";
+      return;
+    }
+    responder(preguntaActual, texto, null);
+  });
+
   /* ---------- latido: un aparato a la vez y firma nueva ---------- */
   function programarLatido() {
     clearTimeout(temporizadorLatido);
@@ -293,6 +422,7 @@
         if (video.error || video.paused && video.readyState < 2) cargarVideo(r.video.hls);
       }
       pintarEscenario(r.escenario);
+      pintarPregunta(r.pregunta);
       pintarConexion(true);
       programarLatido();
     }).catch(function () {
@@ -421,7 +551,7 @@
     estado.codigo = guardado;
     estado.sesion = sesionGuardada;
     inputCodigo.value = bonito(guardado);
-    llamar("/api/latido", { codigo: guardado, sesion: sesionGuardada }).then(function (r) {
+    llamar("/api/latido", { codigo: guardado, sesion: sesionGuardada, inicio: true }).then(function (r) {
       // Si otro aparato tomó el código, se avisa con «Ver aquí» en vez de
       // quitárselo solo (una pestaña vieja no debe sacar a nadie).
       if (r.ok) { empezar(r); } else if (r.estado === "NO_VALIDO") { mostrar(pCodigo); } else { avisar(r); }

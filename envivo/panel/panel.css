@@ -1,0 +1,71 @@
+/* Panel de la transmisión (VIR-6). Usa los colores de ../envivo.css. */
+.pan { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 16px; }
+.pan h3, .ptitulo { font: 600 22px/1.2 'Fraunces', Georgia, serif; color: #fff; margin: 4px 0 14px; }
+.campo { width: 100%; height: 46px; border-radius: 10px; border: 1px solid var(--linea); background: rgba(8, 18, 39, .6); color: #fff; padding: 0 12px; font: 500 16px 'DM Sans', Arial, sans-serif; margin-bottom: 12px; }
+.campo:focus { outline: none; border-color: var(--oro2); box-shadow: 0 0 0 3px rgba(226, 180, 95, .2); }
+select.campo option { color: #000; }
+#formNueva label, #formLogin label { margin-bottom: 6px; }
+.opciones { display: grid; grid-template-columns: 1fr; gap: 0 10px; }
+.barra { display: grid; grid-template-columns: 120px 1fr 48px; gap: 10px; align-items: center; margin: 10px 0; font-size: 15px; }
+.barra i { display: block; height: 14px; border-radius: 7px; background: var(--oro); min-width: 4px; width: 0; transition: width .4s; }
+.barra i.r { background: #e06a6a; }
+.barra b { text-align: right; color: var(--oro2); }
+.nube { display: flex; flex-wrap: wrap; gap: 8px; }
+.nube span { border: 1px solid var(--linea); border-radius: 999px; padding: 6px 12px; background: rgba(8, 18, 39, .5); }
+.nube b { color: var(--oro2); margin-left: 6px; }
+.alerta { background: rgba(224, 106, 106, .15); border: 1px solid #e06a6a; border-radius: 12px; padding: 10px 12px; margin-top: 12px; color: #f3a0a0; font-weight: 700; font-size: 14px; }
+.lista { list-style: none; }
+.lista li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 0; border-bottom: 1px solid rgba(226, 180, 95, .18); }
+.lista .t { flex: 1 1 220px; color: #fff; }
+.lista .t small { display: block; color: var(--texto-suave); font-size: 12px; margin-top: 2px; }
+.estado { font: 500 11px 'Oswald', Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; border-radius: 999px; padding: 3px 8px; border: 1px solid var(--linea); color: var(--oro2); }
+.estado.ACTIVA { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.btnp { background: rgba(8, 18, 39, .6); color: var(--crema); border: 1px solid var(--linea); border-radius: 999px; padding: 8px 14px; font: 600 14px 'DM Sans', Arial, sans-serif; cursor: pointer; }
+.btnp.oro { background: var(--oro); color: #1a1530; border-color: var(--oro); }
+.btnp:disabled { opacity: .6; cursor: wait; }
+.pie-panel { text-align: center; font-size: 13px; color: var(--texto-suave); }
+#pLogin .btn { margin-top: 4px; }
+@media (min-width: 900px) {
+  .pan { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .pan .ancha, .pie-panel { grid-column: 1 / -1; }
+  .opciones { grid-template-columns: repeat(5, 1fr); }
+  #formNueva .btn { max-width: 320px; }
+}
+
+/* Panel claro, como Reportes y Usuarios (fondo #f5f7fa, tarjetas blancas). */
+html { background: #f5f7fa; }
+body.claro {
+  background: #f5f7fa;
+  color: #111827;
+  --oro: #d9ad55;
+  --oro2: #b8862f;
+  --linea: #e5e7eb;
+  --texto-suave: #6b7280;
+  --crema: #111827;
+}
+.claro .mg-header { background: #fff; border-top: 4px solid var(--morado); border-bottom: 1px solid #e5e7eb; }
+.claro .tarjeta { background: #fff; border-radius: 16px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(17, 24, 39, .06); color: #111827; backdrop-filter: none; }
+.claro .tarjeta::before, .claro .tarjeta::after { display: none; }
+.claro .eyebrow { color: #9a6b1e; }
+.claro .pan h3, .claro .ptitulo { color: #111827; }
+.claro label { color: #374151; }
+.claro .pnota { color: #6b7280; }
+.claro .campo { background: #fff; color: #111827; border: 1px solid #d1d5db; }
+.claro .campo::placeholder { color: #9ca3af; }
+.claro .campo:focus { border-color: var(--oro); box-shadow: 0 0 0 3px rgba(217, 173, 85, .25); }
+.claro .barra i { background: #d9ad55; }
+.claro .barra i.r { background: #dc2626; }
+.claro .barra b { color: #111827; }
+.claro .nube span { background: #f9fafb; border-color: #e5e7eb; color: #111827; }
+.claro .nube b { color: #9a6b1e; }
+.claro .alerta { background: #fef2f2; border-color: #fca5a5; color: #b91c1c; }
+.claro .lista li { border-bottom: 1px solid #e5e7eb; }
+.claro .lista .t { color: #111827; }
+.claro .estado { color: #6b7280; border-color: #d1d5db; }
+.claro .estado.ACTIVA { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.claro .btnp { background: #fff; color: #111827; border: 1px solid #d1d5db; }
+.claro .btnp.oro { background: #d9ad55; border-color: #d9ad55; color: #111827; }
+.claro .btn { background: #d9ad55; color: #111827; box-shadow: none; }
+.claro .enlace { color: #b91c1c; }
+.claro .pie-panel { color: #6b7280; }
+.claro .pie-panel .enlace { color: #6b7280; }
