@@ -1,0 +1,186 @@
+/* Transmisión en vivo · Retiro de Adviento (MG Eventos)
+   Paleta de la página del evento (eventos/adviento) y azul del flyer. */
+:root {
+  --dorado: #C4924F;
+  --dorado-texto: #8A5E2E;
+  --fondo: #F4EDDF;
+  --texto: #141B2D;
+  --suave: #4A5068;
+  --borde: #E4D9C2;
+  --morado: #4A2C6B;
+  --morado-hover: #5B3A82;
+  --azul: #0E2A4A;
+  --verde: #1F7A4D;
+  --rojo: #D7262E;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Archivo', Arial, Helvetica, sans-serif;
+  color: var(--texto);
+  background: var(--fondo) url("../images/textura-papel.png");
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.oculto { display: none !important; }
+
+/* Encabezado */
+.enc {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border-top: 4px solid var(--morado);
+  border-bottom: 1px solid var(--borde);
+}
+.marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; }
+.marca img { width: 40px; height: 40px; border-radius: 50%; }
+.marca span { display: flex; flex-direction: column; line-height: 1.15; }
+.marca b { font-size: 15px; }
+.marca small { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 15px; color: var(--dorado-texto); }
+.chip {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--morado);
+  border: 1px solid var(--morado);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.chip.vivo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+
+main { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 16px 28px; }
+
+.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--dorado-texto); }
+.lema { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 22px; line-height: 1.2; color: var(--morado); }
+.lema b { font-weight: 600; }
+.lema.chico { font-size: 19px; }
+
+/* 1. Código */
+.entrada { max-width: 460px; margin: 0 auto; }
+.titular { text-align: center; margin-bottom: 20px; }
+.titular h1 { font-size: 46px; font-weight: 800; letter-spacing: 1px; color: var(--azul); margin: 6px 0 4px; }
+.cuando { margin-top: 12px; font-size: 15px; color: var(--suave); font-weight: 500; }
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  padding: 22px 20px;
+  box-shadow: 0 14px 34px rgba(20, 27, 45, 0.08);
+}
+label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+#inputCodigo {
+  width: 100%;
+  height: 58px;
+  border: 2px solid var(--borde);
+  border-radius: 14px;
+  padding: 0 14px;
+  font: 700 22px/1 'Archivo', Arial, sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--texto);
+  background: #fff;
+}
+#inputCodigo:focus { outline: none; border-color: var(--morado); box-shadow: 0 0 0 4px rgba(74, 44, 107, 0.15); }
+#inputCodigo::placeholder { color: #C9C2B4; letter-spacing: 2px; }
+
+.btn {
+  width: 100%;
+  margin-top: 14px;
+  min-height: 54px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--morado);
+  color: #fff;
+  font: 800 17px 'Archivo', Arial, sans-serif;
+  cursor: pointer;
+}
+.btn:hover { background: var(--morado-hover); }
+.btn:disabled { opacity: .6; cursor: wait; }
+.btn:focus-visible, .enlace:focus-visible, #inputCodigo:focus-visible { outline: 3px solid var(--dorado); outline-offset: 2px; }
+
+.error { margin-top: 12px; background: #FDECEA; color: #8C1D18; border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.4; }
+.ayuda { margin-top: 14px; font-size: 14px; color: var(--suave); line-height: 1.5; }
+.ayuda b { color: var(--texto); }
+.soporte { margin-top: 18px; text-align: center; font-size: 14px; color: var(--suave); line-height: 1.5; }
+.soporte a { color: var(--morado); font-weight: 700; }
+.enlace { margin-top: 14px; background: none; border: 0; color: var(--suave); font: 600 14px 'Archivo', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
+
+/* 2. Viendo */
+.viendo { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.escena { min-width: 0; }
+.marco {
+  position: relative;
+  margin: 0 -16px;
+  aspect-ratio: 16 / 9;
+  background: #071625;
+  overflow: hidden;
+}
+.marco video { width: 100%; height: 100%; display: block; background: #071625; object-fit: contain; }
+.sonido {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(20, 27, 45, .86);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font: 700 14px 'Archivo', Arial, sans-serif;
+  cursor: pointer;
+}
+.conexion { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--verde); }
+.conexion i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.conexion.alerta { color: #9A5B00; }
+
+.titulo-lado { font-size: 30px; font-weight: 800; color: var(--azul); letter-spacing: 1px; margin: 4px 0 2px; }
+.escenario {
+  margin-top: 16px;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-left: 5px solid var(--dorado);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.ahora { font-size: 20px; font-weight: 800; margin-top: 4px; }
+.antes { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--borde); font-size: 13px; color: var(--suave); }
+.antes ul { list-style: none; margin-top: 6px; }
+.antes li { padding: 3px 0; color: var(--texto); }
+.antes li::before { content: "✓ "; color: var(--verde); font-weight: 800; }
+.tips { margin-top: 16px; list-style: none; font-size: 14px; color: var(--suave); line-height: 1.5; }
+.tips li { padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid var(--borde); }
+.tips li::before { content: "•"; position: absolute; left: 6px; color: var(--dorado); font-weight: 800; }
+
+/* 3. Avisos */
+.aviso { max-width: 460px; margin: 0 auto; }
+.centro { text-align: center; padding: 30px 22px; }
+.icono { width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 34px; background: #ECE4F4; color: var(--morado); }
+.icono.dorado { background: #FBEFD5; color: var(--dorado-texto); }
+.icono.rojo { background: #FDECEA; color: #8C1D18; }
+.aviso h2 { font-size: 25px; line-height: 1.15; margin: 6px 0 10px; }
+.aviso .texto { font-size: 15px; color: var(--suave); line-height: 1.5; }
+.reloj { display: flex; justify-content: center; gap: 10px; margin: 18px 0 4px; }
+.reloj div { background: var(--fondo); border: 1px solid var(--borde); border-radius: 12px; width: 72px; padding: 8px 0; }
+.reloj b { display: block; font-size: 26px; color: var(--morado); }
+.reloj span { font-size: 12px; color: var(--suave); }
+
+.pie { text-align: center; font-size: 12px; color: var(--suave); padding: 14px 16px 20px; }
+.pie a { color: var(--suave); }
+
+/* Computador: video grande y la información al lado */
+@media (min-width: 900px) {
+  main { padding: 34px 28px 40px; }
+  .viendo { grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
+  .marco { margin: 0; border-radius: 16px; box-shadow: 0 22px 44px rgba(20, 27, 45, .18); }
+  .titular h1 { font-size: 56px; }
+  .entrada { max-width: 520px; padding-top: 24px; }
+}
+

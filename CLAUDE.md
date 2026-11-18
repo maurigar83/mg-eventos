@@ -44,6 +44,17 @@ a `main`, GitHub Pages publica solo (no hay más pasos).
     cambia, cambiarla en `lector/index.html`.
   - Los archivos `config-pruebas.js` y `entrar.*` del repo de pruebas no se
     copian aquí.
+- `envivo/`: página de la transmisión en vivo (`mgeventos.co/envivo`) para
+  quien compró una entrada virtual: pide el código personal (o lo trae el QR
+  con `?c=`), habla con el Worker de la transmisión (`config-envivo.js`) y
+  muestra el video firmado de Cloudflare Stream. Reglas:
+  - Copia exacta de `mg-eventos-pruebas/envivo/`: los cambios se prueban
+    allá primero.
+  - hls.js **completo** en `vendor/` (el *light* no lee la pista de audio
+    aparte de Stream). La firma solo se renueva en las listas `.m3u8`.
+  - CSP estricta y sin analítica. Al cambiar `envivo.js` o `envivo.css`,
+    subir su `?v=` en `envivo/index.html`; si cambia la dirección del
+    Worker, cambiarla en `config-envivo.js` y en la CSP.
 - `adviento/almuerzo/`: destino del botón "Pedir mi almuerzo" de la plantilla
   de WhatsApp (Meta no acepta enlaces wa.me en los botones). La página
   redirige al chat de quien toma los pedidos. No cambiar la URL mientras la
@@ -56,7 +67,7 @@ a `main`, GitHub Pages publica solo (no hay más pasos).
   del almuerzo: Meta lo descarga de esta URL en cada envío, no renombrarlo ni
   borrarlo mientras la campaña esté activa. Videos en 720p con faststart.
 - Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies; no
-  usar Google Analytics), menos en `lector/`, cuya CSP lo bloquea.
+  usar Google Analytics), menos en `lector/` y `envivo/`, cuyas CSP lo bloquean.
 
 ## Lenguaje de cara al cliente
 
