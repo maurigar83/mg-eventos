@@ -166,7 +166,7 @@ display: inline;
 </header>
 <main class="container">
 <h1>Política de Tratamiento de Datos Personales</h1>
-<p class="date">Versión 2026-11-13 · Vigente desde el 13 de noviembre de 2026</p>
+<p class="date">Versión 2026-11-18 · Vigente desde el 18 de noviembre de 2026</p>
 
 <p>Esta política explica cómo MG Eventos trata los datos personales, en cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 (incorporado en el Decreto 1074 de 2015) y demás normas colombianas de protección de datos.</p>
 
@@ -187,6 +187,7 @@ display: inline;
 <h2>3. Datos que tratamos</h2>
 <ul>
 <li><strong>Compradores y asistentes:</strong> nombre, apellido, número de cédula, teléfono, correo electrónico, tipo y cantidad de entradas, valor, referencia y fecha de la donación o pago, comprobante cuando aplica, y los registros de ingreso al evento (fecha y hora de lectura del código QR).</li>
+<li><strong>Compradores de entradas virtuales:</strong> además de lo anterior, el código personal de la entrada y los registros de acceso a la transmisión (fecha y hora, y tipo de aparato y navegador, sin dirección IP).</li>
 <li><strong>Usuarios del panel:</strong> nombre, usuario, rol y registros de actividad (inicios de sesión, ventas registradas, lecturas de QR).</li>
 <li><strong>Personas que nos contactan:</strong> los datos que nos envíen por correo o WhatsApp.</li>
 </ul>
@@ -197,6 +198,7 @@ display: inline;
 <li>Registrar la donación o compra y emitir las entradas con su código QR.</li>
 <li>Enviar las entradas y el comprobante por correo electrónico y por WhatsApp.</li>
 <li>Validar las entradas y controlar el ingreso el día del evento, evitando usos duplicados o fraudulentos.</li>
+<li>Dar acceso a la transmisión en vivo y a su grabación a quien compró una entrada virtual, en una pantalla a la vez, y evitar que el código se comparta.</li>
 <li>Atender consultas, reenvíos y reclamos sobre las entradas.</li>
 <li>Enviar comunicaciones operativas del evento comprado (cambios de hora, lugar o condiciones de ingreso).</li>
 <li>Cumplir obligaciones legales y atender requerimientos de autoridades.</li>
@@ -212,7 +214,7 @@ display: inline;
 <li><strong>Google</strong> (hojas de cálculo, Drive y Apps Script): almacenamiento de registros y generación de entradas.</li>
 <li><strong>Brevo</strong>: envío de los correos con las entradas.</li>
 <li><strong>Meta Platforms (WhatsApp Business)</strong>: envío de las entradas y mensajes del evento por WhatsApp.</li>
-<li><strong>Cloudflare</strong>: dominio, redirección de los correos que nos escriben, medición de visitas al sitio web (Web Analytics, sin cookies y sin datos que identifiquen al visitante) y validación de las entradas en la puerta del evento. Para esto último solo guarda el serial y el tipo de la entrada, el nombre con la inicial del apellido, el estado de ingreso y huellas cifradas del código QR y de la cédula, que no permiten reconstruirlos. No guarda teléfono, correo ni datos del pago.</li>
+<li><strong>Cloudflare</strong>: dominio, redirección de los correos que nos escriben, medición de visitas al sitio web (Web Analytics, sin cookies y sin datos que identifiquen al visitante) y validación de las entradas en la puerta del evento. Para esto último solo guarda el serial y el tipo de la entrada, el nombre con la inicial del apellido, el estado de ingreso y huellas cifradas del código QR y de la cédula, que no permiten reconstruirlos. No guarda teléfono, correo ni datos del pago. También transmite en vivo los eventos con entrada virtual (Cloudflare Stream y Workers): para dar acceso solo guarda una huella cifrada del código personal, el serial de la entrada, el tipo de aparato y navegador de cada ingreso y, por 30 minutos, una huella cifrada de la dirección IP de quien escribe códigos errados (para frenar intentos al azar). No guarda nombre, teléfono, correo ni datos del pago.</li>
 <li><strong>GitHub</strong>: alojamiento de las páginas web (no almacena datos de compradores).</li>
 </ul>
 
