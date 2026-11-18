@@ -69,3 +69,11 @@ body.claro {
 .claro .enlace { color: #b91c1c; }
 .claro .pie-panel { color: #6b7280; }
 .claro .pie-panel .enlace { color: #6b7280; }
+
+/* Login compacto (VIR-6c): tarjeta angosta como un formulario de acceso. */
+.claro #pLogin { max-width: 400px; margin: 48px auto 0; }
+.claro #pLogin .tarjeta { padding: 28px 28px 24px; }
+.claro #pLogin .ptitulo { font-size: 26px; margin: 4px 0 18px; }
+.claro #pLogin label { font-size: 12px; margin-bottom: 6px; }
+.claro #pLogin .campo { height: 44px; }
+.claro #pLogin .btn { min-height: 46px; font-size: 16px; margin-top: 6px; border-radius: 10px; }
