@@ -199,7 +199,7 @@
 
   function pintarModo(modo) {
     var grabacion = modo === "GRABACION";
-    chip.textContent = grabacion ? "Grabación" : "● En vivo";
+    pintarChip("", grabacion ? "Grabación" : "● En vivo");
     chip.classList.toggle("vivo", !grabacion);
   }
 
@@ -215,6 +215,7 @@
     var anteriores = e && e.anteriores ? e.anteriores : [];
     oculto($("escenario"), !ahora && !anteriores.length);
     $("ahora").textContent = ahora || "En unos minutos";
+    pintarFoto(ahora);
     var lista = $("listaAntes");
     lista.textContent = "";
     anteriores.forEach(function (nombre) {
@@ -223,6 +224,37 @@
       lista.appendChild(li);
     });
     oculto($("antes"), !anteriores.length);
+  }
+
+  // Foto del sacerdote que está en el escenario: se busca por el apellido
+  // en el texto que se escoge en el menú de la hoja.
+  var FOTOS = [
+    { clave: "bustamante", foto: "img/sacerdote-freddy.jpg" },
+    { clave: "montoya", foto: "img/sacerdote-montoya.jpg" },
+    { clave: "zapata", foto: "img/sacerdote-zapata.jpg" },
+    { clave: "lopera", foto: "img/sacerdote-lopera.jpg" }
+  ];
+  function pintarFoto(texto) {
+    var t = String(texto || "").toLowerCase();
+    var img = $("fotoAhora"), hallada = "";
+    FOTOS.forEach(function (f) { if (!hallada && t.indexOf(f.clave) !== -1) hallada = f.foto; });
+    if (hallada) {
+      if (img.getAttribute("src") !== hallada) img.setAttribute("src", hallada);
+      img.setAttribute("alt", texto);
+    }
+    oculto(img, !hallada);
+  }
+
+  // Texto del chip del encabezado: en celular solo se ve la parte corta.
+  function pintarChip(largo, corto) {
+    chip.textContent = "";
+    if (largo) {
+      var span = document.createElement("span");
+      span.className = "largo";
+      span.textContent = largo;
+      chip.appendChild(span);
+    }
+    chip.appendChild(document.createTextNode(corto));
   }
 
   /* ---------- latido: un aparato a la vez y firma nueva ---------- */
@@ -308,6 +340,13 @@
     var a = AVISOS[r.estado] || AVISOS.ERROR;
     var icono = $("avisoIcono");
     icono.className = "icono " + a.clase;
+    oculto(icono, r.estado === "ANTES");
+    oculto($("frase"), r.estado !== "ANTES");
+    // Espera: sacerdotes y flyer (en computador, flyer a la izquierda)
+    var espera = r.estado === "ANTES";
+    pAviso.classList.toggle("espera", espera);
+    oculto($("acompanan"), !espera);
+    oculto($("flyerEspera"), !espera);
     icono.textContent = a.icono;
     $("avisoEyebrow").textContent = a.eyebrow;
     $("avisoTitulo").textContent = a.titulo;
@@ -318,7 +357,7 @@
     oculto(btn, !a.boton);
     oculto($("reloj"), r.estado !== "ANTES" || !r.desde);
     if (r.estado === "ANTES" && r.desde) correrReloj(r.desde);
-    chip.textContent = "Transmisión en vivo";
+    pintarChip("Transmisión ", "en vivo");
     chip.classList.remove("vivo");
     mostrar(pAviso);
   }
