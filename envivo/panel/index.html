@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Panel de la transmisión (VIR-6). Solo SUPERADMIN: habla con Apps
+       Script (login y pase) y con el Worker de la transmisión. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://*.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Panel de la transmisión · MG Eventos</title>
+  <link rel="icon" href="../../images/favicon-mg.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/mg-header.css">
+  <link rel="stylesheet" href="../envivo.css?v=13">
+  <link rel="stylesheet" href="panel.css?v=2">
+</head>
+<body class="claro">
+  <header class="mg-header">
+    <div class="mg-header-inner">
+      <a href="https://mgeventos.co" class="mg-brand" aria-label="MG Eventos - Inicio">
+        <img class="mg-brand-circulo" src="../../images/mg-eventos-logo-circulo.png" alt="">
+        <span class="mg-brand-divisor" aria-hidden="true"></span>
+        <span class="mg-brand-eslogan" aria-hidden="true">Idəas quə co<span class="sin-espacio">n</span><span class="mg-schwa">ə</span>ctan</span>
+      </a>
+      <span id="chip" class="chip">Panel</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Iniciar sesión (si no viene con sesión del panel de MG Eventos) -->
+    <section id="pLogin" class="panel aviso oculto">
+      <form id="formLogin" class="tarjeta" autocomplete="on" novalidate>
+        <p class="eyebrow">Panel de la transmisión</p>
+        <h2 class="ptitulo">Inicia sesión</h2>
+        <label for="usuario">Usuario</label>
+        <input id="usuario" class="campo" type="text" autocomplete="username" autocapitalize="none" spellcheck="false">
+        <label for="clave">Contraseña</label>
+        <input id="clave" class="campo" type="password" autocomplete="current-password">
+        <button id="btnLogin" type="submit" class="btn">Entrar</button>
+        <p id="msgLogin" class="pnota" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="pPanel" class="pan oculto">
+      <div class="tarjeta">
+        <p class="eyebrow">¿Cómo les llega? · últimos 2 min</p>
+        <h3>Estado de la señal</h3>
+        <div class="barra"><span>👍 Todo bien</span><i id="bOK"></i><b id="nOK">0</b></div>
+        <div class="barra"><span>🧊 Se congela</span><i id="bCONGELA" class="r"></i><b id="nCONGELA">0</b></div>
+        <div class="barra"><span>🔇 Sin sonido</span><i id="bSONIDO" class="r"></i><b id="nSONIDO">0</b></div>
+        <p id="alertaSenal" class="alerta oculto" role="alert"></p>
+        <p class="pnota">Se actualiza solo cada 15 s. Sale una alerta si «Se congela» o «Sin sonido» pasa del 10 % (con 5 o más avisos).</p>
+      </div>
+
+      <div class="tarjeta">
+        <p class="eyebrow">Pregunta del momento</p>
+        <div id="activaVacia"><h3>Ninguna publicada</h3><p class="pnota">Publica una de la lista de abajo.</p></div>
+        <div id="activa" class="oculto">
+          <h3 id="activaTexto"></h3>
+          <div id="activaResultados"></div>
+          <p id="activaTotal" class="pnota"></p>
+          <button id="btnCerrar" type="button" class="enlace">Cerrar pregunta</button>
+        </div>
+      </div>
+
+      <div class="tarjeta ancha">
+        <p class="eyebrow">Preguntas</p>
+        <ul id="lista" class="lista"></ul>
+        <p id="listaVacia" class="pnota">Aún no hay preguntas. Déjalas listas aquí abajo antes del evento.</p>
+      </div>
+
+      <div class="tarjeta ancha">
+        <p class="eyebrow">Nueva pregunta</p>
+        <form id="formNueva" novalidate>
+          <label for="nTexto">Pregunta</label>
+          <input id="nTexto" class="campo" type="text" maxlength="120" placeholder="¿Nos escuchas bien?">
+          <label for="nTipo">Cómo se responde</label>
+          <select id="nTipo" class="campo">
+            <option value="BOTONES">Con botones</option>
+            <option value="TEXTO">Escrita (ciudad o país, solo letras)</option>
+          </select>
+          <div id="nOpciones">
+            <label>Respuestas (de 2 a 5)</label>
+            <div class="opciones">
+              <input class="campo op" type="text" maxlength="30" placeholder="Sí, perfecto">
+              <input class="campo op" type="text" maxlength="30" placeholder="Bajito">
+              <input class="campo op" type="text" maxlength="30" placeholder="Se corta">
+              <input class="campo op" type="text" maxlength="30">
+              <input class="campo op" type="text" maxlength="30">
+            </div>
+          </div>
+          <button id="btnGuardar" type="submit" class="btn">Guardar pregunta</button>
+          <p id="msgNueva" class="pnota" role="status"></p>
+        </form>
+      </div>
+
+      <div id="resultadosVer" class="tarjeta ancha oculto">
+        <p class="eyebrow">Resultados</p>
+        <h3 id="verTexto"></h3>
+        <div id="verResultados"></div>
+        <p id="verTotal" class="pnota"></p>
+      </div>
+
+      <p class="pie-panel"><span id="actualizado"></span> · <button id="btnSalir" type="button" class="enlace">Cerrar sesión</button></p>
+    </section>
+  </main>
+
+  <!-- En mgeventos.co la API está en ../../config.js (en pruebas es
+       ../../lector/config-pruebas.js). -->
+  <script src="../../config.js"></script>
+  <script src="panel.js?v=1"></script>
+</body>
+</html>

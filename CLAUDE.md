@@ -55,6 +55,10 @@ a `main`, GitHub Pages publica solo (no hay más pasos).
   - CSP estricta y sin analítica. Al cambiar `envivo.js` o `envivo.css`,
     subir su `?v=` en `envivo/index.html`; si cambia la dirección del
     Worker, cambiarla en `config-envivo.js` y en la CSP.
+  - `envivo/panel/`: panel de quien transmite (señal, pregunta del
+    momento y resultados; solo SUPERADMIN). Carga `../../config.js`; en
+    pruebas, `../../lector/config-pruebas.js` (única diferencia con la
+    copia de pruebas).
 - `adviento/almuerzo/`: destino del botón "Pedir mi almuerzo" de la plantilla
   de WhatsApp (Meta no acepta enlaces wa.me en los botones). La página
   redirige al chat de quien toma los pedidos. No cambiar la URL mientras la
