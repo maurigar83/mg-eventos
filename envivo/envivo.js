@@ -291,12 +291,12 @@
 
   /* ---------- 3. avisos ---------- */
   var AVISOS = {
-    OTRO_APARATO: { icono: "⧉", clase: "", eyebrow: "Un aparato a la vez", titulo: "Tu código se abrió en otro aparato",
-      boton: "Ver aquí", ayuda: "Si tocas «Ver aquí», el otro aparato se detiene. Si no fuiste tú, alguien tiene tu código: escribe a la organización." },
+    OTRO_APARATO: { icono: "⧉", clase: "", eyebrow: "Una pantalla a la vez", titulo: "Tu código se abrió en otra pantalla",
+      boton: "Ver aquí", ayuda: "Si tocas «Ver aquí», la otra pantalla se detiene. Si no fuiste tú, alguien tiene tu código: escribe a la organización." },
     ANTES: { icono: "◷", clase: "dorado", eyebrow: "Todo listo", titulo: "Tu código funciona", boton: "", ayuda: "" },
     GRABACION_PRONTO: { icono: "◷", clase: "dorado", eyebrow: "Gracias por acompañarnos", titulo: "La transmisión en vivo terminó", boton: "Revisar de nuevo", ayuda: "" },
     TERMINO: { icono: "✓", clase: "", eyebrow: "Retiro de Adviento", titulo: "La grabación ya no está disponible", boton: "", ayuda: "" },
-    BLOQUEADO: { icono: "!", clase: "rojo", eyebrow: "Código bloqueado", titulo: "Este código se abrió en demasiados aparatos", boton: "",
+    BLOQUEADO: { icono: "!", clase: "rojo", eyebrow: "Código bloqueado", titulo: "Este código se abrió en demasiadas pantallas", boton: "",
       ayuda: "Escribe al WhatsApp de la organización +57 322 527 6778 para revisarlo." },
     SIN_CONFIGURAR: { icono: "◷", clase: "dorado", eyebrow: "Un momento", titulo: "La transmisión se está preparando", boton: "Intentar de nuevo", ayuda: "" },
     ERROR: { icono: "!", clase: "rojo", eyebrow: "Algo falló", titulo: "No pudimos conectar", boton: "Intentar de nuevo", ayuda: "" }
