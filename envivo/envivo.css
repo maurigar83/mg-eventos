@@ -1,25 +1,27 @@
 /* Transmisión en vivo · Retiro de Adviento (MG Eventos)
-   Paleta de la página del evento (eventos/adviento) y azul del flyer. */
+   Look de las piezas de Adviento: azul noche y dorado, letras del retiro
+   (img/letras-adviento.jpg) y la corona de eventos/adviento (img/corona.svg).
+   El encabezado es el compartido del sitio (assets/mg-header.css). */
 :root {
-  --dorado: #C4924F;
-  --dorado-texto: #8A5E2E;
-  --fondo: #F4EDDF;
-  --texto: #141B2D;
-  --suave: #4A5068;
-  --borde: #E4D9C2;
+  --noche: #0c1a33;
+  --noche2: #081227;
+  --oro: #e2b45f;
+  --oro2: #f1d39a;
+  --crema: #f6efe2;
+  --texto-suave: rgba(246, 239, 226, 0.78);
+  --linea: rgba(226, 180, 95, 0.45);
   --morado: #4A2C6B;
-  --morado-hover: #5B3A82;
-  --azul: #0E2A4A;
-  --verde: #1F7A4D;
+  --verde: #5fd39a;
   --rojo: #D7262E;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { background: var(--noche2); }
 body {
-  font-family: 'Archivo', Arial, Helvetica, sans-serif;
-  color: var(--texto);
-  background: var(--fondo) url("../images/textura-papel.png");
+  font-family: 'DM Sans', Arial, Helvetica, sans-serif;
+  color: var(--crema);
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, #16294d 0%, var(--noche) 55%, var(--noche2) 100%) fixed;
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
@@ -29,90 +31,95 @@ body {
 
 .oculto { display: none !important; }
 
-/* Encabezado */
-.enc {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.75);
-  border-top: 4px solid var(--morado);
-  border-bottom: 1px solid var(--borde);
-}
-.marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; }
-.marca img { width: 40px; height: 40px; border-radius: 50%; }
-.marca span { display: flex; flex-direction: column; line-height: 1.15; }
-.marca b { font-size: 15px; }
-.marca small { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 15px; color: var(--dorado-texto); }
+/* Encabezado compartido con la franja morada de Adviento */
+.mg-header { background: rgba(255, 255, 255, 0.96); border-top: 4px solid var(--morado); border-bottom: 1px solid #E4D9C2; }
 .chip {
   margin-left: auto;
-  font-size: 12px;
-  font-weight: 700;
+  white-space: nowrap;
+  font: 500 13px 'Oswald', Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
   color: var(--morado);
   border: 1px solid var(--morado);
   border-radius: 999px;
-  padding: 4px 10px;
-  white-space: nowrap;
+  padding: 5px 12px;
 }
+.chip .largo { display: none; }
 .chip.vivo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
 
-main { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 16px 28px; }
+main { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 16px 28px; }
 
-.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--dorado-texto); }
-.lema { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 22px; line-height: 1.2; color: var(--morado); }
-.lema b { font-weight: 600; }
-.lema.chico { font-size: 19px; }
+.eyebrow { font: 500 13px 'Oswald', Arial, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--oro); }
 
-/* 1. Código */
-.entrada { max-width: 460px; margin: 0 auto; }
-.titular { text-align: center; margin-bottom: 20px; }
-.titular h1 { font-size: 46px; font-weight: 800; letter-spacing: 1px; color: var(--azul); margin: 6px 0 4px; }
-.cuando { margin-top: 12px; font-size: 15px; color: var(--suave); font-weight: 500; }
+/* Letras del retiro: la imagen trae su fondo azul y se funde con el de la página */
+.letras, .letras-lado {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 72%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 72%, transparent 100%);
+}
+.corona { display: block; height: auto; filter: drop-shadow(0 0 14px rgba(226, 180, 95, .35)); }
 
 .tarjeta {
-  background: #fff;
-  border: 1px solid var(--borde);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .03));
+  border: 1px solid var(--linea);
   border-radius: 20px;
   padding: 22px 20px;
-  box-shadow: 0 14px 34px rgba(20, 27, 45, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
 }
-label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+
+/* 1. Código */
+.entrada { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+.titular { text-align: center; }
+.titular h1 { max-width: 720px; margin: 0 auto; }
+.zona-codigo { position: relative; isolation: isolate; margin-top: 14px; }
+.zona-codigo .tarjeta { background: linear-gradient(180deg, rgba(22, 41, 77, .82), rgba(12, 26, 51, .82)); }
+/* El flyer completo: en celular va debajo del código */
+.flyer { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--linea); box-shadow: 0 20px 50px rgba(0, 0, 0, .4); }
+.cuando span { display: block; font-size: .8em; opacity: .85; margin-bottom: 2px; }
+.cuando { font: 500 13px 'Oswald', Arial, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--oro); margin-top: 6px; }
+
+label { display: block; font: 500 14px 'Oswald', Arial, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--oro2); margin-bottom: 10px; }
 #inputCodigo {
   width: 100%;
   height: 58px;
-  border: 2px solid var(--borde);
+  border: 2px solid rgba(226, 180, 95, .6);
   border-radius: 14px;
-  padding: 0 14px;
-  font: 700 22px/1 'Archivo', Arial, sans-serif;
-  letter-spacing: 2px;
+  padding: 0 16px;
+  font: 700 22px/1 'DM Sans', Arial, sans-serif;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--texto);
-  background: #fff;
+  color: #fff;
+  background: rgba(8, 18, 39, .6);
 }
-#inputCodigo:focus { outline: none; border-color: var(--morado); box-shadow: 0 0 0 4px rgba(74, 44, 107, 0.15); }
-#inputCodigo::placeholder { color: #C9C2B4; letter-spacing: 2px; }
+#inputCodigo:focus { outline: none; border-color: var(--oro2); box-shadow: 0 0 0 4px rgba(226, 180, 95, .2); }
+#inputCodigo::placeholder { color: rgba(246, 239, 226, .35); letter-spacing: 3px; }
 
 .btn {
   width: 100%;
   margin-top: 14px;
-  min-height: 54px;
+  min-height: 56px;
   border: 0;
   border-radius: 14px;
-  background: var(--morado);
-  color: #fff;
-  font: 800 17px 'Archivo', Arial, sans-serif;
+  background: linear-gradient(180deg, var(--oro2), var(--oro));
+  color: #1a1530;
+  font: 700 19px 'Oswald', Arial, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
   cursor: pointer;
+  box-shadow: 0 8px 24px rgba(226, 180, 95, .25);
 }
-.btn:hover { background: var(--morado-hover); }
+.btn:hover { filter: brightness(1.06); }
 .btn:disabled { opacity: .6; cursor: wait; }
-.btn:focus-visible, .enlace:focus-visible, #inputCodigo:focus-visible { outline: 3px solid var(--dorado); outline-offset: 2px; }
+.btn:focus-visible, .enlace:focus-visible, #inputCodigo:focus-visible { outline: 3px solid var(--oro2); outline-offset: 2px; }
 
 .error { margin-top: 12px; background: #FDECEA; color: #8C1D18; border-radius: 10px; padding: 10px 12px; font-size: 14px; line-height: 1.4; }
-.ayuda { margin-top: 14px; font-size: 14px; color: var(--suave); line-height: 1.5; }
-.ayuda b { color: var(--texto); }
-.soporte { margin-top: 18px; text-align: center; font-size: 14px; color: var(--suave); line-height: 1.5; }
-.soporte a { color: var(--morado); font-weight: 700; }
-.enlace { margin-top: 14px; background: none; border: 0; color: var(--suave); font: 600 14px 'Archivo', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
+.ayuda { margin-top: 14px; font-size: 14px; color: var(--texto-suave); line-height: 1.5; }
+.ayuda b { color: #fff; }
+.soporte { margin-top: 18px; text-align: center; font-size: 14px; color: var(--texto-suave); line-height: 1.5; }
+.soporte a { color: var(--oro2); font-weight: 700; }
+.enlace { margin-top: 14px; background: none; border: 0; color: var(--texto-suave); font: 600 14px 'DM Sans', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
 
 /* 2. Viendo */
 .viendo { display: grid; grid-template-columns: 1fr; gap: 18px; }
@@ -129,58 +136,111 @@ label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgba(20, 27, 45, .86);
+  background: rgba(8, 18, 39, .88);
   color: #fff;
-  border: 0;
+  border: 1px solid var(--linea);
   border-radius: 999px;
   padding: 10px 16px;
-  font: 700 14px 'Archivo', Arial, sans-serif;
+  font: 700 14px 'DM Sans', Arial, sans-serif;
   cursor: pointer;
 }
 .conexion { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--verde); }
 .conexion i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
-.conexion.alerta { color: #9A5B00; }
+.conexion.alerta { color: #f0b54a; }
 
-.titulo-lado { font-size: 30px; font-weight: 800; color: var(--azul); letter-spacing: 1px; margin: 4px 0 2px; }
-.escenario {
-  margin-top: 16px;
-  background: #fff;
-  border: 1px solid var(--borde);
-  border-left: 5px solid var(--dorado);
-  border-radius: 14px;
-  padding: 14px 16px;
-}
-.ahora { font-size: 20px; font-weight: 800; margin-top: 4px; }
-.antes { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--borde); font-size: 13px; color: var(--suave); }
+/* En celular las letras ya salen en la imagen del video: no se repiten */
+.letras-lado { display: none; }
+.escenario { border-left: 4px solid var(--oro); padding: 14px 16px; }
+.escenario-fila { display: flex; gap: 14px; align-items: center; }
+.foto { width: 68px; height: 68px; border-radius: 50%; border: 3px solid var(--oro); object-fit: cover; flex: none; }
+.ahora { font: 600 21px/1.15 'Fraunces', Georgia, serif; color: #fff; margin-top: 4px; }
+.antes { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--linea); font-size: 13px; color: var(--texto-suave); }
 .antes ul { list-style: none; margin-top: 6px; }
-.antes li { padding: 3px 0; color: var(--texto); }
+.antes li { padding: 3px 0; color: var(--crema); }
 .antes li::before { content: "✓ "; color: var(--verde); font-weight: 800; }
-.tips { margin-top: 16px; list-style: none; font-size: 14px; color: var(--suave); line-height: 1.5; }
-.tips li { padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid var(--borde); }
-.tips li::before { content: "•"; position: absolute; left: 6px; color: var(--dorado); font-weight: 800; }
+.tips { margin-top: 16px; list-style: none; font-size: 14px; color: var(--texto-suave); line-height: 1.5; }
+.tips li { padding: 9px 0 9px 24px; position: relative; border-bottom: 1px solid rgba(226, 180, 95, .18); }
+.tips li::before { content: "✦"; position: absolute; left: 2px; top: 11px; color: var(--oro); font-size: 12px; }
 
 /* 3. Avisos */
-.aviso { max-width: 460px; margin: 0 auto; }
+.aviso { max-width: 480px; margin: 0 auto; }
 .centro { text-align: center; padding: 30px 22px; }
-.icono { width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 34px; background: #ECE4F4; color: var(--morado); }
-.icono.dorado { background: #FBEFD5; color: var(--dorado-texto); }
-.icono.rojo { background: #FDECEA; color: #8C1D18; }
-.aviso h2 { font-size: 25px; line-height: 1.15; margin: 6px 0 10px; }
-.aviso .texto { font-size: 15px; color: var(--suave); line-height: 1.5; }
-.reloj { display: flex; justify-content: center; gap: 10px; margin: 18px 0 4px; }
-.reloj div { background: var(--fondo); border: 1px solid var(--borde); border-radius: 12px; width: 72px; padding: 8px 0; }
-.reloj b { display: block; font-size: 26px; color: var(--morado); }
-.reloj span { font-size: 12px; color: var(--suave); }
+.icono { width: 76px; height: 76px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 34px; border: 2px solid var(--oro); color: var(--oro2); }
+.icono.rojo { border-color: #e06a6a; color: #f3a0a0; }
+.aviso h2 { font: 600 30px/1.15 'Fraunces', Georgia, serif; color: #fff; margin: 6px 0 10px; }
+.aviso .texto { font-size: 15px; color: var(--texto-suave); line-height: 1.5; }
+.reloj { display: flex; justify-content: center; gap: 10px; margin: 20px 0 6px; }
+.reloj div { border: 1px solid rgba(226, 180, 95, .5); border-radius: 12px; width: 78px; padding: 10px 0; background: rgba(8, 18, 39, .5); }
+.reloj b { display: block; font: 700 34px 'Oswald', Arial, sans-serif; color: var(--oro2); }
+.reloj span { font-size: 12px; color: var(--texto-suave); }
+.frase { font: 700 26px 'Caveat', cursive; color: var(--oro2); margin-top: 16px; }
 
-.pie { text-align: center; font-size: 12px; color: var(--suave); padding: 14px 16px 20px; }
-.pie a { color: var(--suave); }
-
-/* Computador: video grande y la información al lado */
-@media (min-width: 900px) {
-  main { padding: 34px 28px 40px; }
-  .viendo { grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
-  .marco { margin: 0; border-radius: 16px; box-shadow: 0 22px 44px rgba(20, 27, 45, .18); }
-  .titular h1 { font-size: 56px; }
-  .entrada { max-width: 520px; padding-top: 24px; }
+/* Espera (ANTES): tarjeta con los sacerdotes y el flyer debajo (al lado en computador) */
+.aviso.espera { display: flex; flex-direction: column; gap: 22px; }
+.aviso.espera .centro { padding: 28px 20px; }
+/* En celular la espera lleva el cabezote arriba y no el flyer (más limpio) */
+.letras-espera { display: none; }
+@media (max-width: 899px) {
+  .aviso.espera { gap: 0; }
+  .aviso.espera .letras-espera { display: block; margin: -6px auto 14px; }
+  .aviso.espera .flyer { display: none; }
 }
+.acompanan { margin: 22px 0 6px; padding-top: 18px; border-top: 1px solid rgba(226, 180, 95, .3); }
+.acompanan ul { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.acompanan img { width: 62px; height: 62px; border-radius: 50%; border: 2px solid var(--oro); object-fit: cover; display: block; margin: 0 auto 6px; }
+.acompanan span { display: block; font-size: 11.5px; line-height: 1.25; color: var(--crema); }
 
+.pie { text-align: center; font-size: 12px; color: rgba(246, 239, 226, .5); padding: 14px 16px 20px; }
+.pie a { color: rgba(246, 239, 226, .65); }
+
+/* Computador: todo más grande, video con la información al lado */
+@media (min-width: 900px) {
+  main { padding: 26px 28px 40px; }
+  .chip .largo { display: inline; }
+  .cuando { font-size: 15px; letter-spacing: .22em; }
+  /* Computador: flyer a la izquierda y el código a la derecha, sin scroll */
+  .entrada { max-width: 1080px; flex-direction: row-reverse; align-items: center; justify-content: center; gap: 56px; }
+  .col-codigo { flex: 0 1 480px; }
+  .flyer { flex: none; width: auto; height: min(calc(100svh - 190px), 720px); }
+  .titular h1 { display: none; }
+  .cuando { text-align: left; font-size: 20px; letter-spacing: .14em; }
+  .zona-codigo { margin-top: 12px; }
+  .viendo { grid-template-columns: minmax(0, 1fr) 330px; gap: 30px; align-items: start; }
+  .marco { margin: 0; border-radius: 16px; border: 1px solid var(--linea); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+  .letras-lado { display: block; }
+  .escenario { margin-top: 14px; }
+  .aviso { max-width: 760px; margin-top: 20px; }
+  .aviso .centro { padding: 48px 60px; }
+  .aviso .eyebrow { font-size: 16px; }
+  .aviso h2 { font-size: 52px; }
+  .aviso .texto { font-size: 20px; }
+  .reloj { gap: 18px; margin: 30px 0 10px; }
+  .reloj div { width: 130px; padding: 16px 0; }
+  .reloj b { font-size: 60px; }
+  .reloj span { font-size: 16px; }
+  .frase { font-size: 40px; }
+  .aviso.espera { max-width: 1120px; flex-direction: row-reverse; align-items: center; justify-content: center; gap: 56px; margin-top: 0; }
+  .aviso.espera .tarjeta { flex: 0 1 600px; padding: 36px 44px; }
+  .aviso.espera .flyer { flex: none; width: auto; height: min(calc(100svh - 190px), 720px); }
+  .aviso.espera h2 { font-size: 44px; }
+  .aviso.espera .texto { font-size: 18px; }
+  .aviso.espera .reloj div { width: 110px; padding: 12px 0; }
+  .aviso.espera .reloj b { font-size: 48px; }
+  .aviso.espera .frase { font-size: 34px; }
+  .acompanan img { width: 84px; height: 84px; }
+  .acompanan span { font-size: 13.5px; }
+}
+/* Portátil de pantalla baja: todo cabe sin bajar */
+@media (min-width: 900px) and (max-height: 820px) {
+  .aviso.espera .tarjeta { padding: 24px 40px; }
+  .aviso.espera h2 { font-size: 36px; margin: 4px 0 6px; }
+  .aviso.espera .texto { font-size: 16px; }
+  .aviso.espera .reloj { margin: 16px 0 4px; }
+  .aviso.espera .reloj div { width: 96px; padding: 8px 0; }
+  .aviso.espera .reloj b { font-size: 38px; }
+  .aviso.espera .frase { font-size: 28px; margin-top: 8px; }
+  .acompanan { margin-top: 12px; padding-top: 12px; }
+  .acompanan img { width: 66px; height: 66px; }
+  .acompanan span { font-size: 12.5px; }
+  .aviso.espera .enlace { margin-top: 8px; }
+}

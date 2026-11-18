@@ -11,56 +11,71 @@
   <title>Transmisión en vivo · Retiro de Adviento · MG Eventos</title>
   <link rel="icon" href="../images/favicon-mg.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="envivo.css?v=6">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/mg-header.css">
+  <link rel="stylesheet" href="envivo.css?v=11">
 </head>
 <body>
-  <header class="enc">
-    <a class="marca" href="https://mgeventos.co" aria-label="MG Eventos">
-      <img src="../images/mg-eventos-logo-circulo.png" alt="" width="40" height="40">
-      <span><b>MG Eventos</b><small>Ideas que conectan</small></span>
-    </a>
-    <span id="chip" class="chip">Transmisión en vivo</span>
+  <header class="mg-header">
+    <div class="mg-header-inner">
+      <a href="https://mgeventos.co" class="mg-brand" aria-label="MG Eventos - Inicio">
+        <img class="mg-brand-circulo" src="../images/mg-eventos-logo-circulo.png" alt="">
+        <span class="mg-brand-divisor" aria-hidden="true"></span>
+        <span class="mg-brand-eslogan" aria-hidden="true">Idəas quə co<span class="sin-espacio">n</span><span class="mg-schwa">ə</span>ctan</span>
+      </a>
+      <span id="chip" class="chip"><span class="largo">Transmisión </span>en vivo</span>
+    </div>
   </header>
 
   <main id="app">
     <!-- 1. ESCRIBIR EL CÓDIGO -->
     <section id="pCodigo" class="panel entrada">
-      <div class="titular">
-        <p class="eyebrow">Transmisión en vivo · 28 de noviembre</p>
-        <h1>ADVIENTO</h1>
-        <p class="lema">tiempo de volver a empezar a través del <b>perdón y la sanación</b></p>
-        <p class="cuando">Sábado 28 de noviembre · 8:00 a. m. a 3:00 p. m.</p>
-      </div>
-      <form id="formCodigo" class="tarjeta" autocomplete="off" novalidate>
-        <label for="inputCodigo">Tu código personal</label>
-        <input id="inputCodigo" type="text" inputmode="text" autocapitalize="characters"
-          spellcheck="false" placeholder="ADV-XXXX-XXXX" maxlength="20" aria-describedby="ayudaCodigo">
-        <button id="btnEntrar" type="submit" class="btn">▶&nbsp; Ver transmisión</button>
-        <p id="errorCodigo" class="error oculto" role="alert"></p>
-        <p id="ayudaCodigo" class="ayuda">Está en tu entrada virtual (el PDF que te llegó por WhatsApp desde
-          <b>MG Eventos Oficial</b> o por correo). Funciona en <b>una pantalla a la vez</b>: celular, computador o televisor.</p>
-      </form>
+      <div class="col-codigo">
+        <div class="titular">
+          <h1><img class="letras" src="img/letras-adviento.jpg" width="1080" height="330"
+            alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación. Retiro de Adviento"></h1>
+          <p class="cuando"><span>Transmisión en vivo</span>Sábado 28 de noviembre · 8:00 a. m.</p>
+        </div>
+        <div class="zona-codigo">
+          <form id="formCodigo" class="tarjeta" autocomplete="off" novalidate>
+            <label for="inputCodigo">Tu código personal</label>
+            <input id="inputCodigo" type="text" inputmode="text" autocapitalize="characters"
+              spellcheck="false" placeholder="ADV-XXXX-XXXX" maxlength="20" aria-describedby="ayudaCodigo">
+            <button id="btnEntrar" type="submit" class="btn">▶&#xFE0E;&nbsp; Ver transmisión</button>
+            <p id="errorCodigo" class="error oculto" role="alert"></p>
+            <p id="ayudaCodigo" class="ayuda">Está en tu entrada virtual (el PDF que te llegó por WhatsApp desde
+              <b>MG Eventos Oficial</b> o por correo). Funciona en <b>una pantalla a la vez</b>: celular, computador o televisor.</p>
+          </form>
+        </div>
       <p class="soporte">¿No te llegó tu entrada? Escribe al WhatsApp de la organización
         <a href="https://wa.me/573225276778" rel="noopener">+57 322 527 6778</a>.</p>
+      </div>
+      <img class="flyer" src="../images/flyer_adviento_v4_600.jpg"
+        srcset="../images/flyer_adviento_v4_600.jpg 600w, ../images/flyer_adviento_v4.jpg 1024w"
+        sizes="(min-width: 900px) 480px, 100vw" width="600" height="900"
+        alt="Flyer del Retiro de Adviento: sábado 28 de noviembre con los padres Freddy Bustamante, Juan José Montoya, Juan Felipe Zapata y Wilson Lopera">
     </section>
 
     <!-- 2. VIENDO -->
     <section id="pVideo" class="panel viendo oculto">
       <div class="escena">
         <div class="marco">
-          <video id="video" playsinline controls preload="none" poster="poster-envivo.jpg"></video>
+          <video id="video" playsinline controls preload="none" poster="poster-envivo.jpg?v=2"></video>
           <button id="btnSonido" type="button" class="sonido oculto">🔊 Toca para activar el sonido</button>
         </div>
         <p id="conexion" class="conexion"><i></i><span>Conectado</span></p>
       </div>
       <aside class="lado">
-        <p class="eyebrow">Retiro de Adviento 2026</p>
-        <h2 class="titulo-lado">ADVIENTO</h2>
-        <p class="lema chico">tiempo de volver a empezar a través del <b>perdón y la sanación</b></p>
-        <div id="escenario" class="escenario oculto">
-          <p class="eyebrow">En el escenario</p>
-          <p id="ahora" class="ahora"></p>
+        <img class="letras-lado" src="img/letras-adviento.jpg" width="1080" height="330"
+          alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación">
+        <div id="escenario" class="tarjeta escenario oculto">
+          <div class="escenario-fila">
+            <img id="fotoAhora" class="foto oculto" src="" alt="" width="160" height="160">
+            <div>
+              <p class="eyebrow">En el escenario</p>
+              <p id="ahora" class="ahora"></p>
+            </div>
+          </div>
           <div id="antes" class="antes oculto">
             <p>Ya compartieron</p>
             <ul id="listaAntes"></ul>
@@ -77,6 +92,9 @@
 
     <!-- 3. AVISOS (otro aparato, antes de la hora, terminó, bloqueado) -->
     <section id="pAviso" class="panel aviso oculto">
+      <!-- Solo en la espera y en celular: el cabezote del retiro en vez del flyer -->
+      <img class="letras letras-espera" src="img/letras-adviento.jpg" width="1080" height="330"
+        alt="Adviento: tiempo de volver a empezar a través del perdón y la sanación. Retiro de Adviento">
       <div class="tarjeta centro">
         <div id="avisoIcono" class="icono"></div>
         <p id="avisoEyebrow" class="eyebrow"></p>
@@ -87,17 +105,32 @@
           <div><b id="rHoras">0</b><span>horas</span></div>
           <div><b id="rMin">0</b><span>min</span></div>
         </div>
+        <p id="frase" class="frase oculto">Prepara tu corazón</p>
         <button id="btnAviso" type="button" class="btn oculto"></button>
         <p id="avisoAyuda" class="ayuda"></p>
+        <div id="acompanan" class="acompanan oculto">
+          <p class="eyebrow">Te acompañan</p>
+          <ul>
+            <li><img src="img/sacerdote-freddy.jpg" alt="" width="160" height="160"><span>Pbro. Freddy<br>Bustamante</span></li>
+            <li><img src="img/sacerdote-montoya.jpg" alt="" width="160" height="160"><span>Pbro. Juan José<br>Montoya</span></li>
+            <li><img src="img/sacerdote-zapata.jpg" alt="" width="160" height="160"><span>Pbro. Juan Felipe<br>Zapata</span></li>
+            <li><img src="img/sacerdote-lopera.jpg" alt="" width="160" height="160"><span>Pbro. Wilson<br>Lopera</span></li>
+          </ul>
+        </div>
         <button id="btnOtroCodigo" type="button" class="enlace">Usar otro código</button>
       </div>
+      <!-- Solo en la espera (ANTES): el flyer, como en la pantalla del código -->
+      <img id="flyerEspera" class="flyer oculto" src="../images/flyer_adviento_v4_600.jpg"
+        srcset="../images/flyer_adviento_v4_600.jpg 600w, ../images/flyer_adviento_v4.jpg 1024w"
+        sizes="(min-width: 900px) 480px, 100vw" width="600" height="900" loading="lazy"
+        alt="Flyer del Retiro de Adviento: sábado 28 de noviembre con los padres Freddy Bustamante, Juan José Montoya, Juan Felipe Zapata y Wilson Lopera">
     </section>
   </main>
 
   <footer class="pie">MG Eventos · boletería oficial del retiro · <a href="../politica-privacidad.html">Política de privacidad</a></footer>
 
-  <script src="config-envivo.js?v=6"></script>
+  <script src="config-envivo.js?v=9"></script>
   <script src="vendor/hls-1.5.17.min.js"></script>
-  <script src="envivo.js?v=6"></script>
+  <script src="envivo.js?v=9"></script>
 </body>
 </html>
