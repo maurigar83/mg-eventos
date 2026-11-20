@@ -1190,6 +1190,13 @@ body {
 .alm-plato{border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;background:#fff}
 .alm-plato span{display:block;font-size:12px;color:#6b7280}
 .alm-plato strong{font-size:22px}
+/* VIR-1i: entradas virtuales (transmisión en vivo), aparte del aforo del teatro */
+.vir-resumen{margin-top:0;border-color:#ddd0ee;background:#faf7fd}
+.vir-resumen h3{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.vir-chip{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#5b3a84;background:#efe7f8;border-radius:999px;padding:3px 9px}
+.vir-barra{height:8px;border-radius:999px;background:#ebe4f4;overflow:hidden;margin:12px 0 4px}
+.vir-barra i{display:block;height:100%;background:#7c5aa6;border-radius:999px}
+.vir-resumen .alm-plato{border-color:#e6dcf2}
 @media (max-width: 600px){
   .alm-sel{flex-direction:column;align-items:stretch;gap:6px}
   .alm-sel select{width:100%;min-width:0}
@@ -1249,12 +1256,19 @@ body {
     <div class="stat-card">
       <div class="stat-label">Ingresos</div>
       <div class="stat-value loading" id="statIngresos">Cargando...</div>
-      <div class="stat-breakdown">Solo boletas General</div>
+      <div class="stat-breakdown" id="statIngresosDesglose">General y Virtual</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Compradores</div>
       <div class="stat-value loading" id="statCompradores">Cargando...</div>
     </div>
+  </section>
+
+  <section class="panel-card alm-resumen vir-resumen" id="virResumen" hidden>
+    <h3>Entradas virtuales <span class="vir-chip">Transmisión en vivo</span></h3>
+    <div id="virResumenTexto" class="alm-sub"></div>
+    <div class="vir-barra"><i id="virResumenBarra"></i></div>
+    <div class="alm-platos" id="virResumenCifras"></div>
   </section>
 
   <section class="panel-card alm-resumen" id="almResumen" hidden>
@@ -1613,6 +1627,12 @@ async function cargarResumen() {
       "General: " + resultado.disponiblesGeneral + " · Cortesía: " + resultado.disponiblesCortesia;
 
     document.getElementById("statIngresos").textContent = formatearMoneda(resultado.ingresos);
+    if (resultado.ingresosGeneral !== undefined) {
+      document.getElementById("statIngresosDesglose").textContent =
+        "General: " + formatearMoneda(resultado.ingresosGeneral) +
+        " · Virtual: " + formatearMoneda(resultado.ingresosVirtual);
+    }
+    pintarResumenVirtuales(resultado);
     document.getElementById("statCompradores").textContent = resultado.compradores;
     pintarResumenAlmuerzos(resultado.almuerzos);
   } catch (error) {
@@ -2391,6 +2411,32 @@ async function anularAlmuerzo(serial) {
     feedback.className = "ficha-feedback error";
     feedback.textContent = "Error de conexión al anular.";
   }
+}
+
+// VIR-1i: bloque de entradas virtuales. Sin cupo virtual en Configuración no sale.
+function pintarResumenVirtuales(r) {
+  const seccion = document.getElementById("virResumen");
+  const cupo = Number(r.inventarioVirtual) || 0;
+  if (!(cupo > 0)) {
+    seccion.hidden = true;
+    return;
+  }
+  seccion.hidden = false;
+  const vendidas = Number(r.vendidasVirtual) || 0;
+  document.getElementById("virResumenTexto").textContent =
+    vendidas + " de " + cupo + (vendidas === 1 ? " vendida" : " vendidas") +
+    " · no cuentan en el aforo del teatro";
+  document.getElementById("virResumenBarra").style.width =
+    Math.min(100, vendidas * 100 / cupo).toFixed(1) + "%";
+  const cifras = [
+    ["Vendidas", vendidas],
+    ["Disponibles", Number(r.disponiblesVirtual) || 0],
+    ["Ingresos virtuales", formatearMoneda(r.ingresosVirtual || 0)],
+    ["Pagadas con link de Bold", Number(r.virtualesLinkBold) || 0]
+  ];
+  document.getElementById("virResumenCifras").innerHTML = cifras.map(function(c) {
+    return '<div class="alm-plato"><span>' + c[0] + "</span><strong>" + escaparTexto(String(c[1])) + "</strong></div>";
+  }).join("");
 }
 
 function pintarResumenAlmuerzos(datos) {
