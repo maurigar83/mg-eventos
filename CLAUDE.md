@@ -69,7 +69,11 @@ a `main`, GitHub Pages publica solo (no hay más pasos).
   de Adviento es `flyer_adviento_v4.jpg` (y su versión de 600 px).
   `flyer-almuerzo-adviento.jpg` es el encabezado de la plantilla de WhatsApp
   del almuerzo: Meta lo descarga de esta URL en cada envío, no renombrarlo ni
-  borrarlo mientras la campaña esté activa. Videos en 720p con faststart.
+  borrarlo mientras la campaña esté activa.
+  `recomendaciones-adviento-whatsapp.jpg` es el encabezado de la plantilla
+  de WhatsApp del recordatorio del evento (`recordatorio_evento`): Meta lo
+  descarga de esta URL en cada envío, no renombrarlo ni borrarlo antes del
+  evento. Videos en 720p con faststart.
 - Cloudflare Web Analytics en el `<head>` de todas las páginas (sin cookies; no
   usar Google Analytics), menos en `lector/` y `envivo/`, cuyas CSP lo bloquean.
 
