@@ -307,6 +307,15 @@
         .event-card-item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; color: var(--texto-suave); }
         .event-card-item.strong { font-size: 16px; font-weight: 700; color: var(--texto); }
 
+        /* Lugar: nombre del teatro, dirección y enlace al mapa (abre Google Maps en otra pestaña) */
+        .event-card-item.lugar { flex-basis: 100%; align-items: flex-start; text-decoration: none; color: var(--texto-suave); border-radius: 8px; }
+        .event-card-item.lugar svg { flex-shrink: 0; margin-top: 1px; }
+        .event-card-item.lugar:focus-visible { outline: 2px solid var(--dorado-texto); outline-offset: 4px; }
+        .lugar-texto { display: flex; flex-direction: column; gap: 2px; }
+        .lugar-direccion { font-size: 14px; font-weight: 400; }
+        .lugar-mapa { display: inline-flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 14px; font-weight: 700; color: var(--dorado-texto); text-decoration: underline; text-underline-offset: 3px; }
+        .event-card-item.lugar:hover .lugar-mapa { text-decoration-thickness: 2px; }
+
         .info-button {
             display: inline-flex;
             align-items: center;
@@ -478,11 +487,9 @@
 
             .event-card { flex-direction: column; align-items: center; gap: 8px; padding: 14px 16px; text-align: center; }
 
-            /* Lugar en celular: ícono junto al teatro y la ciudad en una línea aparte, centrada */
-            .event-card-item.lugar { align-items: flex-start; }
-            .event-card-item.lugar svg { flex-shrink: 0; margin-top: 1px; }
-            .event-card-item.lugar .lugar-coma { display: none; }
-            .event-card-item.lugar .lugar-ciudad { display: block; font-size: 14px; }
+            /* Lugar en celular: ícono junto al teatro; dirección y enlace al mapa debajo, centrados */
+            .event-card-item.lugar { flex-basis: auto; }
+            .lugar-texto { align-items: center; }
 
             .info-button { width: 100%; padding: 17px 20px; }
 
@@ -614,10 +621,14 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                             8:00 a.m. a 3:00 p.m.
                         </span>
-                        <span class="event-card-item lugar">
+                        <a class="event-card-item lugar" href="https://maps.app.goo.gl/YZjpsTv25XVHgTg59" target="_blank" rel="noopener" aria-label="Teatro del Colegio María Auxiliadora, Calle 57, La Candelaria, Medellín. Abrir en Google Maps (pestaña nueva)">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5E2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-                            <span>Teatro del Colegio María Auxiliadora<span class="lugar-coma">,</span> <span class="lugar-ciudad">Medellín, Antioquia</span></span>
-                        </span>
+                            <span class="lugar-texto">
+                                <span class="lugar-nombre">Teatro del Colegio María Auxiliadora</span>
+                                <span class="lugar-direccion">Cl. 57, La Candelaria, Medellín, Antioquia</span>
+                                <span class="lugar-mapa">Ver en Google Maps<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+                            </span>
+                        </a>
                     </div>
 
                     <button type="button" class="info-button" onclick="openModal()">MÁS INFORMACIÓN AQUÍ</button>
