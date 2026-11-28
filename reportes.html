@@ -513,6 +513,33 @@ body {
   color: #6b7280;
 }
 
+.ingreso-lista .ing-vivo { color: #059669; font-weight: 600; }
+.ingreso-lista .ing-visto { color: #6b7280; }
+.ingreso-lista .ing-alerta { color: #b45309; }
+.ingreso-lista .ing-tipo {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-size: 11px;
+  font-weight: 600;
+}
+.ingreso-lista .ing-punto {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: #9ca3af;
+}
+.ingreso-lista .ing-vivo .ing-punto { background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, .2); }
+.ingreso-lista .ing-fila + .ing-fila { margin-top: 10px; }
+.ingreso-lista .ing-est { margin-top: 2px; font-size: 13px; }
+.ing-nota { margin-top: 8px; font-size: 11px; color: #9ca3af; }
+
 .comm-button {
   padding: 9px 16px;
   border: 1px solid #d9ad55;
@@ -1456,7 +1483,7 @@ body {
       </div>
       <div class="comm-row">
         <div class="comm-info">
-          <strong>Ingreso al evento</strong>
+          <strong id="fichaIngresosTitulo">Ingreso al evento</strong>
           <ul class="ingreso-lista" id="fichaIngresos"></ul>
         </div>
       </div>
@@ -2197,7 +2224,14 @@ if (fechaISO(new Date()) > NUEVO_HASTA) {
 
 function pintarIngresos(ingresos) {
   const lista = document.getElementById("fichaIngresos");
+  const titulo = document.getElementById("fichaIngresosTitulo");
   lista.innerHTML = "";
+  const nota = lista.parentNode.querySelector(".ing-nota");
+  if (nota) nota.remove();
+
+  const hayVirtual = ingresos.some(function(e) { return e.virtual; });
+  const hayPresencial = ingresos.some(function(e) { return !e.virtual; });
+  titulo.textContent = hayVirtual ? (hayPresencial ? "Ingreso y transmisión" : "Transmisión en vivo") : "Ingreso al evento";
 
   if (!ingresos.length) {
     const item = document.createElement("li");
@@ -2209,6 +2243,41 @@ function pintarIngresos(ingresos) {
 
   ingresos.forEach(function(entrada) {
     const item = document.createElement("li");
+    if (entrada.virtual) {
+      item.className = "ing-fila";
+      const cab = document.createElement("div");
+      cab.textContent = entrada.serial || "Sin serial";
+      const tipo = document.createElement("span");
+      tipo.className = "ing-tipo";
+      tipo.textContent = "Virtual";
+      cab.appendChild(tipo);
+      const est = document.createElement("div");
+      const punto = document.createElement("span");
+      punto.className = "ing-punto";
+      est.appendChild(punto);
+      let texto = "Estado no disponible";
+      est.className = "ing-est ing-visto";
+      if (entrada.enLinea === "VIENDO") {
+        est.className = "ing-est ing-vivo";
+        texto = "Viendo ahora";
+      } else if (entrada.enLinea === "VISTO") {
+        const f = entrada.visto ? new Date(entrada.visto) : null;
+        const hora = f && !isNaN(f) ? f.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }) : "";
+        const hoy = f && !isNaN(f) && f.toDateString() === new Date().toDateString();
+        const dia = f && !isNaN(f) && !hoy ? "el " + f.toLocaleDateString("es-CO", { day: "numeric", month: "short" }) + " " : "";
+        texto = "Visto por última vez " + dia + (hora ? "a las " + hora : "");
+      } else if (entrada.enLinea === "NUNCA") {
+        texto = "Aún no ha entrado";
+      } else if (entrada.enLinea === "BLOQUEADO") {
+        est.className = "ing-est ing-alerta";
+        texto = "Código bloqueado por exceso de cambios de pantalla";
+      }
+      est.appendChild(document.createTextNode(texto));
+      item.appendChild(cab);
+      item.appendChild(est);
+      lista.appendChild(item);
+      return;
+    }
     const estado = document.createElement("span");
     const detalle = [entrada.fecha, entrada.hora].filter(Boolean).join(" ");
 
@@ -2218,6 +2287,13 @@ function pintarIngresos(ingresos) {
     item.appendChild(estado);
     lista.appendChild(item);
   });
+
+  if (hayVirtual) {
+    const n = document.createElement("div");
+    n.className = "ing-nota";
+    n.textContent = "Las virtuales no cuentan en el aforo del teatro. El estado se calcula al abrir esta ficha.";
+    lista.parentNode.appendChild(n);
+  }
 }
 
 // ============================================================
